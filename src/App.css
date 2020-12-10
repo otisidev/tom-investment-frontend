@@ -1,0 +1,47 @@
+html {
+    background: #574294;
+}
+
+.input:focus, .button:focus {
+    box-shadow: 0 0 0 1.5px #574294;
+}
+
+.text-theme-1 {
+    color: #574294 !important;
+}
+
+.bg-theme-1 {
+    background: #574294 !important;
+}
+.bg-theme-9 {
+    background: #14ca6f !important;
+}
+.text-theme-9 {
+    color: #14ca6f !important;
+}
+
+.bg-theme-18 {
+    --bg-opacity: 1;
+    background-color: #14ca6f !important;
+    background-color: rgba(216, 248, 188, 0.7) !important;
+}
+.toggle__dot {
+  top: -.25rem;
+  left: -.25rem;
+  transition: all 0.3s ease-in-out;
+}
+
+input:checked ~ .toggle__dot {
+  transform: translateX(100%);
+  background-color: #574294;
+}
+@media (max-width: 1279px) {
+    .login {
+        background: linear-gradient(to bottom, #574294, #574294);
+    }
+}
+
+.input[type=checkbox]:not(.input--switch):checked {
+    background-color: #574294;
+    border-color: #574294;
+}
