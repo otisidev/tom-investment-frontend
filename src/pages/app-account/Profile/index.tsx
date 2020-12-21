@@ -11,34 +11,31 @@ import UpdateInformation from "./UpdateInformation";
 import UpdatePassword from "./ChangePassword";
 import UpdateEmail from "./UpdateEmail";
 import NotFound from "./../../404";
-import {  CheckmarkDone, StatsChart, PersonAdd } from "@styled-icons/ionicons-outline";
+import { CheckmarkDone, StatsChart, PersonAdd } from "@styled-icons/ionicons-outline";
 import { useMutation } from "@apollo/react-hooks";
 import { FIX_INVESTMENT } from "./../../../queries/investment.query";
 import { toast } from "react-toastify";
 import { CleanMessage } from "./../../../context/App";
 import { LoadingIcon } from "../../../components/Button";
 import { FIX_REFERRAL } from "../../../queries/referral.query";
-import NextOfKinPage from './NextOfkin';
+import NextOfKinPage from "./NextOfkin";
 
 const Profile = () => {
     const { t } = useTranslation();
     const user = authService.GetUser();
-  
 
     const [fixInvestmentFunc, { loading }] = useMutation(FIX_INVESTMENT, {
         onError: (er) => toast.error(CleanMessage(er.message)),
         onCompleted: (d) => {
             toast.success(d.FixInvestment);
-        },
+        }
     });
     const [fixReferralFunc, { loading: refLoading }] = useMutation(FIX_REFERRAL, {
         onError: (er) => toast.error(CleanMessage(er.message)),
         onCompleted: (d) => {
             toast.success(d.FixReferral);
-        },
+        }
     });
-
-  
 
     return (
         <>
@@ -54,8 +51,8 @@ const Profile = () => {
                 <div className="col-span-12 lg:col-span-4 xxl:col-span-3 flex lg:block flex-col-reverse">
                     <div className="intro-y box mt-5">
                         <div className="relative flex items-center p-5">
-                            <div className="w-12 h-12 image-fit">
-                                <img alt={user.firstname} className="rounded-full zoom-in" src={user.image || "/dist/images/profile.png"} />
+                            <div className="w-12 h-12 image-fit rounded-full border-2 border-purple-600">
+                                <img alt={user.firstname} className="rounded-full zoom-in" src={user.image || "/dist/images/profile.jpg"} />
                             </div>
                             <div className="ml-4 mr-auto">
                                 <div className="font-medium text-base">
@@ -65,27 +62,52 @@ const Profile = () => {
                             </div>
                         </div>
                         <div className="p-5 border-t border-gray-200" style={{ minHeight: "55vh" }}>
-                            <NavLink activeClassName="text-theme-1" exact className="flex items-center  font-medium hover:bg-gray-200 p-3" to="/app/profile">
+                            <NavLink
+                                activeClassName="text-theme-1"
+                                exact
+                                className="flex items-center  font-medium hover:bg-gray-200 p-3"
+                                to="/app/profile"
+                            >
                                 <Shield className="w-4 h-4 mr-2" />
                                 {t("info")}
                             </NavLink>
-                            <NavLink activeClassName="text-theme-1" className="flex items-center mt-5 hover:bg-gray-200 p-3" to="/app/profile/change-image">
+                            <NavLink
+                                activeClassName="text-theme-1"
+                                className="flex items-center mt-5 hover:bg-gray-200 p-3"
+                                to="/app/profile/change-image"
+                            >
                                 <Image className="w-4 h-4 mr-2" />
                                 {t("change_image")}
                             </NavLink>
-                            <NavLink activeClassName="text-theme-1" className="flex items-center mt-5 hover:bg-gray-200 p-3" to="/app/profile/update">
+                            <NavLink
+                                activeClassName="text-theme-1"
+                                className="flex items-center mt-5 hover:bg-gray-200 p-3"
+                                to="/app/profile/update"
+                            >
                                 <Edit3 className="w-4 h-4 mr-2" />
                                 {t("account_setting")}
                             </NavLink>
-                            <NavLink activeClassName="text-theme-1" className="flex items-center mt-5 hover:bg-gray-200 p-3" to="/app/profile/next-of-kin">
+                            <NavLink
+                                activeClassName="text-theme-1"
+                                className="flex items-center mt-5 hover:bg-gray-200 p-3"
+                                to="/app/profile/next-of-kin"
+                            >
                                 <PersonAdd className="w-4 h-4 mr-2" />
                                 {t("next_heading")}
                             </NavLink>
-                            <NavLink activeClassName="text-theme-1" className="flex items-center mt-5 hover:bg-gray-200 p-3" to="/app/profile/change-password">
+                            <NavLink
+                                activeClassName="text-theme-1"
+                                className="flex items-center mt-5 hover:bg-gray-200 p-3"
+                                to="/app/profile/change-password"
+                            >
                                 <Lock className="w-4 h-4 mr-2" />
                                 {t("change_password")}
                             </NavLink>
-                            <NavLink activeClassName="text-theme-1" className="flex items-center mt-5 hover:bg-gray-200 p-3" to="/app/profile/change-email">
+                            <NavLink
+                                activeClassName="text-theme-1"
+                                className="flex items-center mt-5 hover:bg-gray-200 p-3"
+                                to="/app/profile/change-email"
+                            >
                                 <Settings className="w-4 h-4 mr-2" />
                                 {t("change_email")}
                             </NavLink>
@@ -101,7 +123,7 @@ const Profile = () => {
                                             type="button"
                                             className="button block border bg-theme-14 text-theme-10 rounded font-medium"
                                         >
-                                            <StatsChart className="h-8 w-8 mr-2" /> Fix Investment
+                                            <StatsChart className="h-4 w-4 mr-2" /> Fix Investment
                                         </button>
                                         <button
                                             onClick={async (event) => {
@@ -111,7 +133,7 @@ const Profile = () => {
                                             type="button"
                                             className="button border bg-theme-18 text-theme-9 rounded font-medium ml-auto"
                                         >
-                                            <CheckmarkDone className="h-8 w-8 mr-2" /> Fix Referral
+                                            <CheckmarkDone className="h-4 w-4 mr-2" /> Fix Referral
                                         </button>
                                     </div>
                                 </>

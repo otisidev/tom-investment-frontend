@@ -16,7 +16,7 @@ const NextOfKinPage = () => {
     const { next_of_kin } = authService.GetUser();
 
     const [model, setModel] = useState<any>(next_of_kin);
-    const [dp, setDp] = useState<any>(model?.image || "/dist/images/profile.png");
+    const [dp, setDp] = useState<any>(model?.image || "/dist/images/profile.jpg");
 
     const [uploading, setUploading] = useState(false);
 

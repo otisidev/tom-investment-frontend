@@ -19,7 +19,7 @@ const UserInformation: FC<IProps> = ({ user }) => {
         onCompleted: (d) => {
             setInvest(d.CountInvestment);
             setRef(d.CountReferral);
-        },
+        }
     });
     if (user)
         return (
@@ -32,7 +32,7 @@ const UserInformation: FC<IProps> = ({ user }) => {
                 <div className="p-5">
                     <div className="flex flex-col lg:flex-row border-b border-gray-200 pb-5 -mx-5">
                         <div className="flex flex-1 px-5 items-center justify-center lg:justify-start">
-                            <div className="w-20 h-20 sm:w-24 sm:h-24 flex-none lg:w-32 lg:h-32 image-fit relative">
+                            <div className="w-20 h-20 sm:w-24 sm:h-24 flex-none lg:w-32 lg:h-32 image-fit relative border-2 border-purple-600 rounded-full">
                                 <img alt={user.firstname} className="rounded-full" src={user.image || "/dist/images/profile.png"} />
                             </div>
                             <div className="ml-5">

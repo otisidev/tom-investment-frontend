@@ -18,9 +18,9 @@ const InvestmentApprovalItems = () => {
     const { loading, data, fetchMore } = useQuery(INVESTMENT_APPROVAL, {
         variables: {
             page,
-            limit,
+            limit
         },
-        onError: (er) => toast.error(CleanMessage(er.message)),
+        onError: (er) => toast.error(CleanMessage(er.message))
     });
 
     const [declineFunc, { loading: dLoading }] = useMutation(DECLINE_INVESTMENT, {
@@ -31,8 +31,8 @@ const InvestmentApprovalItems = () => {
                 query: INVESTMENT_APPROVAL,
                 variables: {
                     page,
-                    limit,
-                },
+                    limit
+                }
             });
 
             // update
@@ -50,16 +50,16 @@ const InvestmentApprovalItems = () => {
                 query: INVESTMENT_APPROVAL,
                 variables: {
                     page,
-                    limit,
+                    limit
                 },
                 data: {
-                    GetInvestmentsForApproval: d.GetInvestmentsForApproval,
-                },
+                    GetInvestmentsForApproval: d.GetInvestmentsForApproval
+                }
             });
         },
         onCompleted: (d) => {
             toast.success(d.DeclineInvestment.message);
-        },
+        }
     });
 
     const [acceptFunc, { loading: aLoading }] = useMutation(ACCEPT_INVESTMENT, {
@@ -70,8 +70,8 @@ const InvestmentApprovalItems = () => {
                 query: INVESTMENT_APPROVAL,
                 variables: {
                     page,
-                    limit,
-                },
+                    limit
+                }
             });
             // update
             const docs = d.GetInvestmentsForApproval.docs;
@@ -87,15 +87,15 @@ const InvestmentApprovalItems = () => {
                 query: INVESTMENT_APPROVAL,
                 variables: {
                     page,
-                    limit,
+                    limit
                 },
-                data: { GetInvestmentsForApproval: d.GetInvestmentsForApproval },
+                data: { GetInvestmentsForApproval: d.GetInvestmentsForApproval }
             });
         },
         onCompleted: (d) => {
             document.getElementById("closeApproval")?.click();
             toast.success(d.ApproveInvestment.message);
-        },
+        }
     });
 
     useEffect(() => {
@@ -104,7 +104,7 @@ const InvestmentApprovalItems = () => {
             updateQuery: (prev, { fetchMoreResult }) => {
                 if (!fetchMoreResult) return prev;
                 return { GetInvestmentsForApproval: fetchMoreResult.GetInvestmentsForApproval };
-            },
+            }
         });
     }, [page, limit, fetchMore]);
 
@@ -113,7 +113,9 @@ const InvestmentApprovalItems = () => {
             <LoadingIcon loading={loading || dLoading} />
             <div className="grid grid-cols-12 gap-6 mt-5">
                 <div className="intro-y col-span-12 flex flex-wrap sm:flex-no-wrap items-center mt-2">
-                    {data && data.GetInvestmentsForApproval.docs.length > 0 && <PaginationSummary {...data.GetInvestmentsForApproval} length={data.GetInvestmentsForApproval.docs.length} />}
+                    {data && data.GetInvestmentsForApproval.docs.length > 0 && (
+                        <PaginationSummary {...data.GetInvestmentsForApproval} length={data.GetInvestmentsForApproval.docs.length} />
+                    )}
                 </div>
             </div>
             <div className="mt-4">
@@ -126,7 +128,6 @@ const InvestmentApprovalItems = () => {
                                     <th className="whitespace-no-wrap">Investor</th>
                                     <th className="whitespace-no-wrap text-center">Country</th>
                                     <th className="text-center whitespace-no-wrap">investment made</th>
-                                    <th className="text-left whitespace-no-wrap">Plan</th>
                                     <th className="text-left whitespace-no-wrap">Investment Date</th>
                                     <th className="whitespace-no-wrap text-center">Actions</th>
                                 </tr>
@@ -143,7 +144,11 @@ const InvestmentApprovalItems = () => {
                                         <td className="w-50">
                                             <div className="flex flex-col lg:flex-row items-center py-3">
                                                 <div className="w-24 h-24 lg:w-12 lg:h-12 image-fit lg:mr-1">
-                                                    <img alt={item.user.firstname} className="rounded-full" src={item.user.image || "/dist/images/profile-5.jpg"} />
+                                                    <img
+                                                        alt={item.user.firstname}
+                                                        className="rounded-full"
+                                                        src={item.user.image || "/dist/images/profile-5.jpg"}
+                                                    />
                                                 </div>
                                                 <div className="lg:ml-4 lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">
                                                     <div className="font-medium">
@@ -161,14 +166,21 @@ const InvestmentApprovalItems = () => {
                                         </td>
                                         <td className="text-center">
                                             <div className="font-medium text-theme-9">${toCurrency(item.investment_made)}</div>
+                                            <p>{item.plan.title}</p>
                                         </td>
-                                        <td className="text-left">{item.plan.title}</td>
                                         <td className="text-left">
                                             <span className="font-medium">{CleanDate(item.date, true)}</span>
                                         </td>
                                         <td className="table-report__action w-56">
                                             <div className="flex justify-center items-center text-theme-9">
-                                                <a data-toggle="modal" data-target="#approval-box" id={item.id} onClick={() => setItem(item)} className="flex items-center mr-3" href="javascript:;">
+                                                <a
+                                                    data-toggle="modal"
+                                                    data-target="#approval-box"
+                                                    id={item.id}
+                                                    onClick={() => setItem(item)}
+                                                    className="flex items-center mr-3"
+                                                    href="javascript:;"
+                                                >
                                                     <Checkbox className="w-4 h-4 mr-1" />
                                                     Approve
                                                 </a>
@@ -177,8 +189,8 @@ const InvestmentApprovalItems = () => {
                                                         if (window.confirm("Are sure you want to decline this investment?")) {
                                                             await declineFunc({
                                                                 variables: {
-                                                                    id: item.id,
-                                                                },
+                                                                    id: item.id
+                                                                }
                                                             });
                                                         }
                                                     }}
@@ -200,7 +212,11 @@ const InvestmentApprovalItems = () => {
             </div>
             <div className="mt-5 intro-x">
                 {data && data.GetInvestmentsForApproval.docs.length > 0 && (
-                    <PageNumber onPageClicked={(page: number) => setPage(page)} {...data.GetInvestmentsForApproval} length={data.GetInvestmentsForApproval.docs.length} />
+                    <PageNumber
+                        onPageClicked={(page: number) => setPage(page)}
+                        {...data.GetInvestmentsForApproval}
+                        length={data.GetInvestmentsForApproval.docs.length}
+                    />
                 )}
             </div>
 
@@ -223,8 +239,8 @@ const InvestmentApprovalItems = () => {
                             await acceptFunc({
                                 variables: {
                                     id: item.id,
-                                    nextFund,
-                                },
+                                    nextFund
+                                }
                             });
                         }}
                     >

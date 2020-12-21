@@ -58,18 +58,18 @@ const Verify: FC<iProp> = ({ location }) => {
                     <div className="hidden xl:flex flex-col min-h-screen">
                         <a href="/" className="-intro-x flex items-center pt-5">
                             <img alt="Investment bot" className="w-6" src="../../dist/images/logo.svg" />
-                            <span className="text-white text-lg ml-3">
+                            <span className="text-theme-1 text-lg ml-3">
                                 Investment<span className="font-medium">Bot</span>
                             </span>
                         </a>
                         <div className="my-auto">
                             <img alt="investment bot" className="-intro-x w-1/2 -mt-16" src="../../dist/images/Site-constructor.svg" />
-                            <div className="-intro-x text-white font-medium text-4xl leading-tight mt-10">
+                            <div className="-intro-x text-theme-1 font-medium text-4xl leading-tight mt-10">
                                 {t("login_title")}
                                 <br />
                                 {t("login_title_2")}
                             </div>
-                            <div className="-intro-x mt-5 text-lg text-white">{t("login_title_desc")}</div>
+                            <div className="-intro-x mt-5 text-lg text-theme-1">{t("login_title_desc")}</div>
                         </div>
                     </div>
 

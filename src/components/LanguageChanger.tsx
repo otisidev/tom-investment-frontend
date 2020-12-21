@@ -17,7 +17,7 @@ const LanguageChanger: React.FC<iProp> = ({ showLabel = false }) => {
                     localStorage.setItem("lang", ev.target.value);
                 }}
                 name="lang"
-                className="appearance-none bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                className="appearance-none bg-purple-200 border font-medium border-purple-600 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-purple-100 focus:border-gray-500"
                 id="lang"
             >
                 {lang.map((i) => (

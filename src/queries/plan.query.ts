@@ -4,18 +4,16 @@ export const PLAN_PROP = gql`
     fragment PlanProp on Plan {
         id
         amount
-        can_reinvestment
         percent
         created_at
-        days_to_payout
         title
-        weekly_payout_interval
         max_amount
+        
     }
 `;
 export const GET_PLANS = gql`
-    query GetPlans {
-        GetPlans {
+    query GetPlans($category: ID!) {
+        GetPlans(category: $category) {
             docs {
                 ...PlanProp
             }
@@ -27,13 +25,16 @@ export const GET_PLANS = gql`
 export const CREATE_PLAN = gql`
     mutation NewPlan($model: PlanInput!) {
         NewPlan(model: $model) {
-            message
+            doc {
+                ...PlanProp
+            }
         }
     }
+    ${PLAN_PROP}
 `;
 
 export const UPDATE_PLAN = gql`
-    mutation UpdatePlan($id: ID!, $update: PlanInput!) {
+    mutation UpdatePlan($id: ID!, $update: PlanUpdateInput!) {
         UpdatePlan(id: $id, update: $update) {
             message
         }

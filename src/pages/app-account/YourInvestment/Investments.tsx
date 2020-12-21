@@ -4,12 +4,16 @@ import { useTranslation } from "react-i18next";
 import { Investment } from "../../../model/investment.model";
 import { toCurrency, CleanDate, CleanMessage, CopyToClipboard } from "./../../../context/App";
 import { Wallet, Trash, ArrowForward, GitCommit, CloseCircle } from "@styled-icons/ionicons-outline";
-import { useMutation } from "@apollo/react-hooks";
+import { useLazyQuery, useMutation } from "@apollo/react-hooks";
 import { MAKE_PAYMENT, CLOSE_INVESTMENT, REINVESTMENT, COMPOUND_INVESTMENT } from "../../../queries/investment.query";
 import { toast } from "react-toastify";
 import { LoadingIcon } from "../../../components/Button";
 import { NavLink } from "react-router-dom";
 import app from "../../../data/app.json";
+import { GET_CONTACT_PERSONS } from "../../../queries/contact-person.query";
+import { ContactPersonModel } from "./../../../model/contact-person.model";
+import ContactPersonList from "../AdminCorner/ContactPerson/items";
+import PersonList from "./../AdminCorner/ContactPerson/PersonList";
 
 interface iProp {
     items: Array<Investment>;
@@ -23,6 +27,7 @@ const Investments: FC<iProp> = ({ items }) => {
     const [cWeek, setCWeek] = useState(4);
     const [showAddress, setShowAddress] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [persons, setPersons] = useState<Array<ContactPersonModel>>([]);
 
     const [MakePaymentFunc, { loading: mLoading }] = useMutation(MAKE_PAYMENT, {
         onError: (er) => toast.error(CleanMessage(er.message)),
@@ -30,14 +35,14 @@ const Investments: FC<iProp> = ({ items }) => {
             if (data.PaidForInvestment) {
                 document.location.reload(true);
             }
-        },
+        }
     });
 
     const [closeFunc, { loading: closeLoading }] = useMutation(CLOSE_INVESTMENT, {
         onError: (er) => toast.error(CleanMessage(er.message)),
         onCompleted: () => {
             document.location.reload(true);
-        },
+        }
     });
 
     const [ReinvestFunc, { loading: rLoading }] = useMutation(REINVESTMENT, {
@@ -46,13 +51,20 @@ const Investments: FC<iProp> = ({ items }) => {
                 document.location.reload(true);
             }
         },
-        onError: (er) => toast.error(CleanMessage(er.message)),
+        onError: (er) => toast.error(CleanMessage(er.message))
     });
     const [compoundFunc, { loading: comLoading }] = useMutation(COMPOUND_INVESTMENT, {
         onError: (er) => toast.error(CleanMessage(er.message)),
         onCompleted: () => {
             document.location.reload(true);
-        },
+        }
+    });
+
+    const [getContactPersons, { loading: getting }] = useLazyQuery(GET_CONTACT_PERSONS, {
+        onError: (er) => toast.error(CleanMessage(er.message)),
+        onCompleted: (data) => {
+            setPersons(data.GetContactPersons.docs);
+        }
     });
 
     if (items.length)
@@ -85,46 +97,57 @@ const Investments: FC<iProp> = ({ items }) => {
                                     {t("approval.status")}
                                 </div>
                             )}
-                            <div className="text-xl font-medium text-center mt-10">{item.plan.title}</div>
+                            <div className="text-center font-bold text-gray-600 mt-10">{item.plan.category.title}</div>
+                            <div className="text-xl font-medium text-center">{item.plan.title}</div>
+                            <div className="flex justify-center">
+                                <div className="relative text-5xl font-semibold mt-8 mx-auto">
+                                    {toCurrency(item.investment_made)}{" "}
+                                    <span className="absolute text-2xl top-0 right-0 text-gray-500 -mr-4 mt-1">$</span>
+                                </div>
+                            </div>
                             {item.compounded?.status && (
                                 <div className="text-gray-800 text-center mt-5">
-                                    <strong> ${toCurrency(item.compounded.payout)}</strong> {t("i.amount.text")} <span className="mx-1 text-theme-1">•</span>{" "}
-                                    <strong className="text-theme-1">Compounding</strong>
+                                    <strong> ${toCurrency(item.compounded.payout)}</strong> {t("i.amount.text")}{" "}
+                                    <span className="mx-1 text-theme-1">•</span> <strong className="text-theme-1">Compounding</strong>
                                 </div>
                             )}
                             {!item.compounded?.status && (
                                 <div className="text-gray-700 text-center mt-5">
-                                    ${toCurrency(item.payout_weekly)} {t("weekly.pay")} <span className="mx-1 text-theme-1">•</span> ${toCurrency(item.payout_sum)}
+                                    ${toCurrency(item.payout_weekly)} {t("weekly.pay")} <span className="mx-1 text-theme-1">•</span> $
+                                    {toCurrency(item.payout_sum)}
                                 </div>
                             )}
                             {item.approved && (
                                 <div className="text-gray-800 px-10 text-center mx-auto mt-2">
-                                    <b>{t("next.fund")}</b> <Calendar className="text-theme-1 h-4 mr-1" /> <span>{CleanDate(item.next_fund_date, true, true)}</span>
+                                    <b>{t("next.fund")}</b> <Calendar className="text-theme-1 h-4 mr-1" />{" "}
+                                    <span>{CleanDate(item.next_fund_date, true, true)}</span>
                                 </div>
                             )}
-                            <div className="flex justify-center">
-                                <div className="relative text-5xl font-semibold mt-8 mx-auto">
-                                    {toCurrency(item.investment_made)} <span className="absolute text-2xl top-0 right-0 text-gray-500 -mr-4 mt-1">$</span>
-                                </div>
-                            </div>
+
                             {item.approved && item.paid && (
-                                <div className="p-5 flex justify-center">
+                                <div className="p-2 mt-2 flex justify-center">
                                     {!item.compounded?.status && (
                                         <a
-                                            onClick={() => setActive(item)}
+                                            onClick={async () =>
+                                                await getContactPersons({ variables: { category: item.plan.category.id } })
+                                            }
                                             data-toggle="modal"
                                             href="javascript:;"
                                             data-target="#reinvestment-box"
-                                            title="Reinvest"
-                                            className="button w-24 rounded-full mr-1 mb-2 bg-theme-14 text-theme-10"
+                                            title="Contact persons"
+                                            className="button w-34 rounded-full mr-1 mb-2 bg-theme-14 text-theme-10"
                                         >
-                                            {t("reinvestment")}
+                                            {t("investment.contact-person")}
                                         </a>
                                     )}
-                                    <NavLink to={{ pathname: `/app/investment-history/${item.id}` }} title="Investment history" className="button w-24 rounded-full mr-1 mb-2 border text-gray-700">
+                                    <NavLink
+                                        to={{ pathname: `/app/investment-history/${item.id}` }}
+                                        title="Investment history"
+                                        className="button w-24 rounded-full mr-1 mb-2 border border-purple-400 text-gray-700"
+                                    >
                                         {t("reinvestment.history")}
                                     </NavLink>
-                                    {!item.compounded?.status && (
+                                    {/* {!item.compounded?.status && (
                                         <a
                                             onClick={() => setActive(item)}
                                             data-toggle="modal"
@@ -135,7 +158,7 @@ const Investments: FC<iProp> = ({ items }) => {
                                         >
                                             {t("i.compound.text")}
                                         </a>
-                                    )}
+                                    )} */}
                                 </div>
                             )}
                             {!item.paid && !item.approved && (
@@ -251,7 +274,7 @@ const Investments: FC<iProp> = ({ items }) => {
                                     onClick={async () => {
                                         if (wallet) {
                                             await MakePaymentFunc({
-                                                variables: { id: active?.id, wallet },
+                                                variables: { id: active?.id, wallet }
                                             });
                                         } else {
                                             toast.info("Enter the wallet address used for the transaction.");
@@ -280,7 +303,11 @@ const Investments: FC<iProp> = ({ items }) => {
                             <button type="button" data-dismiss="modal" className="button w-24 border text-gray-700 mr-1">
                                 {t("btn.cancel")}
                             </button>
-                            <button type="button" onClick={async () => await closeFunc({ variables: { id: active?.id } })} className="button w-24 bg-theme-6 text-white">
+                            <button
+                                type="button"
+                                onClick={async () => await closeFunc({ variables: { id: active?.id } })}
+                                className="button w-24 bg-theme-6 text-white"
+                            >
                                 {t("pay.done")}
                             </button>
                         </div>
@@ -290,81 +317,15 @@ const Investments: FC<iProp> = ({ items }) => {
                 <div className="modal" id="reinvestment-box">
                     <div className="modal__content">
                         <div className="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200">
-                            <h2 className="font-medium text-base mr-auto">{t("reinvestment.title")}</h2>
+                            <h2 className="font-medium text-base mr-auto">{t("investment.contact-person")}</h2>
                         </div>
-                        <form
-                            onSubmit={async (ev) => {
-                                ev.preventDefault();
-                                if (window.confirm(t("reinvestment.confirm"))) {
-                                    if (active)
-                                        await ReinvestFunc({
-                                            variables: {
-                                                id: active.id,
-                                                payout: week * active.payout_sum,
-                                                weeks: week,
-                                            },
-                                        });
-                                }
-                            }}
-                        >
-                            <div className="p-5 grid grid-cols-12 gap-4 row-gap-3">
-                                <div className="col-span-12 sm:col-span-6">
-                                    <b>{t("investment.made")}</b>
-                                    <h4>${toCurrency(active?.investment_made || 0)}</h4>
-                                </div>
-                                <div className="col-span-12 sm:col-span-6">
-                                    <b>{t("plan.title")}</b>
-                                    <h4>{active?.plan.title}</h4>
-                                </div>
-                            </div>
-                            <div className="p-5 grid grid-cols-12 gap-4 row-gap-3">
-                                {week > 0 && (
-                                    <>
-                                        <div className="col-span-12 sm:col-span-6">
-                                            <b>{t("reinvestment.expected")}</b>
-                                            <h4>{toCurrency(week * active?.payout_sum)}</h4>
-                                        </div>
-                                        <div className="col-span-12 sm:col-span-6">
-                                            <b>{t("reinvestment.month")}</b>
-                                            <h4>
-                                                {Intl.DateTimeFormat("en-US", {
-                                                    month: "short",
-                                                    year: "numeric",
-                                                    day: "numeric",
-                                                    weekday: "short",
-                                                }).format(new Date(active?.next_fund_date || new Date()).setHours(week * 7 * 24))}
-                                            </h4>
-                                        </div>
-                                    </>
-                                )}
-                                <hr className="bg-theme-1" />
-                                <div className="col-span-12 sm:col-span-12">
-                                    <label>{t("wallet.label")}</label>
-                                    <input
-                                        onChange={({ currentTarget: { value, validity } }) => validity.valid && setWeek(parseInt(value))}
-                                        type="number"
-                                        min={active?.plan.weekly_payout_interval}
-                                        step={active?.plan.weekly_payout_interval}
-                                        name={active?.id}
-                                        className="input w-full border mt-2 flex-1"
-                                        required
-                                        defaultValue={week}
-                                    />
-                                </div>
-                                <div className="col-span-12 sm:col-span-12">
-                                    <LoadingIcon loading={rLoading} />
-                                </div>
-                            </div>
 
-                            <div className="px-5 py-3 text-right border-t border-gray-200">
-                                <button type="button" data-dismiss="modal" className="button w-20 border text-gray-700 mr-1">
-                                    Cancel
-                                </button>
-                                <button type="submit" className="button w-35 bg-theme-1 text-white">
-                                    {t("submit.text")} <ArrowForward className="w-4 h-4 ml-2" />
-                                </button>
-                            </div>
-                        </form>
+                        <div className="col-span-12 sm:col-span-12">
+                            <LoadingIcon loading={getting} />
+                        </div>
+                        <div className="p-5">
+                            <PersonList items={persons} />
+                        </div>
                     </div>
                 </div>
                 {/* COMPOUNDING */}
@@ -378,7 +339,8 @@ const Investments: FC<iProp> = ({ items }) => {
                             onSubmit={async (ev) => {
                                 ev.preventDefault();
                                 if (window.confirm(t("reinvestment.confirm"))) {
-                                    const payout = cWeek * active?.payout_sum + (cWeek * active?.payout_sum + active.investment_made) * 0.03;
+                                    const payout =
+                                        cWeek * active?.payout_sum + (cWeek * active?.payout_sum + active.investment_made) * 0.03;
                                     const date = new Date(active?.next_fund_date || new Date()).setHours(cWeek * 7 * 24);
                                     await compoundFunc({ variables: { id: active.id, payout: payout + "", nextDate: new Date(date) } });
                                 }
@@ -404,7 +366,7 @@ const Investments: FC<iProp> = ({ items }) => {
                                                     month: "short",
                                                     year: "numeric",
                                                     day: "numeric",
-                                                    weekday: "short",
+                                                    weekday: "short"
                                                 }).format(new Date(active?.next_fund_date || new Date()).setHours(cWeek * 7 * 24))}
                                             </h4>
                                         </div>

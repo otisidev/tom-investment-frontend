@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { BarChart2, Home, CreditCard, Users, User, Settings, CheckCircle, ShoppingBag, Activity } from "@styled-icons/feather";
+import { BarChart2, Home, CreditCard, Users, User, Settings, CheckCircle, ShoppingBag, Activity, Paperclip } from "@styled-icons/feather";
 import $ from "jquery";
 import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -36,7 +36,7 @@ const MobileNavigation = () => {
                     <img alt="investment bot" className="w-6" src="/dist/images/logo.svg" />
                 </a>
                 <a href="javascript:;" id="mobile-menu-toggler">
-                    <BarChart2 className="w-8 h-8 text-white transform -rotate-90" size={18} />
+                    <BarChart2 className="w-8 h-8 text-theme-1 transform -rotate-90" size={18} />
                 </a>
             </div>
             <ul className="border-t border-theme-24 py-5 hidden">
@@ -101,6 +101,14 @@ const MobileNavigation = () => {
                         </li>
                         <li className="menu__devider my-6"></li>
                         <li>
+                            <NavLink to="/app/category" className="menu">
+                                <div className="menu__icon">
+                                    <Settings size={18} />
+                                </div>
+                                <div className="menu__title">Category Management </div>
+                            </NavLink>
+                        </li>
+                        <li>
                             <NavLink to="/app/plan" className="menu">
                                 <div className="menu__icon">
                                     <Activity size={18} />
@@ -123,6 +131,14 @@ const MobileNavigation = () => {
                                     <Users size={18} />
                                 </div>
                                 <div className="menu__title">User Management</div>
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/app/contact=person" className="menu">
+                                <div className="menu__icon">
+                                    <Paperclip size={18} />
+                                </div>
+                                <div className="menu__title">Contact Person</div>
                             </NavLink>
                         </li>
                     </>

@@ -13,7 +13,7 @@ import "react-toastify/dist/ReactToastify.min.css";
 import SecuredRoute from "./components/SecuredRoute";
 import AppAccount from "./pages/app-account/index";
 import Verify from "./pages/Verify";
-import NewPassword from './pages/NewPassword';
+import NewPassword from "./pages/NewPassword";
 
 function App() {
     document.body.className = "app";

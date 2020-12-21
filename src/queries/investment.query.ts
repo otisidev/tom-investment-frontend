@@ -18,6 +18,10 @@ const INVESTMENT_PROP = gql`
         payout_weekly
         plan {
             ...PlanProp
+            category {
+                id
+                title
+            }
         }
         walletAddress
         compounded {

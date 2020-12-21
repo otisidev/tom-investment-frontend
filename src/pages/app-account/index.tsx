@@ -19,6 +19,9 @@ import Payout from "./AdminCorner/Payout/index";
 import InvestmentApproval from "./AdminCorner/InvestmentApproval/index";
 import ReferralBonus from "./AdminCorner/ref-bonus";
 import ActiveInvestment from "./AdminCorner/ActiveInvestment";
+import AppMenu from "../../components/Menu";
+import CategoryApp from "./AdminCorner/Category";
+import ContactPerson from "./AdminCorner/ContactPerson";
 
 const AppAccount = () => {
     // Update css class name
@@ -33,23 +36,29 @@ const AppAccount = () => {
                 </title>
             </Helmet>
             <MobileNavigation />
-            <TopNavigation />
-            <div className="content">
-                <Switch>
-                    <Route exact path="/app" component={Dashboard} />
-                    <Route exact path="/app/user-investment" component={YourInvestment} />
-                    <Route exact path="/app/referral" component={YourReferral} />
-                    <Route path="/app/profile" component={Profile} />
-                    <Route path="/app/investment-history/:id" component={InvestmentHistory} />
-                    <AdminRoute path="/app/plan" component={Plan} />
-                    <AdminRoute path="/app/users" component={UserManagement} />
-                    <Route path="/app/user/:id" component={UserProfile} />
-                    <AdminRoute path="/app/load-investment" component={LoadInvestment} />
-                    <AdminRoute path="/app/payout" component={Payout} />
-                    <AdminRoute path="/app/investment-approval" component={InvestmentApproval} />
-                    <AdminRoute path="/app/ref-bonus" component={ReferralBonus} />
-                    <AdminRoute path="/app/active-investment" component={ActiveInvestment} />
-                </Switch>
+
+            <div className="flex">
+                <AppMenu />
+                <div className="content">
+                    <TopNavigation />
+                    <Switch>
+                        <Route exact path="/app" component={Dashboard} />
+                        <Route exact path="/app/user-investment" component={YourInvestment} />
+                        <Route exact path="/app/referral" component={YourReferral} />
+                        <Route path="/app/profile" component={Profile} />
+                        <Route path="/app/investment-history/:id" component={InvestmentHistory} />
+                        <AdminRoute path="/app/plan" component={Plan} />
+                        <AdminRoute path="/app/users" component={UserManagement} />
+                        <Route path="/app/user/:id" component={UserProfile} />
+                        <AdminRoute path="/app/load-investment" component={LoadInvestment} />
+                        <AdminRoute path="/app/payout" component={Payout} />
+                        <AdminRoute path="/app/investment-approval" component={InvestmentApproval} />
+                        <AdminRoute path="/app/ref-bonus" component={ReferralBonus} />
+                        <AdminRoute path="/app/active-investment" component={ActiveInvestment} />
+                        <AdminRoute path="/app/category" component={CategoryApp} />
+                        <AdminRoute path="/app/contact-person" component={ContactPerson} />
+                    </Switch>
+                </div>
             </div>
         </>
     );

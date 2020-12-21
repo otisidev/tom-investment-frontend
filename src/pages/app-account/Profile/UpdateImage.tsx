@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { authService } from "./../../../services/Authentication.Service";
-import { X, Image } from "@styled-icons/feather";
+import { Image } from "@styled-icons/feather";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import { CleanMessage } from "./../../../context/App";
@@ -27,7 +27,7 @@ const UpdateImage = () => {
                 setDp(data.UpdateProfile.doc.image);
                 // document.location.href = "/app/profile/change-image";
             }
-        },
+        }
     });
     return (
         <div className="intro-y box lg:mt-5" style={{ minHeight: "65vh" }}>
@@ -41,7 +41,7 @@ const UpdateImage = () => {
                     <div className="col-span-12 xl:col-span-12">
                         <div className="border border-gray-200 rounded-md p-5">
                             <div className="w-40 h-40 relative image-fit cursor-pointer zoom-in mx-auto">
-                                <img className="rounded-md" alt={firstname} src={dp || "dist/images/profile.png"} />
+                                <img className="rounded-md" alt={firstname} src={dp || "/dist/images/profile.jpg"} />
                             </div>
                             <div className="w-40 mx-auto cursor-pointer relative mt-5">
                                 <button disabled={loading} type="button" className="button w-full bg-theme-1 text-white">

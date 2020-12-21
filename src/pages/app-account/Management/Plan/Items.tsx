@@ -19,7 +19,7 @@ const PlanItems: FC<iProps> = ({ items }) => {
         onError: (er) => toast.error(CleanMessage(er.message)),
         onCompleted: () => {
             window.document.location.reload(true);
-        },
+        }
     });
 
     // delete plan function
@@ -27,7 +27,7 @@ const PlanItems: FC<iProps> = ({ items }) => {
         onError: (er) => toast.error(CleanMessage(er.message)),
         onCompleted: () => {
             window.document.location.reload(true);
-        },
+        }
     });
 
     if (items.length)
@@ -41,13 +41,13 @@ const PlanItems: FC<iProps> = ({ items }) => {
                                 <th className="whitespace-no-wrap">Title</th>
                                 <th className="text-center whitespace-no-wrap">Amount</th>
                                 <th className="text-center whitespace-no-wrap">Percent</th>
-                                <th className="text-center whitespace-no-wrap">Can Reinvest</th>
+                                {/* <th className="text-center whitespace-no-wrap">Can Reinvest</th> */}
                                 <th className="text-center whitespace-no-wrap">actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             {items.map((item, idx) => (
-                                <tr className="intro-x">
+                                <tr key={idx} className="intro-x">
                                     <td className="text-center">
                                         <strong>{idx + 1}</strong>
                                     </td>
@@ -56,7 +56,13 @@ const PlanItems: FC<iProps> = ({ items }) => {
                                         ${toCurrency(item.amount)} - ${toCurrency(item.max_amount)}
                                     </td>
                                     <td className="text-center font-bold">{item.percent}%</td>
-                                    <td className="text-center">{item.can_reinvestment ? <CheckCircle className="h-8 text-theme-9" /> : <CloseCircle className="h-8 text-theme-6" />}</td>
+                                    {/* <td className="text-center">
+                                        {item.can_reinvestment ? (
+                                            <CheckCircle className="h-8 text-theme-9" />
+                                        ) : (
+                                            <CloseCircle className="h-8 text-theme-6" />
+                                        )}
+                                    </td> */}
                                     <td className="table-report__action w-56">
                                         <div className="flex justify-center items-center">
                                             <a
@@ -92,7 +98,7 @@ const PlanItems: FC<iProps> = ({ items }) => {
                         <form
                             onSubmit={async (ev) => {
                                 ev.preventDefault();
-                                if (!active.amount || !active.percent || !active.days_to_payout || !active.weekly_payout_interval) {
+                                if (!active.amount || !active.percent) {
                                     toast.info("All fields are required & should not be equal or less than 0");
                                 } else {
                                     await updateFunc({
@@ -101,13 +107,11 @@ const PlanItems: FC<iProps> = ({ items }) => {
                                             update: {
                                                 amount: active.amount + "",
                                                 percent: active.percent,
-                                                daysToPayout: active.days_to_payout,
                                                 title: active.title,
-                                                weeklyPayoutInterval: active.weekly_payout_interval,
                                                 canReinvestment: active.can_reinvestment,
-                                                maxAmount: active.max_amount + "",
-                                            },
-                                        },
+                                                maxAmount: active.max_amount + ""
+                                            }
+                                        }
                                     });
                                 }
                             }}
@@ -117,7 +121,9 @@ const PlanItems: FC<iProps> = ({ items }) => {
                                     <div className="col-span-12 sm:col-span-12">
                                         <label htmlFor="title">Title</label>
                                         <input
-                                            onChange={({ currentTarget: { value, validity } }) => validity.valid && setActive({ ...active, title: value })}
+                                            onChange={({ currentTarget: { value, validity } }) =>
+                                                validity.valid && setActive({ ...active, title: value })
+                                            }
                                             type="text"
                                             name="title"
                                             className="input w-full border mt-2 flex-1"
@@ -128,7 +134,9 @@ const PlanItems: FC<iProps> = ({ items }) => {
                                     <div className="col-span-6 sm:col-span-6 mt-3">
                                         <label htmlFor="amount">Minimum Amount</label>
                                         <input
-                                            onChange={({ currentTarget: { value, validity } }) => validity.valid && setActive({ ...active, amount: parseInt(value) })}
+                                            onChange={({ currentTarget: { value, validity } }) =>
+                                                validity.valid && setActive({ ...active, amount: parseInt(value) })
+                                            }
                                             type="number"
                                             name="amount"
                                             className="input w-full border mt-2 flex-1"
@@ -140,7 +148,9 @@ const PlanItems: FC<iProps> = ({ items }) => {
                                     <div className="col-span-6 sm:col-span-6 mt-3">
                                         <label htmlFor="amount">Maximum Amount</label>
                                         <input
-                                            onChange={({ currentTarget: { value, validity } }) => validity.valid && setActive({ ...active, max_amount: parseInt(value) })}
+                                            onChange={({ currentTarget: { value, validity } }) =>
+                                                validity.valid && setActive({ ...active, max_amount: parseInt(value) })
+                                            }
                                             type="number"
                                             name="amount"
                                             className="input w-full border mt-2 flex-1"
@@ -152,7 +162,9 @@ const PlanItems: FC<iProps> = ({ items }) => {
                                     <div className="col-span-6 sm:col-span-6 mt-3">
                                         <label htmlFor="percent">Percentage %</label>
                                         <input
-                                            onChange={({ currentTarget: { value, validity } }) => validity.valid && setActive({ ...active, percent: parseInt(value) })}
+                                            onChange={({ currentTarget: { value, validity } }) =>
+                                                validity.valid && setActive({ ...active, percent: parseInt(value) })
+                                            }
                                             type="number"
                                             name="percent"
                                             className="input w-full border mt-2 flex-1"
@@ -162,31 +174,8 @@ const PlanItems: FC<iProps> = ({ items }) => {
                                         />
                                     </div>
                                 </div>
-                                <div className="col-span-12 sm:col-span-12 mt-3">
-                                    <label>Days to Payout</label>
-                                    <input
-                                        id="daysToPayout"
-                                        name="daysToPayout"
-                                        required
-                                        defaultValue={active?.days_to_payout}
-                                        onChange={({ currentTarget: { value } }) => setActive({ ...active, days_to_payout: parseInt(value) })}
-                                        className="input w-full border mt-2"
-                                        type="number"
-                                    />
-                                </div>
-                                <div className="col-span-12 sm:col-span-12 mt-3">
-                                    <label>Weekly Payout Interval</label>
-                                    <input
-                                        id="weekly_payout_interval"
-                                        name="weekly_payout_interval"
-                                        required
-                                        defaultValue={active?.weekly_payout_interval}
-                                        onChange={({ currentTarget: { value } }) => setActive({ ...active, weekly_payout_interval: parseInt(value) })}
-                                        className="input w-full border mt-2"
-                                        type="number"
-                                    />
-                                </div>
-                                <div className="col-span-12 sm:col-span-12 mt-3">
+
+                                {/* <div className="col-span-12 sm:col-span-12 mt-3">
                                     <div className="mr-3">Can Reinvest?</div>
                                     <input
                                         defaultChecked={active?.can_reinvestment}
@@ -194,7 +183,7 @@ const PlanItems: FC<iProps> = ({ items }) => {
                                         type="checkbox"
                                         className="input input--switch border"
                                     />
-                                </div>
+                                </div> */}
                                 <div className="col-span-12 sm:col-span-12 mt-3">
                                     <LoadingIcon loading={uploading} />
                                 </div>
@@ -225,7 +214,11 @@ const PlanItems: FC<iProps> = ({ items }) => {
                             <button type="button" data-dismiss="modal" className="button w-24 border text-gray-700 mr-1">
                                 Cancel
                             </button>
-                            <button type="button" onClick={async () => await deleteFunc({ variables: { id: active?.id } })} className="button w-24 bg-theme-6 text-white">
+                            <button
+                                type="button"
+                                onClick={async () => await deleteFunc({ variables: { id: active?.id } })}
+                                className="button w-24 bg-theme-6 text-white"
+                            >
                                 Proceed
                             </button>
                         </div>
@@ -236,7 +229,7 @@ const PlanItems: FC<iProps> = ({ items }) => {
     return (
         <div className="flex flex-col items-center py-16" style={{ minHeight: "60vh", alignItems: "center" }}>
             <InformationCircle className="w-16 h-16 text-theme-1 mx-auto mt-5" />
-            <p className="text-gray-600 mx-auto mt-5">No Plan is added yet!</p>
+            <p className="text-gray-600 text-2xl mx-auto mt-5">No Plan is added yet!</p>
         </div>
     );
 };

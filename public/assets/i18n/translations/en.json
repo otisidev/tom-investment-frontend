@@ -47,7 +47,7 @@
     "dob.label": "Date of Birth",
     "investment.made": "Investment Made",
     "next.fund": "Next Payout Date",
-    "weekly.pay": "Weekly Earnings",
+    "weekly.pay": "On each payout",
     "payment.not-done": "You have not paid for this investment yet!",
     "no.investment": "No investment yet! Click on the button above to add your first investment.",
     "welcome.intro": "Harry's Private Investment BOT",
@@ -91,7 +91,7 @@
     "plan.reinvest": "Can Reinvest",
     "plan.notreinvest": "Can't Reinvest",
     "plan.percent": "Percentage",
-    "home.referral": "Referral with approved investment",
+    "home.referral": "Valid Approved investment",
     "user.account.caption": "User Account",
     "user.account.amount": "Amount",
     "user.account.paid": "Payment Status",
@@ -217,5 +217,10 @@
     "relationship.label": "Relationship to next of kin",
     "2fa": "Two factor authentication",
     "2fa-off": "Disable two factor authentication",
-    "2fa-on": "Enable two factor authentication"
+    "2fa-on": "Enable two factor authentication",
+
+    "investment.new.category": "Select Category",
+    "investment.contact-person": "Contact Person",
+    "payout-info": "How often do you want to receive your payout (weeks)?",
+    "investment.new.payout": "Enter Payout interval"
 }

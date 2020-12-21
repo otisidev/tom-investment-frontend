@@ -18,7 +18,7 @@ const YourInvestment = () => {
     const [limit] = useState(25);
     const [newItem, setNewItem] = useState(false);
 
-    const { loading, data, fetchMore } = useQuery(GET_YOUR_INVESTMENT, {
+    const { loading, data } = useQuery(GET_YOUR_INVESTMENT, {
         onError: (er) => toast.error(CleanMessage(er.message)),
         variables: { page, limit },
     });
@@ -34,7 +34,7 @@ const YourInvestment = () => {
                 <h2 className="text-lg font-medium mr-auto">{t("investment")}</h2>
             </div>
             <div className="flex justify-end">
-                <button onClick={() => setNewItem(!newItem)} className="button mr-2 mb-2 flex items-center border justify-center bg-theme-14 text-theme-10">
+                <button onClick={() => setNewItem(!newItem)} className="button mr-2 mb-2 flex items-center border justify-center shadow-lg bg-purple-200 text-theme-1">
                     {t("investment.new")}
                     <Plus className="w-4 h-4 ml-2" />
                 </button>

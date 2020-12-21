@@ -24,7 +24,7 @@ const UserProfile: FC<iProp> = ({ match, history }) => {
     const [user, setUser] = useState<User>();
     const [stats, setStats] = useState({
         investment: 0,
-        referral: 0,
+        referral: 0
     });
     const { t } = useTranslation();
 
@@ -34,7 +34,7 @@ const UserProfile: FC<iProp> = ({ match, history }) => {
             setUser(d.GetUser.doc);
             setStats({ ...stats, investment: d.CountInvestment, referral: d.CountReferral });
         },
-        variables: { id },
+        variables: { id }
     });
 
     //   Remove user
@@ -45,7 +45,7 @@ const UserProfile: FC<iProp> = ({ match, history }) => {
             setTimeout(() => {
                 document.location.href = "/app/users";
             }, 500);
-        },
+        }
     });
 
     const { admin } = authService.GetUser();
@@ -100,7 +100,7 @@ const UserProfile: FC<iProp> = ({ match, history }) => {
                         </div>
                     </div>
                     <div className="grid grid-cols-12 gap-6 mt-5">
-                        <div className="intro-y box col-span-12 lg:col-span-6">
+                        <div className="intro-y box col-span-12 lg:col-span-4">
                             <div className="p-5">
                                 <div className="relative flex items-center">
                                     <div className="ml-4 mr-auto">
@@ -141,7 +141,11 @@ const UserProfile: FC<iProp> = ({ match, history }) => {
                                     {user.referred.map((u, i) => (
                                         <div key={i} className="flex flex-col lg:flex-row items-center p-3">
                                             <div className="w-24 h-24 lg:w-12 lg:h-12 image-fit lg:mr-1">
-                                                <img alt={u.firstname} className="rounded-full" src={u.image || "/dist/images/profile-5.jpg"} />
+                                                <img
+                                                    alt={u.firstname}
+                                                    className="rounded-full"
+                                                    src={u.image || "/dist/images/profile-5.jpg"}
+                                                />
                                             </div>
                                             <div className="lg:ml-2 lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">
                                                 <NavLink to={{ pathname: `/app/user/${u.id}` }} className="font-medium">
@@ -150,7 +154,10 @@ const UserProfile: FC<iProp> = ({ match, history }) => {
                                                 <div className="text-gray-600 text-xs">{u.email}</div>
                                             </div>
                                             <div className="flex mt-4 lg:mt-0">
-                                                <NavLink to={{ pathname: `/app/user/${u.id}` }} className="button button--sm text-theme-1 border border-theme-1">
+                                                <NavLink
+                                                    to={{ pathname: `/app/user/${u.id}` }}
+                                                    className="button button--sm text-theme-1 border border-theme-1"
+                                                >
                                                     Profile
                                                 </NavLink>
                                             </div>
@@ -165,9 +172,14 @@ const UserProfile: FC<iProp> = ({ match, history }) => {
                             </div>
                         </div>
                         {admin && (
-                            <div className="intro-y col-span-12 lg:col-span-2">
+                            <div className="intro-y col-span-12 lg:col-span-4">
                                 <div className="p-5">
-                                    <a href="javascript:;" data-toggle="modal" data-target="#delete-box" className="button w-full mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white">
+                                    <a
+                                        href="javascript:;"
+                                        data-toggle="modal"
+                                        data-target="#delete-box"
+                                        className="button w-full mr-2 mb-2 flex items-center justify-center bg-theme-6 text-white"
+                                    >
                                         <Trash className="w-4 h-4 mr-2" /> Delete Account
                                     </a>
                                     <NavLink
@@ -177,7 +189,10 @@ const UserProfile: FC<iProp> = ({ match, history }) => {
                                     >
                                         <Copy className="w-4 h-4 mr-2" /> Load Investment
                                     </NavLink>
-                                    <button onClick={() => history.goBack()} className="button w-full mr-2 mb-2 flex items-center justify-center border-theme-1 text-theme-1 mt-5">
+                                    <button
+                                        onClick={() => history.goBack()}
+                                        className="button w-full mr-2 mb-2 flex items-center justify-center border-theme-1 text-theme-1 mt-5"
+                                    >
                                         <ArrowBack className="w-4 h-4 mr-2" /> Go Back
                                     </button>
                                 </div>
@@ -201,8 +216,8 @@ const UserProfile: FC<iProp> = ({ match, history }) => {
                                     onClick={async () => {
                                         await deleteFunc({
                                             variables: {
-                                                id,
-                                            },
+                                                id
+                                            }
                                         });
                                     }}
                                     className="button w-24 bg-theme-6 text-white"
