@@ -3,7 +3,6 @@ import { Home, CreditCard, Users, User, Settings, Activity, CheckCircle, Shoppin
 import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { authService } from "./../services/Authentication.Service";
-import { Box } from "@styled-icons/feather/Box";
 
 const AppMenu = () => {
     const { t } = useTranslation();
@@ -11,9 +10,9 @@ const AppMenu = () => {
     return (
         <nav className="side-nav">
             <a href="/" className="intro-x flex items-center pl-5 pt-4">
-                <img alt="Investment Bot" className="w-6" src="/dist/images/logo.svg" />
+                <img alt="Patrick Investment" className="w-6" src="/dist/images/icon.svg" />
                 <span className="text-theme-1 text-lg ml-3">
-                    Patrick<span className="font-bold">Service</span>
+                    Patrick<span className="font-bold">Investment</span>
                 </span>
             </a>
             <div className="side-nav__devider my-6"></div>

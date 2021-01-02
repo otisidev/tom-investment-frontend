@@ -1,4 +1,4 @@
-New Urama's investment bot frontend
+### Patrick Investment service frontend application
 
 ## Available Scripts
 

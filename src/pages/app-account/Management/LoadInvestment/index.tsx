@@ -24,7 +24,7 @@ const LoadInvestment = () => {
         onCompleted: (d) => {
             setUser(d.GetUserByEmail.doc);
             setSearch(false);
-        },
+        }
     });
 
     const [loadFunc, { loading: iLoading }] = useMutation(LOAD_INVESTMENT, {
@@ -36,7 +36,7 @@ const LoadInvestment = () => {
                     localStorage.removeItem("load");
                 }, 500);
             }
-        },
+        }
     });
 
     useEffect(() => {
@@ -99,8 +99,8 @@ const LoadInvestment = () => {
                                         const model = { ...item, user: user.id };
                                         await loadFunc({
                                             variables: {
-                                                model,
-                                            },
+                                                model
+                                            }
                                         });
                                     }}
                                 />

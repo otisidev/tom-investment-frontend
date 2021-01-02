@@ -63,7 +63,7 @@ const Plan = () => {
                             Select Category
                         </option>
                         {categories.map((i) => (
-                            <option title={i.desc} key={i.id} value={i.id}>
+                            <option className="p-2" title={i.desc} key={i.id} value={i.id}>
                                 {i.title}
                             </option>
                         ))}

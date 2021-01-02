@@ -63,9 +63,9 @@ const Login: FC<iProp> = ({ history, location }) => {
                 <div className="block xl:grid grid-cols-2 gap-4">
                     <div className="hidden xl:flex flex-col min-h-screen">
                         <a href="/" className="-intro-x flex items-center pt-5">
-                            <img alt="Investment bot" className="w-6" src="dist/images/logo.svg" />
+                            <img alt="Investment bot" className="w-6" src="dist/images/icon.svg" />
                             <span className="text-theme-1 text-lg ml-3">
-                                Investment<span className="font-medium">Bot</span>
+                                Patrick<span className="font-medium">Investment</span>
                             </span>
                         </a>
                         <div className="my-auto">
@@ -93,9 +93,9 @@ const Login: FC<iProp> = ({ history, location }) => {
                                             option: {
                                                 attempt,
                                                 userAgent: navigator.userAgent,
-                                                token,
-                                            },
-                                        },
+                                                token
+                                            }
+                                        }
                                     });
                                 }}
                             >
@@ -137,7 +137,12 @@ const Login: FC<iProp> = ({ history, location }) => {
                                     <NavLink to="/forgot-password">{t("forget.password")}</NavLink>
                                 </div>
                                 <div className="intro-x mt-5 xl:mt-8 text-center xl:text-left">
-                                    <PrimaryButton type={ButtonType.submit} loading={loading} disabled={loading} className="button button--lg w-full xl:w-32 text-white bg-theme-1 xl:mr-3">
+                                    <PrimaryButton
+                                        type={ButtonType.submit}
+                                        loading={loading}
+                                        disabled={loading}
+                                        className="button button--lg w-full xl:w-32 text-white bg-theme-1 xl:mr-3"
+                                    >
                                         {t("login")} <ArrowRight size={18} />
                                     </PrimaryButton>
                                     <button

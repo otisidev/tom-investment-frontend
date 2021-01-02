@@ -52,9 +52,9 @@ const CreateAccount: FC<iProp> = ({ history, location }) => {
                 <div className="block xl:grid grid-cols-2 gap-4">
                     <div className="hidden xl:flex flex-col min-h-screen">
                         <a href="/" className="-intro-x flex items-center pt-5">
-                            <img alt="Investment bot" className="w-6" src="dist/images/logo.svg" />
+                            <img alt="Investment bot" className="w-6" src="dist/images/icon.svg" />
                             <span className="text-theme-1 text-lg ml-3">
-                                Investment<span className="font-medium">Bot</span>
+                                Patrick<span className="font-medium">Investment</span>
                             </span>
                         </a>
                         <div className="my-auto">
@@ -80,11 +80,11 @@ const CreateAccount: FC<iProp> = ({ history, location }) => {
                                     } else {
                                         const option = {
                                             device: navigator.vendor,
-                                            userAgent: navigator.userAgent,
+                                            userAgent: navigator.userAgent
                                         };
                                         const { re_password, referralCode, ...rest } = user;
                                         await createFunc({
-                                            variables: { option, model: rest, referrer: referralCode },
+                                            variables: { option, model: rest, referrer: referralCode }
                                         });
                                     }
                                 }}
@@ -100,7 +100,7 @@ const CreateAccount: FC<iProp> = ({ history, location }) => {
                                                 onChange={({ currentTarget }) =>
                                                     setUser({
                                                         ...user,
-                                                        firstname: currentTarget.value,
+                                                        firstname: currentTarget.value
                                                     })
                                                 }
                                                 placeholder={t("name.first.label")}
@@ -109,7 +109,7 @@ const CreateAccount: FC<iProp> = ({ history, location }) => {
                                                 onChange={({ target }) =>
                                                     setUser({
                                                         ...user,
-                                                        lastname: target.value,
+                                                        lastname: target.value
                                                     })
                                                 }
                                                 defaultValue={user?.lastname}
@@ -124,7 +124,7 @@ const CreateAccount: FC<iProp> = ({ history, location }) => {
                                                 onChange={({ currentTarget }) =>
                                                     setUser({
                                                         ...user,
-                                                        email: currentTarget.value,
+                                                        email: currentTarget.value
                                                     })
                                                 }
                                                 type="email"
@@ -136,7 +136,7 @@ const CreateAccount: FC<iProp> = ({ history, location }) => {
                                                 onChange={({ target }) =>
                                                     setUser({
                                                         ...user,
-                                                        phone: target.value,
+                                                        phone: target.value
                                                     })
                                                 }
                                                 required
@@ -152,29 +152,29 @@ const CreateAccount: FC<iProp> = ({ history, location }) => {
                                                 onChange={(item: any) =>
                                                     setUser({
                                                         ...user,
-                                                        gender: item.value,
+                                                        gender: item.value
                                                     })
                                                 }
                                                 placeholder={t("gender.label")}
                                                 options={[
                                                     { value: "Male", label: "Male" },
                                                     { value: "Female", label: "Female" },
-                                                    { value: "Others", label: "Others" },
+                                                    { value: "Others", label: "Others" }
                                                 ]}
                                                 theme={(theme) => ({
                                                     ...theme,
                                                     colors: {
                                                         ...theme.colors,
                                                         primary25: "#a996e0",
-                                                        primary: "#574294",
-                                                    },
+                                                        primary: "#574294"
+                                                    }
                                                 })}
                                             />
                                             <Select
                                                 onChange={(item: any) =>
                                                     setUser({
                                                         ...user,
-                                                        nationality: item.value,
+                                                        nationality: item.value
                                                     })
                                                 }
                                                 className="intro-x block mt-4 border-theme-1"
@@ -183,15 +183,15 @@ const CreateAccount: FC<iProp> = ({ history, location }) => {
                                                 placeholder={t("nation.label")}
                                                 options={countries.map((item) => ({
                                                     value: item.name,
-                                                    label: item.name,
+                                                    label: item.name
                                                 }))}
                                                 theme={(theme) => ({
                                                     ...theme,
                                                     colors: {
                                                         ...theme.colors,
                                                         primary25: "#a996e0",
-                                                        primary: "#574294",
-                                                    },
+                                                        primary: "#574294"
+                                                    }
                                                 })}
                                             />
                                         </>
@@ -205,7 +205,7 @@ const CreateAccount: FC<iProp> = ({ history, location }) => {
                                                 onChange={({ currentTarget: { value } }) =>
                                                     setUser({
                                                         ...user,
-                                                        walletAddress: value,
+                                                        walletAddress: value
                                                     })
                                                 }
                                                 placeholder={t("wallet.label")}
@@ -215,7 +215,7 @@ const CreateAccount: FC<iProp> = ({ history, location }) => {
                                                 onChange={({ target }) =>
                                                     setUser({
                                                         ...user,
-                                                        dob: target.value,
+                                                        dob: target.value
                                                     })
                                                 }
                                                 required
@@ -230,7 +230,7 @@ const CreateAccount: FC<iProp> = ({ history, location }) => {
                                                 onChange={({ target }) =>
                                                     setUser({
                                                         ...user,
-                                                        address: target.value,
+                                                        address: target.value
                                                     })
                                                 }
                                                 type="text"
@@ -245,7 +245,7 @@ const CreateAccount: FC<iProp> = ({ history, location }) => {
                                                 onChange={({ currentTarget: { value } }) =>
                                                     setUser({
                                                         ...user,
-                                                        referralCode: value,
+                                                        referralCode: value
                                                     })
                                                 }
                                                 type="text"
@@ -259,7 +259,7 @@ const CreateAccount: FC<iProp> = ({ history, location }) => {
                                                 onChange={({ currentTarget: { value } }) =>
                                                     setUser({
                                                         ...user,
-                                                        password: value,
+                                                        password: value
                                                     })
                                                 }
                                                 required
@@ -272,7 +272,7 @@ const CreateAccount: FC<iProp> = ({ history, location }) => {
                                                 onChange={({ currentTarget: { value } }) =>
                                                     setUser({
                                                         ...user,
-                                                        re_password: value,
+                                                        re_password: value
                                                     })
                                                 }
                                                 type="password"
@@ -297,10 +297,18 @@ const CreateAccount: FC<iProp> = ({ history, location }) => {
                                             .
                                         </div>
                                         <div className="intro-x mt-5 xl:mt-8 text-center xl:text-left">
-                                            <PrimaryButton type={ButtonType.submit} loading={loading} className="button button--lg w-full xl:w-32 text-white bg-theme-1 xl:mr-3">
+                                            <PrimaryButton
+                                                type={ButtonType.submit}
+                                                loading={loading}
+                                                className="button button--lg w-full xl:w-32 text-white bg-theme-1 xl:mr-3"
+                                            >
                                                 {t("btn-register")} <UserPlus className="ml-3 h-6" />
                                             </PrimaryButton>
-                                            <button type="button" onClick={() => setStep(1)} className="button button--lg w-full xl:w-32 text-gray-700 border border-gray-300 mt-3 xl:mt-0">
+                                            <button
+                                                type="button"
+                                                onClick={() => setStep(1)}
+                                                className="button button--lg w-full xl:w-32 text-gray-700 border border-gray-300 mt-3 xl:mt-0"
+                                            >
                                                 <ArrowLeft className="ml-1 h-6 text-theme-1" /> {t("pagination.previous")}
                                             </button>
                                         </div>
@@ -308,10 +316,19 @@ const CreateAccount: FC<iProp> = ({ history, location }) => {
                                 )}
                                 {step === 1 && (
                                     <div className="intro-x mt-5 xl:mt-8 text-center xl:text-left">
-                                        <PrimaryButton onClick={() => setStep(2)} type={ButtonType.button} loading={false} className="button button--lg w-full xl:w-32 text-white bg-theme-1 xl:mr-3">
+                                        <PrimaryButton
+                                            onClick={() => setStep(2)}
+                                            type={ButtonType.button}
+                                            loading={false}
+                                            className="button button--lg w-full xl:w-32 text-white bg-theme-1 xl:mr-3"
+                                        >
                                             {t("pagination.next")} <ArrowRight className="ml-3 h-6" />
                                         </PrimaryButton>
-                                        <button type="button" onClick={() => history.push("/")} className="button button--lg w-full xl:w-32 text-gray-700 border border-gray-300 mt-3 xl:mt-0">
+                                        <button
+                                            type="button"
+                                            onClick={() => history.push("/")}
+                                            className="button button--lg w-full xl:w-32 text-gray-700 border border-gray-300 mt-3 xl:mt-0"
+                                        >
                                             <LoginIcon className="mr-3 h-6 text-theme-1" /> {t("login.caption")}
                                         </button>
                                     </div>
