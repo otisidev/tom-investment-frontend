@@ -1,4 +1,4 @@
-### Patrick Investment service frontend application
+### Tom Investment service frontend application
 
 ## Available Scripts
 
