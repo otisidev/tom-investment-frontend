@@ -34,7 +34,7 @@ const YourInvestment = () => {
                 <h2 className="text-lg font-medium mr-auto">{t("investment")}</h2>
             </div>
             <div className="flex justify-end">
-                <button onClick={() => setNewItem(!newItem)} className="button mr-2 mb-2 flex items-center border justify-center shadow-lg bg-purple-200 text-theme-1">
+                <button onClick={() => setNewItem(!newItem)} className="button mr-2 mb-2 flex items-center border justify-center shadow-lg bg-theme-1 text-white">
                     {t("investment.new")}
                     <Plus className="w-4 h-4 ml-2" />
                 </button>

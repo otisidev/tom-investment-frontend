@@ -17,6 +17,10 @@ html {
 .bg-theme-9 {
     background: #14ca6f !important;
 }
+.border-theme-1 {
+    border-color: #0a3632;
+}
+
 .text-theme-9 {
     color: #14ca6f !important;
 }

@@ -51,7 +51,7 @@ const Profile = () => {
                 <div className="col-span-12 lg:col-span-4 xxl:col-span-3 flex lg:block flex-col-reverse">
                     <div className="intro-y box mt-5">
                         <div className="relative flex items-center p-5">
-                            <div className="w-12 h-12 image-fit rounded-full border-2 border-purple-600">
+                            <div className="w-12 h-12 image-fit rounded-full border-2 border-theme-1">
                                 <img alt={user.firstname} className="rounded-full zoom-in" src={user.image || "/dist/images/profile.jpg"} />
                             </div>
                             <div className="ml-4 mr-auto">
