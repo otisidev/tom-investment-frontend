@@ -4,15 +4,15 @@ html {
 
 .input:focus,
 .button:focus {
-    box-shadow: 0 0 0 1.5px #574294;
+    box-shadow: 0 0 0 1.5px #0e2e2b;
 }
 
 .text-theme-1 {
-    color: #574294 !important;
+    color: #0e2e2b !important;
 }
 
 .bg-theme-1 {
-    background: #574294 !important;
+    background: #0e2e2b !important;
 }
 .bg-theme-9 {
     background: #14ca6f !important;
@@ -34,38 +34,38 @@ html {
 
 input:checked ~ .toggle__dot {
     transform: translateX(100%);
-    background-color: #574294;
+    background-color: #0e2e2b;
 }
 @media (max-width: 1279px) {
     .login {
-        background: linear-gradient(to bottom, #574294, #574294);
+        background: linear-gradient(to bottom, #0e2e2b, #0e2e2b);
     }
 }
 
 .input[type="checkbox"]:not(.input--switch):checked {
-    background-color: #574294;
-    border-color: #574294;
+    background-color: #0e2e2b;
+    border-color: #0e2e2b;
 }
 
 .side-nav > ul ul ul {
-    background-color: #412e7a !important;
+    background-color: #0e2e2b !important;
 }
 
 .side-nav > ul > li > .side-menu.side-menu--active .side-menu__icon , .breadcrumb .breadcrumb--active{
-    color: #412e7a !important;
+    color: #0e2e2b !important;
 }
 
 .side-nav > ul > li > .side-menu:hover:not(.side-menu--active):not(.side-menu--open) .side-menu__icon:before {
-    background-color: #412e7a;
+    background-color: #0e2e2b;
 }
 
 .side-nav__devider, .menu__devider {
-    background-color: #574294 !important;
+    background-color: #0a3632 !important;
 }
 
 .side-nav .side-menu,
 .side-nav > ul > li > .side-menu.side-menu--active .side-menu__title,.mobile-menu .menu {
-    color: #574294 !important;
+    color: #0a3632 !important;
 }
 
 .side-nav > ul > li > .side-menu:not(.side-menu--active) .side-menu__icon:before {
@@ -73,11 +73,11 @@ input:checked ~ .toggle__dot {
 }
 
 .side-nav > ul > li > .side-menu:hover:not(.side-menu--active):not(.side-menu--open) .side-menu__icon:before {
-    background-color: rgba(65, 46, 122, 0.123);
+    background-color: #0a363242;
 }
 
 .side-nav > ul > li > .side-menu.side-menu--active {
     border-radius: 0 !important;
-    border-left: solid 3px #412e7a !important;
+    border-left: solid 3px #0e2e2b !important;
     margin-left: 1em !important;
 }

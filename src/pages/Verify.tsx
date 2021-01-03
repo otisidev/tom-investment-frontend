@@ -59,7 +59,7 @@ const Verify: FC<iProp> = ({ location }) => {
                         <a href="/" className="-intro-x flex items-center pt-5">
                             <img alt="Investment bot" className="w-6" src="../../dist/images/icon.svg" />
                             <span className="text-theme-1 text-lg ml-3">
-                                Patrick<span className="font-medium">Investment</span>
+                                Tom<span className="font-medium">Investment</span>
                             </span>
                         </a>
                         <div className="my-auto">
