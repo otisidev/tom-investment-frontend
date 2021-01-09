@@ -62,7 +62,7 @@ const Login: FC<iProp> = ({ history, location }) => {
             <div className="container sm:px-10">
                 <div className="block xl:grid grid-cols-2 gap-4">
                     <div className="hidden xl:flex flex-col min-h-screen">
-                        <a href="/" className="-intro-x flex items-center pt-5">
+                        <a href="https://tominvestment.com/" className="-intro-x flex items-center pt-5">
                             <img alt="Investment bot" className="w-6" src="dist/images/icon.svg" />
                             <span className="text-theme-1 text-lg ml-3">
                                 Tom<span className="font-medium">Investment</span>
