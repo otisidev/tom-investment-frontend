@@ -6,7 +6,6 @@ import { Home } from "@styled-icons/feather";
 interface iProp {
     history: any;
 }
-
 const NotFound: FC<iProp> = ({ history }) => {
     document.body.className = "app";
     return (
