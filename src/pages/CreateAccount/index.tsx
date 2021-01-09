@@ -22,6 +22,7 @@ const CreateAccount: FC<iProp> = ({ history, location }) => {
     const { t } = useTranslation();
     const [step, setStep] = useState(1);
     const [user, setUser] = useState<any>({});
+    const [showReferral, setShowReferral] = useState(false);
 
     const [createFunc, { loading }] = useMutation(NEW_ACCOUNT, {
         onCompleted: (data) => {
@@ -30,14 +31,14 @@ const CreateAccount: FC<iProp> = ({ history, location }) => {
                 authService.Login(doc, token);
                 toast.success(message);
                 const { from } = location.state || {
-                    from: { pathname: "/app" },
+                    from: { pathname: "/app" }
                 };
                 setTimeout(() => {
                     window.document.location.href = from.pathname;
-                },500)
+                }, 500);
             }
         },
-        onError: (error) => toast.error(CleanMessage(error.message)),
+        onError: (error) => toast.error(CleanMessage(error.message))
     });
 
     return (
@@ -241,20 +242,27 @@ const CreateAccount: FC<iProp> = ({ history, location }) => {
                                                 placeholder={t("address.label")}
                                                 defaultValue={user?.address}
                                             />
-                                            <input
-                                                onChange={({ currentTarget: { value } }) =>
-                                                    setUser({
-                                                        ...user,
-                                                        referralCode: value
-                                                    })
-                                                }
-                                                type="text"
-                                                name="referral code"
-                                                id="referral_code"
-                                                className="intro-x login__input input w-full input--lg border border-gray-300 block mt-4"
-                                                placeholder={t("referral_code")}
-                                                defaultValue={user?.referralCode}
-                                            />
+                                            {showReferral ? (
+                                                <input
+                                                    onChange={({ currentTarget: { value } }) =>
+                                                        setUser({
+                                                            ...user,
+                                                            referralCode: value
+                                                        })
+                                                    }
+                                                    type="text"
+                                                    name="referral code"
+                                                    id="referral_code"
+                                                    className="intro-x login__input input w-full input--lg border border-gray-300 block mt-4"
+                                                    placeholder={t("referral_code")}
+                                                    defaultValue={user?.referralCode}
+                                                />
+                                            ) : (
+                                                <a className="text-theme-1" onClick={() => setShowReferral(showReferral)} href="javascript:void(0)">
+                                                    Add Referral Code
+                                                </a>
+                                            )}
+
                                             <input
                                                 onChange={({ currentTarget: { value } }) =>
                                                     setUser({
