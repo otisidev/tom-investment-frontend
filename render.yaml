@@ -6,9 +6,9 @@ services:
   buildCommand: yarn; yarn build
   startCommand: yarn start
 # Uncomment the following to deploy this app as a static site on render
-# - type: web
-#   name: nextjs-static
-#   env: static
-#   buildCommand: yarn; yarn build; yarn next export
-#   staticPublishPath: out
-#   pullRequestPreviewsEnabled: true     # optional
+- type: web
+  name: nextjs-static
+  env: static
+  buildCommand: yarn; yarn build; yarn next export
+  staticPublishPath: out
+  pullRequestPreviewsEnabled: true     # optional
