@@ -1,4 +1,4 @@
-### Patrick Investment service frontend application
+### PIS service frontend application
 
 ## Available Scripts
 
