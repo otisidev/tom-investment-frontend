@@ -33,7 +33,7 @@ const MobileNavigation = () => {
         <div className="mobile-menu md:hidden">
             <div className="mobile-menu-bar">
                 <a href="/in" className="flex mr-auto">
-                    <img alt="investment bot" className="w-6" src="/dist/images/icon.svg" />
+                    <img alt="investment bot" className="w-6" src="/dist/images/icon.png" />
                 </a>
                 <a href="javascript:;" id="mobile-menu-toggler">
                     <BarChart2 className="w-8 h-8 text-theme-1 transform -rotate-90" size={18} />

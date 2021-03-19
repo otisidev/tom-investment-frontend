@@ -17,7 +17,7 @@ export const AppUploadUrl = () => REACT_APP_UploadBaseUrl || "";
 
 export const UploadPreset = () => REACT_APP_UploadPreset || "";
 
-export const AppName = "Patrick Investment Services";
+export const AppName = "Timo Stephan Investment";
 
 export const CleanMessage = (message: string) => {
     if (message?.includes("Unauthorized access!")) {

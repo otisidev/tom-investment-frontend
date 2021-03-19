@@ -10,9 +10,9 @@ const AppMenu = () => {
     return (
         <nav className="side-nav">
             <a href="/" className="intro-x flex items-center pl-5 pt-4">
-                <img alt="Patrick Investment" className="w-6" src="/dist/images/icon.svg" />
+                <img alt="Timo Stephan Investment" className="w-6" src="/dist/images/icon.png" />
                 <span className="text-theme-1 text-lg ml-3">
-                    Patrick<span className="font-bold">Investment</span>
+                    Timo Stephan<span className="font-bold">Investment</span>
                 </span>
             </a>
             <div className="side-nav__devider my-6"></div>

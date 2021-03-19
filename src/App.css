@@ -4,15 +4,15 @@ html {
 
 .input:focus,
 .button:focus {
-    box-shadow: 0 0 0 1.5px #574294;
+    box-shadow: 0 0 0 1.5px #010101;
 }
 
 .text-theme-1 {
-    color: #574294 !important;
+    color: #010101 !important;
 }
 
 .bg-theme-1 {
-    background: #574294 !important;
+    background: #010101 !important;
 }
 .bg-theme-9 {
     background: #14ca6f !important;
@@ -34,17 +34,17 @@ html {
 
 input:checked ~ .toggle__dot {
     transform: translateX(100%);
-    background-color: #574294;
+    background-color: #010101;
 }
 @media (max-width: 1279px) {
     .login {
-        background: linear-gradient(to bottom, #574294, #574294);
+        background: linear-gradient(to bottom, #010101, #010101);
     }
 }
 
 .input[type="checkbox"]:not(.input--switch):checked {
-    background-color: #574294;
-    border-color: #574294;
+    background-color: #010101;
+    border-color: #010101;
 }
 
 .side-nav > ul ul ul {
@@ -60,12 +60,12 @@ input:checked ~ .toggle__dot {
 }
 
 .side-nav__devider, .menu__devider {
-    background-color: #574294 !important;
+    background-color: #010101 !important;
 }
 
 .side-nav .side-menu,
 .side-nav > ul > li > .side-menu.side-menu--active .side-menu__title,.mobile-menu .menu {
-    color: #574294 !important;
+    color: #010101 !important;
 }
 
 .side-nav > ul > li > .side-menu:not(.side-menu--active) .side-menu__icon:before {
@@ -80,4 +80,7 @@ input:checked ~ .toggle__dot {
     border-radius: 0 !important;
     border-left: solid 3px #412e7a !important;
     margin-left: 1em !important;
+}
+.login:before {
+    background-image: none;
 }

@@ -1,4 +1,4 @@
-### Patrick Investment service frontend application
+### Timo Stephan Investment service frontend application
 
 ## Available Scripts
 
