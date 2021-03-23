@@ -9,14 +9,13 @@ const AppMenu = () => {
     const user = authService.GetUser();
     return (
         <nav className="side-nav">
-            <a href="/" className="intro-x flex items-center pl-5 pt-4">
-                <img alt="Timo Stephan Investment" className="w-6" src="/dist/images/icon.png" />
+            <a href="/" className="intro-x flex items-center pl-5 p2-4">
+                <img alt="Timo Stephan Investment" className="w-10" src="/dist/images/icon.png" />
                 <span className="text-theme-1 text-lg ml-3">
-                    Timo Stephan<span className="font-bold">Investment</span>
+                    Timo <span className="font-bold">Stephan</span>
                 </span>
             </a>
-            <div className="side-nav__devider my-6"></div>
-            <ul>
+            <ul className="my-6">
                 <li>
                     <NavLink exact to="/app" className="side-menu" activeClassName="side-menu--active">
                         <div className="side-menu__icon">
