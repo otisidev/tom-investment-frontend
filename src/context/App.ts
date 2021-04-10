@@ -48,7 +48,7 @@ export const CleanDate = (date: string, onlyDate = false, short = true) =>
 
 export const toCurrency = (value: any): string => {
     if (value) {
-        return Intl.NumberFormat("en-US").format(value);
+        return Intl.NumberFormat("en-GB").format(value);
     }
     return "0";
 };

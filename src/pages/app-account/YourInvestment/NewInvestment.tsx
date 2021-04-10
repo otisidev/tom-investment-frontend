@@ -145,9 +145,9 @@ const NewInvestment: FC<iProp> = ({ onCancel }) => {
                                         <div className="text-gray-800 text-center mt-5">
                                             <strong>{plan.percent}% percent ROI</strong>
                                             <span className="mx-1 text-theme-1">•</span>
-                                            Minimum Investment - <strong> ${toCurrency(plan.amount)}</strong>{" "}
+                                            Minimum Investment - <strong> £{toCurrency(plan.amount)}</strong>{" "}
                                             <span className="mx-1 text-theme-1">•</span>
-                                            Maximum Investment - <strong> ${toCurrency(plan.max_amount)}</strong>
+                                            Maximum Investment - <strong> £{toCurrency(plan.max_amount)}</strong>
                                         </div>
                                     </div>
                                     <div className="flex flex-wrap -mx-3 my-6">
@@ -170,7 +170,7 @@ const NewInvestment: FC<iProp> = ({ onCancel }) => {
                                                 }
                                             />
                                             <p className="text-gray-600 text-xs italic">
-                                                {t("min-amount")} ${toCurrency(plan.amount)}
+                                                {t("min-amount")} £{toCurrency(plan.amount)}
                                             </p>
                                         </div>
                                         <div className="w-full px-3 mt-4">

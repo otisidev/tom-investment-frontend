@@ -56,14 +56,14 @@ const ActiveInvestmentItems: FC<iProps> = ({ items, onClose }) => {
                                     {item.compounded?.status ? (
                                         <>
                                             <span className="font-bold text-theme-1">Compounding</span>
-                                            <h4 className="text-theme-9 text-lg">${toCurrency(item.investment_made)}</h4>
-                                            <b>Expected Payout: </b> ${toCurrency(item.compounded.payout || 0)} <br />
+                                            <h4 className="text-theme-9 text-lg">£{toCurrency(item.investment_made)}</h4>
+                                            <b>Expected Payout: </b> £{toCurrency(item.compounded.payout || 0)} <br />
                                         </>
                                     ) : (
                                         <>
-                                            <h4 className="text-theme-9 text-lg">${toCurrency(item.investment_made)}</h4>
-                                            <b>Total Payout: </b> ${toCurrency(item.payout_sum)} <br />
-                                            <b>Weekly Payout: </b> ${toCurrency(item.payout_weekly)}
+                                            <h4 className="text-theme-9 text-lg">£{toCurrency(item.investment_made)}</h4>
+                                            <b>Total Payout: </b> £{toCurrency(item.payout_sum)} <br />
+                                            <b>Weekly Payout: </b> £{toCurrency(item.payout_weekly)}
                                         </>
                                     )}
                                 </td>
