@@ -38,7 +38,7 @@ const Login: FC<iProp> = ({ history, location }) => {
                 if (t) {
                     authService.Login(doc, t);
                     const { from } = location.state || {
-                        from: { pathname: "/app" },
+                        from: { pathname: "/app" }
                     };
                     document.location.href = from.pathname;
                 } else {
@@ -46,7 +46,7 @@ const Login: FC<iProp> = ({ history, location }) => {
                     setShowToken(true);
                 }
             }
-        },
+        }
     });
 
     if (authService.IsAuthenticated()) return <Redirect to="/app" />;

@@ -30,14 +30,14 @@ const CreateAccount: FC<iProp> = ({ history, location }) => {
                 authService.Login(doc, token);
                 toast.success(message);
                 const { from } = location.state || {
-                    from: { pathname: "/app" },
+                    from: { pathname: "/app" }
                 };
                 setTimeout(() => {
                     window.document.location.href = from.pathname;
-                },500)
+                }, 500);
             }
         },
-        onError: (error) => toast.error(CleanMessage(error.message)),
+        onError: (error) => toast.error(CleanMessage(error.message))
     });
 
     return (
