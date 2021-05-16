@@ -3,6 +3,7 @@ import { Home, CreditCard, Users, User, Settings, Activity, CheckCircle, Shoppin
 import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { authService } from "./../services/Authentication.Service";
+import { Cash, Wallet } from "@styled-icons/ionicons-outline";
 
 const AppMenu = () => {
     const { t } = useTranslation();
@@ -93,6 +94,14 @@ const AppMenu = () => {
                                 <div className="side-menu__title">Contact Person</div>
                             </NavLink>
                         </li>
+                        <li>
+                            <NavLink to="/app/currency" className="side-menu" activeClassName="side-menu--active">
+                                <div className="side-menu__icon">
+                                    <Cash size={18} />
+                                </div>
+                                <div className="side-menu__title">Currency Settings</div>
+                            </NavLink>
+                        </li>
                         <div className="side-nav__devider my-6"></div>
                         <li>
                             <NavLink exact to="/app/payout" className="side-menu" activeClassName="side-menu--active">
@@ -124,6 +133,14 @@ const AppMenu = () => {
                                     <Users size={18} />
                                 </div>
                                 <div className="side-menu__title">Referral Bonus</div>
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink exact to="/app/top-up" className="side-menu" activeClassName="side-menu--active">
+                                <div className="side-menu__icon">
+                                    <Wallet size={18} />
+                                </div>
+                                <div className="side-menu__title">Top-up Request</div>
                             </NavLink>
                         </li>
                     </>

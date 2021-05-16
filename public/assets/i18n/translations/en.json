@@ -222,5 +222,11 @@
     "investment.new.category": "Select Category",
     "investment.contact-person": "Contact Person",
     "payout-info": "How often do you want to receive your payout (weeks)?",
-    "investment.new.payout": "Enter Payout interval"
+    "investment.new.payout": "Enter Payout interval",
+
+    "goto.investment": "Goto Investment",
+    "top.new": "New Investment Top-up",
+    "balance": "Current Balance",
+    "investment.detail": "Investment Detail",
+    "currency.new.plan": "Payment Currency"
 }

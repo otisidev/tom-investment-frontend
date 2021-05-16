@@ -22,6 +22,9 @@ import ActiveInvestment from "./AdminCorner/ActiveInvestment";
 import AppMenu from "../../components/Menu";
 import CategoryApp from "./AdminCorner/Category";
 import ContactPerson from "./AdminCorner/ContactPerson";
+import SingleInvestment from "./YourInvestment/investment";
+import TopUpRequest from "./AdminCorner/top-up-request";
+import CurrencyApp from "./AdminCorner/Currency";
 
 const AppAccount = () => {
     // Update css class name
@@ -44,6 +47,7 @@ const AppAccount = () => {
                     <Switch>
                         <Route exact path="/app" component={Dashboard} />
                         <Route exact path="/app/user-investment" component={YourInvestment} />
+                        <Route exact path="/app/user-investment/:id" component={SingleInvestment} />
                         <Route exact path="/app/referral" component={YourReferral} />
                         <Route path="/app/profile" component={Profile} />
                         <Route path="/app/investment-history/:id" component={InvestmentHistory} />
@@ -57,6 +61,8 @@ const AppAccount = () => {
                         <AdminRoute path="/app/active-investment" component={ActiveInvestment} />
                         <AdminRoute path="/app/category" component={CategoryApp} />
                         <AdminRoute path="/app/contact-person" component={ContactPerson} />
+                        <AdminRoute path="/app/top-up" component={TopUpRequest} />
+                        <AdminRoute path="/app/currency" component={CurrencyApp} />
                     </Switch>
                 </div>
             </div>

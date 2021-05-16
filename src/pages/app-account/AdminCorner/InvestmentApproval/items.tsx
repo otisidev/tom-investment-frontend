@@ -110,7 +110,7 @@ const InvestmentApprovalItems = () => {
 
     return (
         <div>
-            <LoadingIcon loading={loading || dLoading} />
+            <LoadingIcon loading={loading || dLoading || aLoading} />
             <div className="grid grid-cols-12 gap-6 mt-5">
                 <div className="intro-y col-span-12 flex flex-wrap sm:flex-no-wrap items-center mt-2">
                     {data && data.GetInvestmentsForApproval.docs.length > 0 && (

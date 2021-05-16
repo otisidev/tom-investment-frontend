@@ -212,5 +212,11 @@
     "relationship.label": "Beziehung zu den nächsten Verwandten",
     "2fa": "Zwei-Faktor-Authentifizierung",
     "2fa-off": "Deaktivieren Sie die Zwei-Faktor-Authentifizierung",
-    "2fa-on": "Aktivieren Sie die Zwei-Faktor-Authentifizierung"
+    "2fa-on": "Aktivieren Sie die Zwei-Faktor-Authentifizierung",
+
+    "goto.investment": "Ga naar investering",
+    "top.new": "Nieuwe investering aanvullen",
+    "balance": "Huidig saldo",
+    "investment.detail": "Investment Detail",
+    "currency.new.plan": "Betalingsvaluta"
 }

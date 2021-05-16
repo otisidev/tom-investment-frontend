@@ -29,6 +29,11 @@ const INVESTMENT_PROP = gql`
             payout
             payoutDate
         }
+        currency {
+            id
+            name
+            address
+        }
     }
     ${PLAN_PROP}
 `;
@@ -104,8 +109,8 @@ export const GET_HISTORY = gql`
 `;
 
 export const REINVESTMENT = gql`
-    mutation Reinvestment($id: ID!, $payout: Int!, $weeks: Int!) {
-        Reinvestment(id: $id, payout: $payout, weeks: $weeks) {
+    mutation Reinvestment($id: ID!) {
+        Reinvestment(id: $id) {
             message
         }
     }
@@ -202,5 +207,88 @@ export const GET_ACTIVE = gql`
 export const FIX_INVESTMENT = gql`
     mutation FixInvestment {
         FixInvestment
+    }
+`;
+
+export const GET_INVESTMENT = gql`
+    query GetInvestment($id: ID!) {
+        GetInvestment(Id: $id) {
+            doc {
+                ...InvestmentProp
+            }
+        }
+    }
+    ${INVESTMENT_PROP}
+`;
+
+export const GET_TOP_LIST = gql`
+    query GetInvestmentTopUp($investment: ID!) {
+        GetInvestmentTopUp(investment: $investment) {
+            docs {
+                id
+                amount
+                created_at
+                approved
+            }
+        }
+    }
+`;
+
+export const NEW_TOP_UP = gql`
+    mutation NewTopUp($amount: Int!, $investment: ID!) {
+        NewInvestmentTopUp(amount: $amount, investment: $investment) {
+            message
+        }
+    }
+`;
+
+export const GET_TOP_UP_REQUEST = gql`
+    query GetTopUpList($page: Int, $limit: Int) {
+        GetTopUpForApproval(page: $page, limit: $limit) {
+            docs {
+                id
+                amount
+                created_at
+                approved
+                investment {
+                    id
+                    investment_made
+                    user {
+                        id
+                        name
+                        email
+                        image
+                    }
+                }
+            }
+            page
+            limit
+            totalPages
+            totalDocs
+            nextPage
+            prevPage
+        }
+    }
+`;
+
+export const APPROVE_TOP_UP = gql`
+    mutation ApproveInvestmentTopUp($id: ID!) {
+        ApproveTopUp(id: $id) {
+            message
+            doc {
+                id
+            }
+        }
+    }
+`;
+
+export const CANCEL_TOP_UP = gql`
+    mutation CancelInvestmentTopUp($id: ID!) {
+        CancelTopUp(id: $id) {
+            message
+            doc {
+                id
+            }
+        }
     }
 `;

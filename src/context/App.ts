@@ -101,3 +101,7 @@ export const CopyToClipboard = (parentId: string, content: string) => {
 function isIOS() {
     return navigator.userAgent.match(/ipad|iphone/i);
 }
+
+
+
+export const DefaultImage = "https://res.cloudinary.com/obaforex/image/upload/v1620379912/assets/imgs/isgpp_avatar_placeholder_l8cm9b.png";

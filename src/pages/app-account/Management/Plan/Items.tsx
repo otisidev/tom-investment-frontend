@@ -64,7 +64,7 @@ const PlanItems: FC<iProps> = ({ items }) => {
                                         )}
                                     </td> */}
                                     <td className="table-report__action w-56">
-                                        <div className="flex justify-center items-center">
+                                        <div className="flex justify-center items-center py-4">
                                             <a
                                                 href="javascript:;"
                                                 onClick={() => setActive(item)}

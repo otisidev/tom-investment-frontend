@@ -4,6 +4,7 @@ import $ from "jquery";
 import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { authService } from "./../services/Authentication.Service";
+import { Cash } from "@styled-icons/ionicons-outline";
 
 const MobileNavigation = () => {
     useEffect(() => {
@@ -134,11 +135,27 @@ const MobileNavigation = () => {
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink to="/app/contact=person" className="menu">
+                            <NavLink to="/app/contact-person" className="menu">
                                 <div className="menu__icon">
                                     <Paperclip size={18} />
                                 </div>
                                 <div className="menu__title">Contact Person</div>
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/app/top-up" className="menu">
+                                <div className="menu__icon">
+                                    <Paperclip size={18} />
+                                </div>
+                                <div className="menu__title">Top-up Request</div>
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/app/currency" className="menu">
+                                <div className="menu__icon">
+                                    <Cash size={18} />
+                                </div>
+                                <div className="menu__title">Currency Settings</div>
                             </NavLink>
                         </li>
                     </>
