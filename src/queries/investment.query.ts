@@ -292,3 +292,11 @@ export const CANCEL_TOP_UP = gql`
         }
     }
 `;
+
+export const CREDIT_INVESTMENT = gql`
+    mutation CreditInvestment($model: InvestmentLogInput!) {
+        CreditInvestment(model: $model) {
+            message
+        }
+    }
+`;

@@ -4,7 +4,7 @@ import { AppName } from "../../../../context/App";
 import { toast } from "react-toastify";
 import { CleanMessage } from "./../../../../context/App";
 import { useQuery, useMutation } from "@apollo/react-hooks";
-import { GET_ACTIVE, CLOSE_INVESTMENT } from "../../../../queries/investment.query";
+import { GET_ACTIVE, CLOSE_INVESTMENT, CREDIT_INVESTMENT } from "../../../../queries/investment.query";
 import { Refresh, Search } from "@styled-icons/ionicons-outline";
 import { LoadingIcon } from "../../../../components/Button";
 import PaginationSummary from "../../../../components/Paging/Summary";
@@ -20,16 +20,22 @@ const ActiveInvestment = () => {
     const { loading, data, fetchMore, refetch } = useQuery(GET_ACTIVE, {
         variables: { page, limit, user },
         onError: (er) => toast.error(CleanMessage(er.message)),
-        notifyOnNetworkStatusChange: true,
+        notifyOnNetworkStatusChange: true
     });
 
+    const [creditFunc, { loading: __loading }] = useMutation(CREDIT_INVESTMENT, {
+        onError: (er) => toast.error(CleanMessage(er.message)),
+        onCompleted: () => {
+            document.location.reload();
+        }
+    });
     useEffect(() => {
         fetchMore({
             variables: { page, limit, user },
             updateQuery: (prev, { fetchMoreResult }) => {
                 if (!fetchMoreResult) return prev;
                 return { GetActiveInvestment: fetchMoreResult.GetActiveInvestment };
-            },
+            }
         });
     }, [page, user, limit, fetchMore]);
 
@@ -41,8 +47,8 @@ const ActiveInvestment = () => {
                 variables: {
                     page,
                     limit,
-                    user,
-                },
+                    user
+                }
             });
             // update
             const docs = d.GetActiveInvestment.docs;
@@ -58,11 +64,11 @@ const ActiveInvestment = () => {
                 variables: {
                     page,
                     limit,
-                    user,
+                    user
                 },
                 data: {
-                    GetActiveInvestment: d.GetActiveInvestment,
-                },
+                    GetActiveInvestment: d.GetActiveInvestment
+                }
             });
         },
         onError: (er) => toast.error(CleanMessage(er.message)),
@@ -70,7 +76,7 @@ const ActiveInvestment = () => {
             if (data.CloseInvestment) {
                 toast.success(data.CloseInvestment.message);
             }
-        },
+        }
     });
 
     return (
@@ -83,7 +89,7 @@ const ActiveInvestment = () => {
             <div className="intro-y flex items-center mt-8 mb-8">
                 <h2 className="text-lg font-medium mr-auto">{title}</h2>
             </div>
-            <LoadingIcon loading={loading || cLoading} />
+            <LoadingIcon loading={loading || cLoading || __loading} />
             <div className="grid grid-cols-12 gap-6 mt-5">
                 <div className="intro-y col-span-12 flex flex-wrap sm:flex-no-wrap items-center mt-2">
                     {user && (
@@ -114,8 +120,24 @@ const ActiveInvestment = () => {
                     </div>
                 </div>
             </div>
-            <div className="mt-8">{data && <ActiveInvestmentItems onClose={async (item: any) => await closeFunc({ variables: { id: item.id } })} items={data.GetActiveInvestment.docs} />}</div>
-            <div className="mt-5 intro-x">{data && <PageNumber onPageClicked={(page: number) => setPage(page)} {...data.GetActiveInvestment} length={data.GetActiveInvestment.docs.length} />}</div>
+            <div className="mt-8">
+                {data && (
+                    <ActiveInvestmentItems
+                        onClose={async (item: any) => await closeFunc({ variables: { id: item.id } })}
+                        items={data.GetActiveInvestment.docs}
+                        onCredit={async (model: any) => await creditFunc({ variables: { model } })}
+                    />
+                )}
+            </div>
+            <div className="mt-5 intro-x">
+                {data && (
+                    <PageNumber
+                        onPageClicked={(page: number) => setPage(page)}
+                        {...data.GetActiveInvestment}
+                        length={data.GetActiveInvestment.docs.length}
+                    />
+                )}
+            </div>
         </>
     );
 };
