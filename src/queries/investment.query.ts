@@ -300,3 +300,11 @@ export const CREDIT_INVESTMENT = gql`
         }
     }
 `;
+
+export const ADMIN_TOP_UP_INVESTMENT = gql`
+    mutation AdminInvestmentTopUp($id: ID!, $amount: Int!) {
+        AdminInvestmentTopUp(id: $id, amount: $amount) {
+            message
+        }
+    }
+`;

@@ -8,9 +8,10 @@ interface iProps {
     items: Array<any>;
     onClose: any;
     onCredit: any;
+    onTopUp: any;
 }
 
-const ActiveInvestmentItems: FC<iProps> = ({ items, onClose, onCredit }) => {
+const ActiveInvestmentItems: FC<iProps> = ({ items, onClose, onCredit, onTopUp }) => {
     const [active, setActive] = useState<any>();
     const [model, setModel] = useState<any>();
     if (items.length)
@@ -78,16 +79,25 @@ const ActiveInvestmentItems: FC<iProps> = ({ items, onClose, onCredit }) => {
                                             </>
                                         )}
                                     </td>
-                                    <td className="table-report__action w-56">
+                                    <td className="table-report__action">
                                         <div className="flex justify-center items-center">
                                             <a
                                                 href="javascript:;"
                                                 onClick={() => setActive(item)}
                                                 data-toggle="modal"
                                                 data-target="#credit-modal"
-                                                className="button p-2 border shadow mr-2"
+                                                className="button p-2 border bg-teal-500 text-white shadow mr-2"
                                             >
                                                 Credit
+                                            </a>
+                                            <a
+                                                href="javascript:;"
+                                                onClick={() => setActive(item)}
+                                                data-toggle="modal"
+                                                data-target="#top-up-modal"
+                                                className="button p-2 border shadow mr-2"
+                                            >
+                                                Top-up
                                             </a>
                                             <a
                                                 onClick={() => {
@@ -166,6 +176,54 @@ const ActiveInvestmentItems: FC<iProps> = ({ items, onClose, onCredit }) => {
                                     if (model && model.amount && model.reason) {
                                         onCredit({ ...model, investment: active?.id, amount: parseInt(model.amount) });
                                         document.getElementById("cancel__credit")?.click();
+                                    } else {
+                                        window.alert("Amount and reason are required!");
+                                    }
+                                }}
+                                className="button w-24 bg-theme-1 text-white"
+                            >
+                                Submit
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div className="modal" id="top-up-modal">
+                    <div className="modal__content">
+                        <div className="p-5">
+                            <div className="grid gap-4">
+                                <div className="my-6">
+                                    <div className="font-bold uppercase">Investment Top-up</div>
+                                    <div className="w-6 h-1 bg-theme-1"></div>
+                                </div>
+                                <div>
+                                    <label
+                                        className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                                        htmlFor="grid-amount"
+                                    >
+                                        Amount
+                                    </label>
+                                    <input
+                                        required
+                                        className="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
+                                        id="grid-amount"
+                                        placeholder="Enter amount"
+                                        type="number"
+                                        onChange={({ currentTarget: { value } }) => setModel({ ...model, amount: value })}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="px-5 pb-8 text-center">
+                            {/* <LoadingIcon loading={closeLoading} /> */}
+                            <button type="button" id="top_cancel" data-dismiss="modal" className="button w-24 border text-gray-700 mr-1">
+                                Cancel
+                            </button>
+                            <button
+                                type="button"
+                                onClick={async () => {
+                                    if (model && model.amount) {
+                                        onTopUp({ id: active.id, amount: parseInt(model.amount) });
+                                        document.getElementById("top_cancel")?.click();
                                     } else {
                                         window.alert("Amount and reason are required!");
                                     }

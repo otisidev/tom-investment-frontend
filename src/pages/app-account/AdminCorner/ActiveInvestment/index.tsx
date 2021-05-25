@@ -4,7 +4,7 @@ import { AppName } from "../../../../context/App";
 import { toast } from "react-toastify";
 import { CleanMessage } from "./../../../../context/App";
 import { useQuery, useMutation } from "@apollo/react-hooks";
-import { GET_ACTIVE, CLOSE_INVESTMENT, CREDIT_INVESTMENT } from "../../../../queries/investment.query";
+import { GET_ACTIVE, CLOSE_INVESTMENT, CREDIT_INVESTMENT, ADMIN_TOP_UP_INVESTMENT } from "../../../../queries/investment.query";
 import { Refresh, Search } from "@styled-icons/ionicons-outline";
 import { LoadingIcon } from "../../../../components/Button";
 import PaginationSummary from "../../../../components/Paging/Summary";
@@ -24,6 +24,12 @@ const ActiveInvestment = () => {
     });
 
     const [creditFunc, { loading: __loading }] = useMutation(CREDIT_INVESTMENT, {
+        onError: (er) => toast.error(CleanMessage(er.message)),
+        onCompleted: () => {
+            document.location.reload();
+        }
+    });
+    const [topUpFunc, { loading: top__loading }] = useMutation(ADMIN_TOP_UP_INVESTMENT, {
         onError: (er) => toast.error(CleanMessage(er.message)),
         onCompleted: () => {
             document.location.reload();
@@ -89,7 +95,7 @@ const ActiveInvestment = () => {
             <div className="intro-y flex items-center mt-8 mb-8">
                 <h2 className="text-lg font-medium mr-auto">{title}</h2>
             </div>
-            <LoadingIcon loading={loading || cLoading || __loading} />
+            <LoadingIcon loading={loading || cLoading || __loading || top__loading} />
             <div className="grid grid-cols-12 gap-6 mt-5">
                 <div className="intro-y col-span-12 flex flex-wrap sm:flex-no-wrap items-center mt-2">
                     {user && (
@@ -126,6 +132,7 @@ const ActiveInvestment = () => {
                         onClose={async (item: any) => await closeFunc({ variables: { id: item.id } })}
                         items={data.GetActiveInvestment.docs}
                         onCredit={async (model: any) => await creditFunc({ variables: { model } })}
+                        onTopUp={async (model: any) => await topUpFunc({ variables: { ...model } })}
                     />
                 )}
             </div>
