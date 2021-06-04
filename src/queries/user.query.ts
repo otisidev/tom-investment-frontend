@@ -136,6 +136,7 @@ export const NEW_ACCOUNT = gql`
             message
             doc {
                 ...UserProps
+                referralCode
             }
             token
         }
