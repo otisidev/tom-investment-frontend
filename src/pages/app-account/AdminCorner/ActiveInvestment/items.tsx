@@ -135,7 +135,7 @@ const ActiveInvestmentItems: FC<iProps> = ({ items, onClose, onCredit, onTopUp }
                                     </label>
                                     <input
                                         required
-                                        className="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
+                                        className="appearance-none block hover:border-theme-1 border w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
                                         id="grid-amount"
                                         placeholder="Enter amount"
                                         type="number"
@@ -151,12 +151,35 @@ const ActiveInvestmentItems: FC<iProps> = ({ items, onClose, onCredit, onTopUp }
                                     </label>
                                     <input
                                         required
-                                        className="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
+                                        className="appearance-none block hover:border-theme-1 border w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
                                         id="grid-Reason"
                                         type="text"
                                         placeholder="Enter reason"
                                         onChange={({ currentTarget: { value } }) => setModel({ ...model, reason: value })}
                                     />
+                                </div>
+                                <div>
+                                    <label
+                                        className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                                        htmlFor="grid-currency"
+                                    >
+                                        Currency
+                                    </label>
+                                    <select
+                                        id="grid-currency"
+                                        required
+                                        onChange={({ currentTarget: { value } }) => {
+                                            setModel({ ...model, currency: value });
+                                        }}
+                                        className="w-full login__input input rounded-lg input--lg border-2 border-gray-300 block hover:border-theme-1 resize-none font-semibold"
+                                    >
+                                        <option value="">Select Currency</option>
+                                        {["$", "€", "£"].map((item, idx) => (
+                                            <option key={idx} value={item}>
+                                                {item}
+                                            </option>
+                                        ))}
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -174,7 +197,12 @@ const ActiveInvestmentItems: FC<iProps> = ({ items, onClose, onCredit, onTopUp }
                                 type="button"
                                 onClick={async () => {
                                     if (model && model.amount && model.reason) {
-                                        onCredit({ ...model, investment: active?.id, amount: parseInt(model.amount) });
+                                        onCredit({
+                                            ...model,
+                                            investment: active?.id,
+                                            amount: parseInt(model.amount),
+                                            currency: model.currency
+                                        });
                                         document.getElementById("cancel__credit")?.click();
                                     } else {
                                         window.alert("Amount and reason are required!");
@@ -198,18 +226,41 @@ const ActiveInvestmentItems: FC<iProps> = ({ items, onClose, onCredit, onTopUp }
                                 <div>
                                     <label
                                         className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                                        htmlFor="grid-amount"
+                                        htmlFor="g-amount"
                                     >
                                         Amount
                                     </label>
                                     <input
                                         required
                                         className="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
-                                        id="grid-amount"
+                                        id="g-amount"
                                         placeholder="Enter amount"
                                         type="number"
                                         onChange={({ currentTarget: { value } }) => setModel({ ...model, amount: value })}
                                     />
+                                </div>
+                                <div>
+                                    <label
+                                        className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                                        htmlFor="g-currency"
+                                    >
+                                        Currency
+                                    </label>
+                                    <select
+                                        id="g-currency"
+                                        required
+                                        onChange={({ currentTarget: { value } }) => {
+                                            setModel({ ...model, currency: value });
+                                        }}
+                                        className="w-full login__input input rounded-lg input--lg border-2 border-gray-300 block hover:border-theme-1 resize-none font-semibold"
+                                    >
+                                        <option value="">Select Currency</option>
+                                        {["$", "€", "£"].map((item, idx) => (
+                                            <option key={idx} value={item}>
+                                                {item}
+                                            </option>
+                                        ))}
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -221,8 +272,8 @@ const ActiveInvestmentItems: FC<iProps> = ({ items, onClose, onCredit, onTopUp }
                             <button
                                 type="button"
                                 onClick={async () => {
-                                    if (model && model.amount) {
-                                        onTopUp({ id: active.id, amount: parseInt(model.amount) });
+                                    if (model && model.amount && model.currency) {
+                                        onTopUp({ id: active.id, amount: parseInt(model.amount), currency: model.currency });
                                         document.getElementById("top_cancel")?.click();
                                     } else {
                                         window.alert("Amount and reason are required!");

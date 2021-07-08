@@ -302,8 +302,8 @@ export const CREDIT_INVESTMENT = gql`
 `;
 
 export const ADMIN_TOP_UP_INVESTMENT = gql`
-    mutation AdminInvestmentTopUp($id: ID!, $amount: Int!) {
-        AdminInvestmentTopUp(id: $id, amount: $amount) {
+    mutation AdminInvestmentTopUp($id: ID!, $amount: Int!, $currency: String!) {
+        AdminInvestmentTopUp(id: $id, amount: $amount, currency: $currency) {
             message
         }
     }
