@@ -14,6 +14,8 @@ interface iProps {
 const ActiveInvestmentItems: FC<iProps> = ({ items, onClose, onCredit, onTopUp }) => {
     const [active, setActive] = useState<any>();
     const [model, setModel] = useState<any>();
+    const [credit, setCredit] = useState<any>(true);
+
     if (items.length)
         return (
             <>
@@ -24,7 +26,6 @@ const ActiveInvestmentItems: FC<iProps> = ({ items, onClose, onCredit, onTopUp }
                                 <th className="text-center whitespace-no-wrap">#</th>
                                 <th className="whitespace-no-wrap">Investor</th>
                                 <th className="text-left whitespace-no-wrap">Investment Date</th>
-                                <th className="text-left whitespace-no-wrap">Plan</th>
                                 <th className="text-left whitespace-no-wrap">investment made</th>
                                 <th className="whitespace-no-wrap"></th>
                             </tr>
@@ -61,9 +62,9 @@ const ActiveInvestmentItems: FC<iProps> = ({ items, onClose, onCredit, onTopUp }
                                     </td>
 
                                     <td className="text-left">
+                                        <p> {item.plan.title}</p>
                                         <div className="font-medium text-theme-9">{CleanDate(item.created_at, true)}</div>
                                     </td>
-                                    <td className="text-left">{item.plan.title}</td>
                                     <td className="text-left">
                                         {item.compounded?.status ? (
                                             <>
@@ -123,7 +124,7 @@ const ActiveInvestmentItems: FC<iProps> = ({ items, onClose, onCredit, onTopUp }
                         <div className="p-5">
                             <div className="grid gap-4">
                                 <div className="my-6">
-                                    <div className="font-bold uppercase">Credit investment</div>
+                                    <div className="font-bold uppercase">{credit ? "Credit investment" : "Debit Investment"}</div>
                                     <div className="w-6 h-1 bg-theme-1"></div>
                                 </div>
                                 <div>
@@ -181,6 +182,22 @@ const ActiveInvestmentItems: FC<iProps> = ({ items, onClose, onCredit, onTopUp }
                                         ))}
                                     </select>
                                 </div>
+                                <div className="flex items-center p-2 border rounded-lg">
+                                    <label className="mr-auto font-medium" htmlFor="show">
+                                        {credit ? "Credit investment" : "Debit Investment"}
+                                    </label>
+                                    <div className="mt-2">
+                                        <input
+                                            onChange={({ currentTarget: { checked } }) => {
+                                                setCredit(checked);
+                                            }}
+                                            checked={credit}
+                                            type="checkbox"
+                                            id="show"
+                                            className="input input--switch border"
+                                        />
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div className="px-5 pb-8 text-center">
@@ -201,7 +218,8 @@ const ActiveInvestmentItems: FC<iProps> = ({ items, onClose, onCredit, onTopUp }
                                             ...model,
                                             investment: active?.id,
                                             amount: parseInt(model.amount),
-                                            currency: model.currency
+                                            currency: model.currency,
+                                            credit
                                         });
                                         document.getElementById("cancel__credit")?.click();
                                     } else {

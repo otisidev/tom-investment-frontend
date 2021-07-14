@@ -51,7 +51,8 @@ input:checked ~ .toggle__dot {
     background-color: #412e7a !important;
 }
 
-.side-nav > ul > li > .side-menu.side-menu--active .side-menu__icon , .breadcrumb .breadcrumb--active{
+.side-nav > ul > li > .side-menu.side-menu--active .side-menu__icon,
+.breadcrumb .breadcrumb--active {
     color: #412e7a !important;
 }
 
@@ -59,12 +60,14 @@ input:checked ~ .toggle__dot {
     background-color: #412e7a;
 }
 
-.side-nav__devider, .menu__devider {
+.side-nav__devider,
+.menu__devider {
     background-color: #010101 !important;
 }
 
 .side-nav .side-menu,
-.side-nav > ul > li > .side-menu.side-menu--active .side-menu__title,.mobile-menu .menu {
+.side-nav > ul > li > .side-menu.side-menu--active .side-menu__title,
+.mobile-menu .menu {
     color: #010101 !important;
 }
 
@@ -83,4 +86,9 @@ input:checked ~ .toggle__dot {
 }
 .login:before {
     background-image: none;
+}
+
+.input.input--switch[type="checkbox"]:checked {
+    background-color: #14ca6f;
+    border-color: #14ca6f;
 }

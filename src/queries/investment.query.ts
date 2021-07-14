@@ -308,3 +308,29 @@ export const ADMIN_TOP_UP_INVESTMENT = gql`
         }
     }
 `;
+
+export const GET_INVESTMENT_STATUS = gql`
+    query GetInvestmentInformation($email: String!) {
+        GetInvestmentInformation(email: $email) {
+            message
+            docs {
+                id
+                investment_made
+                balance
+                created_at
+                logs {
+                    amount
+                    id
+                    reason
+                    date
+                }
+                topups {
+                    id
+                    amount
+                    approved
+                    created_at
+                }
+            }
+        }
+    }
+`;

@@ -14,6 +14,7 @@ import SecuredRoute from "./components/SecuredRoute";
 import AppAccount from "./pages/app-account/index";
 import Verify from "./pages/Verify";
 import NewPassword from "./pages/NewPassword";
+import InvestmentStatus from "./pages/investment-status";
 
 function App() {
     document.body.className = "app";
@@ -26,6 +27,7 @@ function App() {
                 <SecuredRoute path="/app" component={AppAccount} />
                 <Route path="/account/verify" component={Verify} />
                 <Route path="/rest/new-password" component={NewPassword} />
+                <Route path="/investment-status" component={InvestmentStatus} />
                 <Route component={Login} />
             </Switch>
             <ToastContainer position="top-center" />
