@@ -15,13 +15,13 @@ interface iProp {
 
 const InvestmentHistory: FC<iProp> = ({ match }) => {
     const { t } = useTranslation();
-    const [page, setPage] = useState(1);
+    const [page] = useState(1);
     const [limit] = useState(25);
     const { id } = match.params;
 
     const { loading, data } = useQuery(GET_HISTORY, {
         variables: { id, page, limit },
-        onError: (er) => toast.error(CleanMessage(er.message)),
+        onError: (er) => toast.error(CleanMessage(er.message))
     });
 
     return (

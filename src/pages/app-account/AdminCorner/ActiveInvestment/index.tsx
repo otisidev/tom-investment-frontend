@@ -17,7 +17,7 @@ const ActiveInvestment = () => {
     const [page, setPage] = useState<number>(1);
     const [user, setUser] = useState<any>(null);
 
-    const { loading, data, fetchMore, refetch } = useQuery(GET_ACTIVE, {
+    const { loading, data, fetchMore } = useQuery(GET_ACTIVE, {
         variables: { page, limit, user },
         onError: (er) => toast.error(CleanMessage(er.message)),
         notifyOnNetworkStatusChange: true

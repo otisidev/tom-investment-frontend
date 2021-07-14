@@ -14,7 +14,7 @@ import NewInvestment from "./NewInvestment";
 const YourInvestment = () => {
     const { t } = useTranslation();
 
-    const [page, setPage] = useState(1);
+    const [page] = useState(1);
     const [limit] = useState(25);
     const [newItem, setNewItem] = useState(false);
 

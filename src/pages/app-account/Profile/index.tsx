@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Helmet } from "react-helmet";
 import { AppName } from "../../../context/App";
 import { useTranslation } from "react-i18next";

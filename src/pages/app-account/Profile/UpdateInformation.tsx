@@ -22,7 +22,7 @@ const UpdateInformation = () => {
                 authService.Login(data.UpdateAccount.doc, token);
             }
         },
-        onError: (er) => toast.error(CleanMessage(er.message)),
+        onError: (er) => toast.error(CleanMessage(er.message))
     });
 
     const [update2FAFunc, { loading: _loading }] = useMutation(UPDATE_2FA, {
@@ -33,7 +33,7 @@ const UpdateInformation = () => {
                 const token = authService.GetToken();
                 authService.Login(data.Update2FA.doc, token);
             }
-        },
+        }
     });
     return (
         <>
@@ -49,9 +49,9 @@ const UpdateInformation = () => {
                                 address: model.address,
                                 walletAddress: model.wallet_address,
                                 phone: model.phone,
-                                gender: model.gender,
-                            },
-                        },
+                                gender: model.gender
+                            }
+                        }
                     });
                 }}
             >
@@ -86,7 +86,11 @@ const UpdateInformation = () => {
                                 </div>
                                 <div className="mt-3">
                                     <label>{t("gender.label")}</label>
-                                    <select defaultValue={model.gender} onChange={({ currentTarget: { value } }) => setModel({ ...model, gender: value })} className="input w-full border mt-2">
+                                    <select
+                                        defaultValue={model.gender}
+                                        onChange={({ currentTarget: { value } }) => setModel({ ...model, gender: value })}
+                                        className="input w-full border mt-2"
+                                    >
                                         <option value="Male">Male</option>
                                         <option value="Female">Female</option>
                                         <option value="Other">Others</option>
@@ -94,7 +98,12 @@ const UpdateInformation = () => {
                                 </div>
                                 <div className="mt-3">
                                     <label>{t("referral_code")}</label>
-                                    <input type="text" className="input w-full border bg-gray-100 cursor-not-allowed mt-2" placeholder="Input text" defaultValue={model.referralCode} />
+                                    <input
+                                        type="text"
+                                        className="input w-full border bg-gray-100 cursor-not-allowed mt-2"
+                                        placeholder="Input text"
+                                        defaultValue={model.referralCode}
+                                    />
                                 </div>
                             </div>
                             <div className="col-span-12 xl:col-span-6">
@@ -141,11 +150,15 @@ const UpdateInformation = () => {
                             </div>
                         </div>
                         <div className="flex justify-end mt-4">
-                            <button disabled={loading} type="submit" className="button  mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white">
+                            <button
+                                disabled={loading}
+                                type="submit"
+                                className="button  mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white"
+                            >
                                 <Save className="w-4 h-4 mr-2" /> {t("save_changes")}
                             </button>
                         </div>
-                        <LoadingIcon loading={loading} />
+                        <LoadingIcon loading={loading || _loading} />
                     </div>
                 </div>
             </form>
@@ -170,7 +183,9 @@ const UpdateInformation = () => {
                             <div className="toggle__dot absolute w-6 h-6 bg-white rounded-full shadow inset-y-0 left-0"></div>
                         </div>
 
-                        <div className="ml-3 text-gray-700 font-medium">{user.useTwoF ? <span>{t("2fa-off")}</span> : <span>{t("2fa-on")}</span>}</div>
+                        <div className="ml-3 text-gray-700 font-medium">
+                            {user.useTwoF ? <span>{t("2fa-off")}</span> : <span>{t("2fa-on")}</span>}
+                        </div>
                     </label>
                 </div>
             </div>

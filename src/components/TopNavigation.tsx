@@ -1,21 +1,5 @@
 import React from "react";
-import {
-    ChevronRight,
-    Home,
-    CreditCard,
-    Users,
-    User,
-    Settings,
-    ChevronDown,
-    Activity,
-    CheckCircle,
-    ShoppingBag,
-    ToggleRight,
-    Database,
-    Columns,
-    Edit3,
-    Shield
-} from "@styled-icons/feather";
+import { ChevronRight, User, ToggleRight, Edit3, Shield } from "@styled-icons/feather";
 import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { authService } from "./../services/Authentication.Service";

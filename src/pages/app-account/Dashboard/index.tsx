@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 import { authService } from "../../../services/Authentication.Service";
 import { useQuery } from "@apollo/react-hooks";
