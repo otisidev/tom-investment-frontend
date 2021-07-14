@@ -24,7 +24,7 @@ const InvestmentStatus = () => {
                 <title> Account verification | {AppName}</title>
             </Helmet>
 
-            <div className="container sm:px-10">
+            <div className="container sm:px-10 h-screen">
                 <div className="my-8 text-center">
                     <a href="/" className="-intro-x flex-col flex justify-center items-center pt-5">
                         <img alt="Investment bot" className="w-16" src="/dist/images/icon.png" />
