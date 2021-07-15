@@ -27,7 +27,8 @@ const ActiveInvestmentItems: FC<iProps> = ({ items, onClose, onCredit, onTopUp }
                                 <th className="whitespace-no-wrap">Investor</th>
                                 <th className="text-left whitespace-no-wrap">Investment Date</th>
                                 <th className="text-left whitespace-no-wrap">investment made</th>
-                                <th className="whitespace-no-wrap"></th>
+                                <th className="text-left whitespace-no-wrap">Balance</th>
+                                <th className="whitespace-no-wrap text-center">actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -43,7 +44,7 @@ const ActiveInvestmentItems: FC<iProps> = ({ items, onClose, onCredit, onTopUp }
                                                 <img
                                                     alt={item.user.firstname}
                                                     className="rounded-full"
-                                                    src={item.user.image || "/dist/images/profile-5.jpg"}
+                                                    src={item.user.image || "/dist/images/profile.jpg"}
                                                 />
                                             </div>
                                             <div className="lg:ml-4 lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">
@@ -79,6 +80,9 @@ const ActiveInvestmentItems: FC<iProps> = ({ items, onClose, onCredit, onTopUp }
                                                 <b>Weekly Payout: </b> £{toCurrency(item.payout_weekly)}
                                             </>
                                         )}
+                                    </td>
+                                    <td className="text-left">
+                                        <h4 className="text-theme-9 text-lg">£{toCurrency(item.balance)}</h4>
                                     </td>
                                     <td className="table-report__action">
                                         <div className="flex justify-center items-center">

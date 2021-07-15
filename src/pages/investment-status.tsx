@@ -21,7 +21,7 @@ const InvestmentStatus = () => {
     return (
         <>
             <Helmet>
-                <title> Account verification | {AppName}</title>
+                <title> Investment Status | {AppName}</title>
             </Helmet>
 
             <div className="container sm:px-10 h-screen">
