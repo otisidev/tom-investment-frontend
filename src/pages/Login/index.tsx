@@ -38,7 +38,7 @@ const Login: FC<iProp> = ({ history, location }) => {
                 if (t) {
                     authService.Login(doc, t);
                     const { from } = location.state || {
-                        from: { pathname: "/app" },
+                        from: { pathname: "/app" }
                     };
                     document.location.href = from.pathname;
                 } else {
@@ -46,7 +46,7 @@ const Login: FC<iProp> = ({ history, location }) => {
                     setShowToken(true);
                 }
             }
-        },
+        }
     });
 
     if (authService.IsAuthenticated()) return <Redirect to="/app" />;
@@ -62,14 +62,14 @@ const Login: FC<iProp> = ({ history, location }) => {
             <div className="container sm:px-10">
                 <div className="block xl:grid grid-cols-2 gap-4">
                     <div className="hidden xl:flex flex-col min-h-screen">
-                        <a href="https://tominvestment.com/" className="-intro-x flex items-center pt-5">
-                            <img alt="Investment bot" className="w-6" src="dist/images/icon.svg" />
+                        <a href="/" className="-intro-x flex items-center pt-5">
+                            <img alt="Investment bot" className="w-6" src="dist/images/icon.png" />
                             <span className="text-theme-1 text-lg ml-3">
-                                Tom<span className="font-medium">Investment</span>
+                                Timo Stephan<span className="font-medium">Investment</span>
                             </span>
                         </a>
                         <div className="my-auto">
-                            <img alt="investment bot" className="-intro-x w-3/4 -mt-16" src="dist/images/login-bg.png" />
+                            <img alt="investment bot" className="-intro-x w-3/4 -mt-16" src="dist/images/login-bg.svg" />
                             <div className="-intro-x text-theme-1 font-medium text-4xl leading-tight mt-10">
                                 {t("login_title")}
                                 <br />
@@ -152,6 +152,11 @@ const Login: FC<iProp> = ({ history, location }) => {
                                     >
                                         {t("sign_up")} <UserPlus size={18} className="text-theme-1" />
                                     </button>
+                                </div>
+                                <div className="mt-8 intro-y">
+                                    <NavLink to="/investment-status">
+                                        <button className="button border p-3 border-theme-3 text-theme-3">Check Investment Status</button>
+                                    </NavLink>
                                 </div>
                             </form>
                             <div className="intro-x mt-10 xl:mt-24 text-gray-700 text-center xl:text-left">

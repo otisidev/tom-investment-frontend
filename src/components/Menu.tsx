@@ -3,20 +3,20 @@ import { Home, CreditCard, Users, User, Settings, Activity, CheckCircle, Shoppin
 import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { authService } from "./../services/Authentication.Service";
+import { Cash, Wallet } from "@styled-icons/ionicons-outline";
 
 const AppMenu = () => {
     const { t } = useTranslation();
     const user = authService.GetUser();
     return (
         <nav className="side-nav">
-            <a href="/" className="intro-x flex items-center pl-5 pt-4">
-                <img alt="Tom Investment" className="w-6" src="/dist/images/icon.svg" />
+            <a href="/" className="intro-x flex items-center pl-5 p2-4">
+                <img alt="Timo Stephan Investment" className="w-10" src="/dist/images/icon.png" />
                 <span className="text-theme-1 text-lg ml-3">
-                    Tom<span className="font-bold">Investment</span>
+                    Timo <span className="font-bold">Stephan</span>
                 </span>
             </a>
-            <div className="side-nav__devider my-6"></div>
-            <ul>
+            <ul className="my-6">
                 <li>
                     <NavLink exact to="/app" className="side-menu" activeClassName="side-menu--active">
                         <div className="side-menu__icon">
@@ -94,6 +94,14 @@ const AppMenu = () => {
                                 <div className="side-menu__title">Contact Person</div>
                             </NavLink>
                         </li>
+                        <li>
+                            <NavLink to="/app/currency" className="side-menu" activeClassName="side-menu--active">
+                                <div className="side-menu__icon">
+                                    <Cash size={18} />
+                                </div>
+                                <div className="side-menu__title">Currency Settings</div>
+                            </NavLink>
+                        </li>
                         <div className="side-nav__devider my-6"></div>
                         <li>
                             <NavLink exact to="/app/payout" className="side-menu" activeClassName="side-menu--active">
@@ -125,6 +133,14 @@ const AppMenu = () => {
                                     <Users size={18} />
                                 </div>
                                 <div className="side-menu__title">Referral Bonus</div>
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink exact to="/app/top-up" className="side-menu" activeClassName="side-menu--active">
+                                <div className="side-menu__icon">
+                                    <Wallet size={18} />
+                                </div>
+                                <div className="side-menu__title">Top-up Request</div>
                             </NavLink>
                         </li>
                     </>

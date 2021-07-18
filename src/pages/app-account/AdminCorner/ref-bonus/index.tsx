@@ -10,10 +10,10 @@ import { LoadingIcon } from "../../../../components/Button";
 
 const ReferralBonus = () => {
     const title = "Referral Bonus";
-    const [page, setPage] = useState<number>(1);
+    const [page] = useState<number>(1);
     const [limit] = useState<number>(25);
 
-    const { loading, data, fetchMore } = useQuery(PAYABLE_REFERRALS, {
+    const { loading, data } = useQuery(PAYABLE_REFERRALS, {
         onError: (er) => toast.error(CleanMessage(er.message)),
         variables: {
             page,

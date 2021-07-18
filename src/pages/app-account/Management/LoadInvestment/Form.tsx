@@ -131,7 +131,7 @@ const InvestmentForm: FC<iProp> = ({ onSubmit }) => {
                                             }
                                         />
                                         <p className="text-gray-600 text-xs italic">
-                                            {t("min-amount")} ${toCurrency(plan?.amount)}
+                                            {t("min-amount")} £{toCurrency(plan?.amount)}
                                         </p>
                                     </div>
                                 </div>

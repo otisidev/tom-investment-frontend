@@ -110,7 +110,7 @@ const InvestmentApprovalItems = () => {
 
     return (
         <div>
-            <LoadingIcon loading={loading || dLoading} />
+            <LoadingIcon loading={loading || dLoading || aLoading} />
             <div className="grid grid-cols-12 gap-6 mt-5">
                 <div className="intro-y col-span-12 flex flex-wrap sm:flex-no-wrap items-center mt-2">
                     {data && data.GetInvestmentsForApproval.docs.length > 0 && (
@@ -165,7 +165,7 @@ const InvestmentApprovalItems = () => {
                                             <div className="font-medium">{item.user.nationality}</div>
                                         </td>
                                         <td className="text-center">
-                                            <div className="font-medium text-theme-9">${toCurrency(item.investment_made)}</div>
+                                            <div className="font-medium text-theme-9">£{toCurrency(item.investment_made)}</div>
                                             <p>{item.plan.title}</p>
                                         </td>
                                         <td className="text-left">

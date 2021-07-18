@@ -53,7 +53,7 @@ const PlanItems: FC<iProps> = ({ items }) => {
                                     </td>
                                     <td>{item.title}</td>
                                     <td className="text-center font-bold">
-                                        ${toCurrency(item.amount)} - ${toCurrency(item.max_amount)}
+                                        £{toCurrency(item.amount)} - £{toCurrency(item.max_amount)}
                                     </td>
                                     <td className="text-center font-bold">{item.percent}%</td>
                                     {/* <td className="text-center">
@@ -64,7 +64,7 @@ const PlanItems: FC<iProps> = ({ items }) => {
                                         )}
                                     </td> */}
                                     <td className="table-report__action w-56">
-                                        <div className="flex justify-center items-center">
+                                        <div className="flex justify-center items-center py-4">
                                             <a
                                                 href="javascript:;"
                                                 onClick={() => setActive(item)}

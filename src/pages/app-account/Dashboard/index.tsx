@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 import { authService } from "../../../services/Authentication.Service";
 import { useQuery } from "@apollo/react-hooks";
@@ -99,7 +99,7 @@ const Dashboard = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="text-3xl font-bold leading-8 mt-6">${toCurrency(data.SumInvestmentMade)}</div>
+                                    <div className="text-3xl font-bold leading-8 mt-6">£{toCurrency(data.SumInvestmentMade)}</div>
                                     <div className="text-base text-gray-600 mt-1">{t("investment.made")}</div>
                                 </div>
                             </div>

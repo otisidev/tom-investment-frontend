@@ -18,6 +18,8 @@ export class Investment {
     plan = new Plan();
     user = new User();
     compounded? = new InvestmentCompound();
+    logs = [];
+    topups = [];
 }
 
 class InvestmentCompound {

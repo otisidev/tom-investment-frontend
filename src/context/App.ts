@@ -17,7 +17,7 @@ export const AppUploadUrl = () => REACT_APP_UploadBaseUrl || "";
 
 export const UploadPreset = () => REACT_APP_UploadPreset || "";
 
-export const AppName = "Tom Investment Services";
+export const AppName = "Timo Investment Company";
 
 export const CleanMessage = (message: string) => {
     if (message?.includes("Unauthorized access!")) {
@@ -48,7 +48,7 @@ export const CleanDate = (date: string, onlyDate = false, short = true) =>
 
 export const toCurrency = (value: any): string => {
     if (value) {
-        return Intl.NumberFormat("en-US").format(value);
+        return Intl.NumberFormat("en-GB").format(value);
     }
     return "0";
 };
@@ -101,3 +101,7 @@ export const CopyToClipboard = (parentId: string, content: string) => {
 function isIOS() {
     return navigator.userAgent.match(/ipad|iphone/i);
 }
+
+
+
+export const DefaultImage = "https://res.cloudinary.com/obaforex/image/upload/v1620379912/assets/imgs/isgpp_avatar_placeholder_l8cm9b.png";

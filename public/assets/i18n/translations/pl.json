@@ -204,7 +204,7 @@
     "btn.cancel": "Anuluj",
     "confirm.text": "Tego procesu nie można cofnąć.",
     "investment.instruction": "Przenieś kwotę zainwestowaną w bitcoiny na poniższy adres portfela. Po dokonaniu płatności wprowadź adres portfela transakcji i kliknij przycisk kontynuuj",
-    
+
     "token-input": "wprowadź token weryfikacyjny ...",
     "next_heading": "Krewny",
     "name.label": "Imię",
@@ -212,5 +212,11 @@
     "relationship.label": "Relacja z najbliższym krewnym",
     "2fa": "Uwierzytelnianie dwuskładnikowe",
     "2fa-off": "Wyłącz uwierzytelnianie dwuskładnikowe",
-    "2fa-on": "Włącz uwierzytelnianie dwuskładnikowe"
+    "2fa-on": "Włącz uwierzytelnianie dwuskładnikowe",
+
+    "goto.investment": "Goto Investment",
+    "top.new": "Novo Investimento Complementar",
+    "saldo": "Saldo Atual",
+    "investment.detail": "Detalhe do investimento",
+    "currency.new.plan": "Moeda de pagamento"
 }

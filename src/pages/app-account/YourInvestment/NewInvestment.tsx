@@ -12,6 +12,8 @@ import { GET_CATEGORIES } from "./../../../queries/category.query";
 import { ContactPersonModel } from "./../../../model/contact-person.model";
 import PersonList from "../AdminCorner/ContactPerson/PersonList";
 import { GET_CONTACT_PERSONS } from "./../../../queries/contact-person.query";
+import { Currency } from "../../../model/currency.model";
+import { GET_CURRENCIES } from "../../../queries/currency.query";
 
 interface iProp {
     onCancel: any;
@@ -24,22 +26,35 @@ const NewInvestment: FC<iProp> = ({ onCancel }) => {
     const { t } = useTranslation();
     const [categories, setCategories] = useState<Array<Category>>([]);
     const [contactPersons, setContactPerson] = useState<Array<ContactPersonModel>>([]);
+    const [currencies, setCurrencies] = useState<Array<Currency>>([]);
+    const [currency, setCurrency] = useState("");
 
     const [getPlanFunc, { loading: planLoading, data: planDoc }] = useLazyQuery(GET_PLANS, {
         onError: (er) => toast.error(CleanMessage(er.message))
+    });
+    const { loading: g } = useQuery(GET_CURRENCIES, {
+        onError: (er) => toast.error(CleanMessage(er.message)),
+        onCompleted: (d) => {
+            setCurrencies(d.GetCurrencies.docs);
+        }
     });
     const { loading: fetching } = useQuery(GET_CATEGORIES, {
         onError: (er) => toast.error(CleanMessage(er.message)),
         onCompleted: (d) => {
             setCategories(d.GetCategories.docs);
+            if (d.GetCategories.docs.length === 1) {
+                getPlanFunc({ variables: { category: d.GetCategories.docs[0].id } });
+            }
         }
     });
+
     const [getContactPersonFunc, { loading: _loading }] = useLazyQuery(GET_CONTACT_PERSONS, {
         onError: (er) => toast.error(CleanMessage(er.message)),
         onCompleted: (d) => {
             setContactPerson(d.GetContactPersons.docs);
         }
     });
+
     // New investment
     const [createFunc, { loading }] = useMutation(NEW_INVESTMENT, {
         onCompleted: (data) => {
@@ -64,7 +79,8 @@ const NewInvestment: FC<iProp> = ({ onCancel }) => {
                                         plan: plan?.id,
                                         investmentMade: amount,
                                         weeklyPayoutInterval: payout,
-                                        daysToPayout: payout * 7
+                                        daysToPayout: payout * 7,
+                                        currency
                                     }
                                 }
                             });
@@ -78,35 +94,42 @@ const NewInvestment: FC<iProp> = ({ onCancel }) => {
                             </h2>
                         </div>
                         <div className="p-8">
-                            <LoadingIcon loading={planLoading || loading || fetching || _loading} />
-                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-cate">
-                                {t("investment.new.category")}
-                            </label>
-                            <div className="relative mb-4">
-                                <select
-                                    onChange={async ({ currentTarget: { value } }) => {
-                                        if (value) {
-                                            await getPlanFunc({ variables: { category: value } });
-                                            await getContactPersonFunc({ variables: { category: value } });
-                                        }
-                                    }}
-                                    required
-                                    className="block appearance-none w-full bg-gray-100 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                    id="grid-cate"
-                                >
-                                    <option value="">{t("investment.new.category")}</option>
-                                    {categories.map((item, idx) => (
-                                        <option key={idx} value={item.id}>
-                                            {item.title}
-                                        </option>
-                                    ))}
-                                </select>
-                                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                                    <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                                    </svg>
-                                </div>
-                            </div>
+                            <LoadingIcon loading={planLoading || loading || fetching || _loading || g} />
+                            {categories.length > 1 && (
+                                <>
+                                    <label
+                                        className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                                        htmlFor="grid-cate"
+                                    >
+                                        {t("investment.new.category")}
+                                    </label>
+                                    <div className="relative mb-4">
+                                        <select
+                                            onChange={async ({ currentTarget: { value } }) => {
+                                                if (value) {
+                                                    await getPlanFunc({ variables: { category: value } });
+                                                    await getContactPersonFunc({ variables: { category: value } });
+                                                }
+                                            }}
+                                            required
+                                            className="block appearance-none w-full bg-gray-100 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                            id="grid-cate"
+                                        >
+                                            <option value="">{t("investment.new.category")}</option>
+                                            {categories.map((item, idx) => (
+                                                <option key={idx} value={item.id}>
+                                                    {item.title}
+                                                </option>
+                                            ))}
+                                        </select>
+                                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                            <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </>
+                            )}
                             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-state">
                                 {t("investment.new.plan")}
                             </label>
@@ -139,15 +162,16 @@ const NewInvestment: FC<iProp> = ({ onCancel }) => {
                                     </svg>
                                 </div>
                             </div>
+
                             {plan && (
                                 <>
                                     <div className="intro-y">
                                         <div className="text-gray-800 text-center mt-5">
                                             <strong>{plan.percent}% percent ROI</strong>
                                             <span className="mx-1 text-theme-1">•</span>
-                                            Minimum Investment - <strong> ${toCurrency(plan.amount)}</strong>{" "}
+                                            Minimum Investment - <strong> £{toCurrency(plan.amount)}</strong>{" "}
                                             <span className="mx-1 text-theme-1">•</span>
-                                            Maximum Investment - <strong> ${toCurrency(plan.max_amount)}</strong>
+                                            Maximum Investment - <strong> £{toCurrency(plan.max_amount)}</strong>
                                         </div>
                                     </div>
                                     <div className="flex flex-wrap -mx-3 my-6">
@@ -170,7 +194,7 @@ const NewInvestment: FC<iProp> = ({ onCancel }) => {
                                                 }
                                             />
                                             <p className="text-gray-600 text-xs italic">
-                                                {t("min-amount")} ${toCurrency(plan.amount)}
+                                                {t("min-amount")} £{toCurrency(plan.amount)}
                                             </p>
                                         </div>
                                         <div className="w-full px-3 mt-4">
@@ -196,6 +220,29 @@ const NewInvestment: FC<iProp> = ({ onCancel }) => {
                                     </div>
                                 </>
                             )}
+                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mt-2" htmlFor="grid-currency">
+                                {t("currency.new.plan")}
+                            </label>
+                            <div className="relative">
+                                <select
+                                    onChange={({ currentTarget: { value } }) => setCurrency(value)}
+                                    required
+                                    className="block appearance-none w-full bg-gray-100 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    id="grid-currency"
+                                >
+                                    <option value="-1">{t("currency.new.plan")}</option>
+                                    {currencies.map((item, idx) => (
+                                        <option key={idx} value={item.id}>
+                                            {item.name}
+                                        </option>
+                                    ))}
+                                </select>
+                                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                    <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                                    </svg>
+                                </div>
+                            </div>
                             <div className="flex justify-center sm:justify-start mt-5">
                                 <button
                                     type="submit"

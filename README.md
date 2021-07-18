@@ -1,4 +1,4 @@
-### Tom Investment service frontend application
+### Timo Stephan Investment frontend application
 
 ## Available Scripts
 

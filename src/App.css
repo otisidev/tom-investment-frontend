@@ -4,15 +4,15 @@ html {
 
 .input:focus,
 .button:focus {
-    box-shadow: 0 0 0 1.5px #0e2e2b;
+    box-shadow: 0 0 0 1.5px #010101;
 }
 
 .text-theme-1 {
-    color: #0e2e2b !important;
+    color: #010101 !important;
 }
 
 .bg-theme-1 {
-    background: #0e2e2b !important;
+    background: #010101 !important;
 }
 .bg-theme-9 {
     background: #14ca6f !important;
@@ -38,38 +38,41 @@ html {
 
 input:checked ~ .toggle__dot {
     transform: translateX(100%);
-    background-color: #0e2e2b;
+    background-color: #010101;
 }
 @media (max-width: 1279px) {
     .login {
-        background: linear-gradient(to bottom, #0e2e2b, #0e2e2b);
+        background: linear-gradient(to bottom, #010101, #010101);
     }
 }
 
 .input[type="checkbox"]:not(.input--switch):checked {
-    background-color: #0e2e2b;
-    border-color: #0e2e2b;
+    background-color: #010101;
+    border-color: #010101;
 }
 
 .side-nav > ul ul ul {
     background-color: #0e2e2b !important;
 }
 
-.side-nav > ul > li > .side-menu.side-menu--active .side-menu__icon , .breadcrumb .breadcrumb--active{
-    color: #0e2e2b !important;
+.side-nav > ul > li > .side-menu.side-menu--active .side-menu__icon,
+.breadcrumb .breadcrumb--active {
+    color: #412e7a !important;
 }
 
 .side-nav > ul > li > .side-menu:hover:not(.side-menu--active):not(.side-menu--open) .side-menu__icon:before {
     background-color: #0e2e2b;
 }
 
-.side-nav__devider, .menu__devider {
-    background-color: #0a3632 !important;
+.side-nav__devider,
+.menu__devider {
+    background-color: #010101 !important;
 }
 
 .side-nav .side-menu,
-.side-nav > ul > li > .side-menu.side-menu--active .side-menu__title,.mobile-menu .menu {
-    color: #0a3632 !important;
+.side-nav > ul > li > .side-menu.side-menu--active .side-menu__title,
+.mobile-menu .menu {
+    color: #010101 !important;
 }
 
 .side-nav > ul > li > .side-menu:not(.side-menu--active) .side-menu__icon:before {
@@ -84,4 +87,12 @@ input:checked ~ .toggle__dot {
     border-radius: 0 !important;
     border-left: solid 3px #0e2e2b !important;
     margin-left: 1em !important;
+}
+.login:before {
+    background-image: none;
+}
+
+.input.input--switch[type="checkbox"]:checked {
+    background-color: #14ca6f;
+    border-color: #14ca6f;
 }

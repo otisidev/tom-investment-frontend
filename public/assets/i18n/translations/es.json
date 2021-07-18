@@ -217,5 +217,11 @@
     "relationship.label": "Relación con los familiares más cercanos",
     "2fa": "Autenticación de dos factores",
     "2fa-off": "Deshabilitar la autenticación de dos factores",
-    "2fa-on": "Habilitar la autenticación de dos factores"
+    "2fa-on": "Habilitar la autenticación de dos factores",
+
+    "goto.investment": "Ir a inversión",
+    "top.new": "Recarga de nueva inversión",
+    "balance": "Saldo actual",
+    "investment.detail": "Detalle de la inversión",
+    "currency.new.plan": "Moneda de pago"
 }

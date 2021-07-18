@@ -69,13 +69,13 @@ const ReferralItems: FC<iProp> = ({ items }) => {
                                     </div>
                                 </td>
                                 <td className="text-center">
-                                    <div className="font-medium">${toCurrency(item.investment.investment_made)}</div>
+                                    <div className="font-medium">£{toCurrency(item.investment.investment_made)}</div>
                                 </td>
                                 <td className="text-left">
                                     <div className="font-medium">{CleanDate(item.created_at, true)}</div>
                                 </td>
                                 <td className="text-center">
-                                    <div className="font-medium">${toCurrency(item.amount)}</div>
+                                    <div className="font-medium">£{toCurrency(item.amount)}</div>
                                 </td>
                                 <td className="table-report__action w-56">
                                     <div className="flex justify-center items-center">

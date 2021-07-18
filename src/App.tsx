@@ -4,7 +4,7 @@ import "./i18n";
 import { Switch, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import CreateAccount from "./pages/CreateAccount";
-import NotFound from "./pages/404";
+// import NotFound from "./pages/404";
 import ForgotPassword from "./pages/ForgotPassword";
 
 // import toast
@@ -14,6 +14,7 @@ import SecuredRoute from "./components/SecuredRoute";
 import AppAccount from "./pages/app-account/index";
 import Verify from "./pages/Verify";
 import NewPassword from "./pages/NewPassword";
+import InvestmentStatus from "./pages/investment-status";
 
 function App() {
     document.body.className = "app";
@@ -26,7 +27,8 @@ function App() {
                 <SecuredRoute path="/app" component={AppAccount} />
                 <Route path="/account/verify" component={Verify} />
                 <Route path="/rest/new-password" component={NewPassword} />
-                <Route component={NotFound} />
+                <Route path="/investment-status" component={InvestmentStatus} />
+                <Route component={Login} />
             </Switch>
             <ToastContainer position="top-center" />
         </>
