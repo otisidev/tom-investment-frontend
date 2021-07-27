@@ -11,9 +11,9 @@ const AppMenu = () => {
     return (
         <nav className="side-nav">
             <a href="/" className="intro-x flex items-center pl-5 p2-4">
-                <img alt="Timo Stephan Investment" className="w-10" src="/dist/images/icon.png" />
+                <img alt="Timo  Investment" className="w-10" src="/dist/images/icon.png" />
                 <span className="text-theme-1 text-lg ml-3">
-                    Timo <span className="font-bold">Stephan</span>
+                    Timo <span className="font-bold"></span>
                 </span>
             </a>
             <ul className="my-6">

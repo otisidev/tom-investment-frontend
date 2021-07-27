@@ -29,7 +29,7 @@ const InvestmentStatus = () => {
                     <a href="/" className="-intro-x flex-col flex justify-center items-center pt-5">
                         <img alt="Investment bot" className="w-16" src="/dist/images/icon.png" />
                         <span className="text-theme-1">
-                            Timo Stephan<span className="font-medium">Investment</span>
+                            Timo <span className="font-medium">Investment</span>
                         </span>
                     </a>
                     <h2 className="font-bold text-xl mt-6">Investment Status</h2>
