@@ -241,3 +241,19 @@ export const UPDATE_2FA = gql`
     }
     ${USER_PROP}
 `;
+
+export const GET_REFERRER = gql`
+    query GetUserReferrer($id: ID!) {
+        GetUser(id: $id) {
+            doc {
+                id
+                referrer {
+                    id
+                    name
+                    image
+                    email
+                }
+            }
+        }
+    }
+`;

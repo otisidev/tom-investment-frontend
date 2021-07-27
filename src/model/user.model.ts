@@ -21,3 +21,12 @@ export class User {
     next_of_kin = null;
     useTwoF = false;
 }
+
+
+export interface IUser {
+    id: string;
+    name: string;
+    image: string;
+    email: string;
+    phone: string;
+}
