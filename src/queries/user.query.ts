@@ -78,12 +78,15 @@ export const GET_YOUR_REFERRALS = gql`
     query GetYourReferrals {
         GetYourReferrals {
             docs {
-                ...UserProps
+                id
+                email
+                phone
+                name
+                image
                 referralCode
             }
         }
     }
-    ${USER_PROP}
 `;
 
 export const UPDATE_IMAGE = gql`
