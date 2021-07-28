@@ -25,6 +25,7 @@ import ContactPerson from "./AdminCorner/ContactPerson";
 import SingleInvestment from "./YourInvestment/investment";
 import TopUpRequest from "./AdminCorner/top-up-request";
 import CurrencyApp from "./AdminCorner/Currency";
+import { UserReferral } from "./AdminCorner/referral";
 
 const AppAccount = () => {
     // Update css class name
@@ -63,6 +64,7 @@ const AppAccount = () => {
                         <AdminRoute path="/app/contact-person" component={ContactPerson} />
                         <AdminRoute path="/app/top-up" component={TopUpRequest} />
                         <AdminRoute path="/app/currency" component={CurrencyApp} />
+                        <AdminRoute path="/app/user-referral" component={UserReferral} />
                     </Switch>
                 </div>
             </div>

@@ -154,6 +154,7 @@ export const GET_USERS = gql`
         GetUsers(page: $page, limit: $limit, nationality: $nationality, user: $user) {
             docs {
                 ...UserProps
+                name
             }
             totalDocs
             totalPages
@@ -254,6 +255,14 @@ export const GET_REFERRER = gql`
                     email
                 }
             }
+        }
+    }
+`;
+
+export const NEW_REFERRAL = gql`
+    mutation NewReferral($referrer: ID!, $referred: ID!) {
+        NewReferral(referrer: $referrer, referred: $referred) {
+            message
         }
     }
 `;

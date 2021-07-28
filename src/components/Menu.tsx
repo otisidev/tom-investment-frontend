@@ -3,7 +3,7 @@ import { Home, CreditCard, Users, User, Settings, Activity, CheckCircle, Shoppin
 import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { authService } from "./../services/Authentication.Service";
-import { Cash, Wallet } from "@styled-icons/ionicons-outline";
+import { Cash, People, Wallet } from "@styled-icons/ionicons-outline";
 
 const AppMenu = () => {
     const { t } = useTranslation();
@@ -141,6 +141,14 @@ const AppMenu = () => {
                                     <Wallet size={18} />
                                 </div>
                                 <div className="side-menu__title">Top-up Request</div>
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink exact to="/app/user-referral" className="side-menu" activeClassName="side-menu--active">
+                                <div className="side-menu__icon">
+                                    <People size={18} />
+                                </div>
+                                <div className="side-menu__title">User Referral</div>
                             </NavLink>
                         </li>
                     </>
