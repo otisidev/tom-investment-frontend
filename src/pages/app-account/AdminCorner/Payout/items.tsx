@@ -33,7 +33,11 @@ const PayoutList: FC<iProp> = ({ items, onPay }) => {
                                 <td className="w-40">
                                     <div className="flex flex-col lg:flex-row items-center py-5">
                                         <div className="w-24 h-24 lg:w-12 lg:h-12 image-fit lg:mr-1">
-                                            <img alt={item.user.firstname} className="rounded-full" src={item.user.image || "/dist/images/profile-5.jpg"} />
+                                            <img
+                                                alt={item.user.firstname}
+                                                className="rounded-full"
+                                                src={item.user.image || "/dist/images/profile-5.jpg"}
+                                            />
                                         </div>
                                         <div className="lg:ml-4 lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">
                                             <div className="font-medium">
@@ -43,6 +47,7 @@ const PayoutList: FC<iProp> = ({ items, onPay }) => {
                                             <div className="text-gray-600 text-xs">
                                                 {item.user.gender} | {item.user.nationality}
                                             </div>
+                                            <div className="text-yellow-600 text-xs">{item.user.accountType}</div>
                                         </div>
                                     </div>
                                 </td>
@@ -72,14 +77,15 @@ const PayoutList: FC<iProp> = ({ items, onPay }) => {
                                                     weekday: "short",
                                                     day: "numeric",
                                                     month: "short",
-                                                    year: "numeric",
+                                                    year: "numeric"
                                                 }).format(new Date(item.compounded.payoutDate || new Date()))}
                                             </p>
                                         </>
                                     ) : (
                                         <>
                                             <p>
-                                                <b className="text-theme-9">Due Payout:</b> <span className="text-theme-9">£{toCurrency(item.payout_sum)}</span>
+                                                <b className="text-theme-9">Due Payout:</b>{" "}
+                                                <span className="text-theme-9">£{toCurrency(item.payout_sum)}</span>
                                             </p>
                                             <p>
                                                 <b>Weekly Payout: </b>£{toCurrency(item.payout_weekly)}
@@ -88,7 +94,10 @@ const PayoutList: FC<iProp> = ({ items, onPay }) => {
                                     )}
                                 </td>
                                 <td className="w-16">
-                                    <button onClick={() => onPay(item)} className="button flex items-center justify-center bg-theme-9 text-white">
+                                    <button
+                                        onClick={() => onPay(item)}
+                                        className="button flex items-center justify-center bg-theme-9 text-white"
+                                    >
                                         <Card className="w-4 h-4 mr-2" /> Pay
                                     </button>
                                 </td>

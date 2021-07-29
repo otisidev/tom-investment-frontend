@@ -1,7 +1,7 @@
 import React, { FC, useState } from "react";
 import { Redirect, NavLink } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { AppName, CleanDate } from "../../../context/App";
+import { AppName, CleanDate, DefaultImage } from "../../../context/App";
 import { User } from "./../../../model/user.model";
 import { Mail, Call, Planet, Person, Copy, ArrowBack, Trash, Book } from "@styled-icons/ionicons-outline";
 import { useTranslation } from "react-i18next";
@@ -148,7 +148,7 @@ const UserProfile: FC<iProp> = ({ match, history }) => {
                                                 <img
                                                     alt={u.firstname}
                                                     className="rounded-full"
-                                                    src={u.image || "/dist/images/profile-5.jpg"}
+                                                    src={u.image || DefaultImage}
                                                 />
                                             </div>
                                             <div className="lg:ml-2 lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">

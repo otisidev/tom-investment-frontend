@@ -58,6 +58,9 @@ const ActiveInvestmentItems: FC<iProps> = ({ items, onClose, onCredit, onTopUp }
                                                 <div className="text-gray-600 text-xs">
                                                     {item.user.gender} | <span className="text-theme-1">{item.user.nationality}</span>
                                                 </div>
+                                                <div className="text-yellow-600 text-xs">
+                                                    {item.user.accountType}
+                                                </div>
                                             </div>
                                         </div>
                                     </td>
