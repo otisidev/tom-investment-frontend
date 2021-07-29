@@ -97,13 +97,13 @@ const YourReferral = () => {
                         <h2 className="uppercase text-lg font-medium">Referral list</h2>
                         <div className="w-6 h-1 bg-yellow-600"></div>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 xxl:grid-cols-4 gap-2 lg:gap-6">
                         {users.map((item, idx) => (
                             <div key={idx} className="intro-y flex items-center box rounded-xl px-4 py-6">
                                 <img className="w-20 rounded-full border shadow  mr-4" src={item.image || DefaultImage} alt={item.name} />
                                 <div className="mr-auto">
                                     <h2 className="font-bold text-lg">{item.name}</h2>
-                                    <span className="text-gray-600">{item.email}</span>
+                                    <span className="text-xs text-gray-600">{item.email}</span>
                                 </div>
                             </div>
                         ))}

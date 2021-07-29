@@ -3,7 +3,7 @@ import { Redirect, NavLink } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { AppName, CleanDate } from "../../../context/App";
 import { User } from "./../../../model/user.model";
-import { Mail, Call, Planet, Person, Copy, ArrowBack, Trash } from "@styled-icons/ionicons-outline";
+import { Mail, Call, Planet, Person, Copy, ArrowBack, Trash, Book } from "@styled-icons/ionicons-outline";
 import { useTranslation } from "react-i18next";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import { toast } from "react-toastify";
@@ -94,6 +94,10 @@ const UserProfile: FC<iProp> = ({ match, history }) => {
                                     <div className="truncate sm:whitespace-normal flex items-center mt-3">
                                         <Person className="w-4 h-4 mr-2 text-theme-1" />
                                         {user.gender}
+                                    </div>
+                                    <div className="truncate sm:whitespace-normal flex items-center mt-3 text-yellow-600">
+                                        <Book className="w-4 h-4 mr-2 text-theme-1" />
+                                        {user.accountType}
                                     </div>
                                 </div>
                             </div>

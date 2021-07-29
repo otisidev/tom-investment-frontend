@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { CleanDate } from "../../../context/App";
 import { useQuery } from "@apollo/react-hooks";
 import { GET_COUNT_USER } from "../../../queries/statistics.query";
+import { Book } from "@styled-icons/ionicons-outline";
 
 interface IProps {
     user: User;
@@ -30,7 +31,7 @@ const UserInformation: FC<IProps> = ({ user }) => {
                     </h2>
                 </div>
                 <div className="p-5">
-                    <div className="flex flex-col lg:flex-row border-b border-gray-200 pb-5 -mx-5">
+                    <div className="flex flex-col xxl:flex-row border-b border-gray-200 pb-5 -mx-5">
                         <div className="flex flex-1 px-5 items-center justify-center lg:justify-start">
                             <div className="w-20 h-20 sm:w-24 sm:h-24 flex-none lg:w-32 lg:h-32 image-fit relative border-2 border-purple-600 rounded-full">
                                 <img alt={user.firstname} className="rounded-full" src={user.image || "/dist/images/profile.png"} />
@@ -42,7 +43,7 @@ const UserInformation: FC<IProps> = ({ user }) => {
                                 <div className="text-gray-600">Investor</div>
                             </div>
                         </div>
-                        <div className="flex mt-6 lg:mt-0 items-center lg:items-start flex-1 flex-col justify-center text-gray-600 px-5 border-l border-r border-gray-200 border-t lg:border-t-0 pt-5 lg:pt-0">
+                        <div className="flex mt-6 xxl:mt-0 items-center lg:items-start flex-1 flex-col justify-center text-gray-600 px-5 border-l border-r border-gray-200 border-t lg:border-t-0 pt-5 lg:pt-0">
                             <div className="truncate sm:whitespace-normal flex items-center">
                                 <Mail className="w-4 h-4 mr-2" />
                                 {user.email}
@@ -59,8 +60,12 @@ const UserInformation: FC<IProps> = ({ user }) => {
                                 <UserIcon className="w-4 h-4 mr-2" />
                                 {user.gender}
                             </div>
+                            <div className="truncate sm:whitespace-normal text-yellow-600 flex items-center mt-3">
+                                <Book className="w-4 h-4 mr-2" />
+                                {user.accountType}
+                            </div>
                         </div>
-                        <div className="mt-6 lg:mt-0 flex-1 flex items-center justify-center px-5 border-t lg:border-0 border-gray-200 pt-5 lg:pt-0">
+                        <div className="mt-6 xxl:mt-0 flex-1 flex items-center justify-center px-5 border-t lg:border-0 border-gray-200 pt-5 lg:pt-0">
                             <div className="text-center rounded-md w-20 py-3">
                                 <div className="font-semibold text-theme-1 text-lg">{invests}</div>
                                 <div className="text-gray-600">{t("side.investment")}</div>

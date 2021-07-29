@@ -1,7 +1,7 @@
 import React, { FC, useState } from "react";
 import { Helmet } from "react-helmet";
 import { AppName } from "../../context/App";
-import PrimaryButton, { ButtonType, LoadingIcon } from "../../components/Button";
+import PrimaryButton, { ButtonType } from "../../components/Button";
 import { ArrowLeft, UserPlus, ArrowRight, LogIn as LoginIcon } from "@styled-icons/feather";
 import { useTranslation } from "react-i18next";
 import Select from "react-select";
@@ -11,6 +11,7 @@ import { useMutation } from "@apollo/react-hooks";
 import { NEW_ACCOUNT } from "../../queries/user.query";
 import { authService } from "../../services/Authentication.Service";
 import { CleanMessage } from "./../../context/App";
+import AccountType from "../../data/account-type.json";
 
 interface iProp {
     history?: any;
@@ -92,38 +93,40 @@ const CreateAccount: FC<iProp> = ({ history, location }) => {
                                 <div className="intro-x mt-8">
                                     {step === 1 && (
                                         <>
-                                            <div>
-                                                <label htmlFor="fName">{t("name.first.label")}</label>
-                                                <input
-                                                    required
-                                                    type="text"
-                                                    defaultValue={user?.firstname}
-                                                    className="intro-x login__input input w-full input--lg border border-gray-300"
-                                                    onChange={({ currentTarget }) =>
-                                                        setUser({
-                                                            ...user,
-                                                            firstname: currentTarget.value
-                                                        })
-                                                    }
-                                                    placeholder={t("name.first.label")}
-                                                />
-                                            </div>
+                                            <div className="grid gap-2 grid-cols-2">
+                                                <div>
+                                                    <label htmlFor="fName">{t("name.first.label")}</label>
+                                                    <input
+                                                        required
+                                                        type="text"
+                                                        defaultValue={user?.firstname}
+                                                        className="intro-x input w-full input--lg border border-gray-300"
+                                                        onChange={({ currentTarget }) =>
+                                                            setUser({
+                                                                ...user,
+                                                                firstname: currentTarget.value
+                                                            })
+                                                        }
+                                                        placeholder={t("name.first.label")}
+                                                    />
+                                                </div>
 
-                                            <div className="mt-4">
-                                                <label htmlFor="lName">{t("name.last.label")}</label>
-                                                <input
-                                                    onChange={({ target }) =>
-                                                        setUser({
-                                                            ...user,
-                                                            lastname: target.value
-                                                        })
-                                                    }
-                                                    defaultValue={user?.lastname}
-                                                    required
-                                                    type="text"
-                                                    className="intro-x login__input input w-full input--lg border border-gray-300 block"
-                                                    placeholder={t("name.last.label")}
-                                                />
+                                                <div className="">
+                                                    <label htmlFor="lName">{t("name.last.label")}</label>
+                                                    <input
+                                                        onChange={({ target }) =>
+                                                            setUser({
+                                                                ...user,
+                                                                lastname: target.value
+                                                            })
+                                                        }
+                                                        defaultValue={user?.lastname}
+                                                        required
+                                                        type="text"
+                                                        className="intro-x input w-full input--lg border border-gray-300 block"
+                                                        placeholder={t("name.last.label")}
+                                                    />
+                                                </div>
                                             </div>
 
                                             <div className="mt-4">
@@ -138,7 +141,7 @@ const CreateAccount: FC<iProp> = ({ history, location }) => {
                                                         })
                                                     }
                                                     type="email"
-                                                    className="intro-x login__input input w-full input--lg border border-gray-300 block"
+                                                    className="intro-x input w-full input--lg border border-gray-300 block"
                                                     name="email"
                                                     placeholder={t("email.label")}
                                                 />
@@ -154,38 +157,66 @@ const CreateAccount: FC<iProp> = ({ history, location }) => {
                                                     }
                                                     required
                                                     type="text"
-                                                    className="intro-x login__input input w-full input--lg border border-gray-300 block"
+                                                    className="intro-x input w-full input--lg border border-gray-300 block"
                                                     placeholder={t("phone.label")}
                                                     defaultValue={user?.phone}
                                                 />
                                             </div>
                                             <div className="intro-x mt-4">
-                                                <label htmlFor="gender">{t("gender.label")}</label>
-                                                <Select
-                                                    className="login__input"
-                                                    isMulti={false}
-                                                    defaultValue={user?.gender}
-                                                    onChange={(item: any) =>
-                                                        setUser({
-                                                            ...user,
-                                                            gender: item.value
-                                                        })
-                                                    }
-                                                    placeholder={t("gender.label")}
-                                                    options={[
-                                                        { value: "Male", label: "Male" },
-                                                        { value: "Female", label: "Female" },
-                                                        { value: "Others", label: "Others" }
-                                                    ]}
-                                                    theme={(theme) => ({
-                                                        ...theme,
-                                                        colors: {
-                                                            ...theme.colors,
-                                                            primary25: "#a996e0",
-                                                            primary: "#574294"
-                                                        }
-                                                    })}
-                                                />
+                                                <div className="grid gap-2 grid-cols-2">
+                                                    <div>
+                                                        <label htmlFor="account">Account Type</label>
+                                                        <Select
+                                                            id="accountType"
+                                                            isMulti={false}
+                                                            defaultValue={user?.accountType}
+                                                            onChange={(item: any) =>
+                                                                setUser({
+                                                                    ...user,
+                                                                    accountType: item.value
+                                                                })
+                                                            }
+                                                            placeholder="Select type"
+                                                            options={AccountType}
+                                                            theme={(theme) => ({
+                                                                ...theme,
+                                                                colors: {
+                                                                    ...theme.colors,
+                                                                    primary25: "#a996e0",
+                                                                    primary: "#574294"
+                                                                }
+                                                            })}
+                                                        />
+                                                    </div>
+                                                    <div>
+                                                        <label htmlFor="gender">{t("gender.label")}</label>
+                                                        <Select
+                                                            id="gender"
+                                                            isMulti={false}
+                                                            defaultValue={user?.gender}
+                                                            onChange={(item: any) =>
+                                                                setUser({
+                                                                    ...user,
+                                                                    gender: item.value
+                                                                })
+                                                            }
+                                                            placeholder={t("gender.label")}
+                                                            options={[
+                                                                { value: "Male", label: "Male" },
+                                                                { value: "Female", label: "Female" },
+                                                                { value: "Others", label: "Others" }
+                                                            ]}
+                                                            theme={(theme) => ({
+                                                                ...theme,
+                                                                colors: {
+                                                                    ...theme.colors,
+                                                                    primary25: "#a996e0",
+                                                                    primary: "#574294"
+                                                                }
+                                                            })}
+                                                        />
+                                                    </div>
+                                                </div>
                                             </div>
 
                                             <div className="mt-4">
@@ -197,7 +228,7 @@ const CreateAccount: FC<iProp> = ({ history, location }) => {
                                                             nationality: item.value
                                                         })
                                                     }
-                                                    className="intro-x block border-theme-1"
+                                                    className="border-theme-1"
                                                     isMulti={false}
                                                     defaultValue={user?.nationality}
                                                     placeholder={t("nation.label")}
@@ -224,7 +255,7 @@ const CreateAccount: FC<iProp> = ({ history, location }) => {
                                                 <input
                                                     type="text"
                                                     required
-                                                    className="intro-x login__input input w-full input--lg border border-gray-300 block"
+                                                    className="intro-x input w-full input--lg border border-gray-300 block"
                                                     onChange={({ currentTarget: { value } }) =>
                                                         setUser({
                                                             ...user,
@@ -247,7 +278,7 @@ const CreateAccount: FC<iProp> = ({ history, location }) => {
                                                     }
                                                     required
                                                     type="date"
-                                                    className="intro-x login__input input w-full input--lg border border-gray-300 block"
+                                                    className="intro-x input w-full input--lg border border-gray-300 block"
                                                     name="dob"
                                                     title="Data of birth"
                                                     placeholder={t("dob.label")}
@@ -266,7 +297,7 @@ const CreateAccount: FC<iProp> = ({ history, location }) => {
                                                     }
                                                     type="text"
                                                     required
-                                                    className="intro-x login__input input w-full input--lg border border-gray-300 block"
+                                                    className="intro-x input w-full input--lg border border-gray-300 block"
                                                     name="ContactAddress"
                                                     id="ContactAddress"
                                                     placeholder={t("address.label")}
@@ -286,7 +317,7 @@ const CreateAccount: FC<iProp> = ({ history, location }) => {
                                                     type="text"
                                                     name="referral code"
                                                     id="referral_code"
-                                                    className="login__input input w-full input--lg border border-gray-300 block"
+                                                    className="input w-full input--lg border border-gray-300 block"
                                                     placeholder={t("referral_code")}
                                                     defaultValue={user?.referralCode}
                                                 />
@@ -303,7 +334,7 @@ const CreateAccount: FC<iProp> = ({ history, location }) => {
                                                     }
                                                     required
                                                     type="password"
-                                                    className="intro-x login__input input w-full input--lg border border-gray-300 block"
+                                                    className="intro-x input w-full input--lg border border-gray-300 block"
                                                     placeholder={t("password.label")}
                                                     defaultValue={user?.password}
                                                 />
@@ -320,7 +351,7 @@ const CreateAccount: FC<iProp> = ({ history, location }) => {
                                                     })
                                                 }
                                                 type="password"
-                                                className="intro-x login__input input w-full input--lg border border-gray-300 block"
+                                                className="intro-x input w-full input--lg border border-gray-300 block"
                                                 placeholder={t("password.confirm.text")}
                                                 defaultValue={user?.re_password}
                                             />

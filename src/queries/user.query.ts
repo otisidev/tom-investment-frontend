@@ -16,6 +16,7 @@ const USER_PROP = gql`
         dob
         verified
         image
+        accountType
         referred {
             id
             firstname

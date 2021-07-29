@@ -20,8 +20,8 @@ export class User {
     referralCode = "";
     next_of_kin = null;
     useTwoF = false;
+    accountType = "";
 }
-
 
 export interface IUser {
     id: string;
