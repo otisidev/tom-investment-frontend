@@ -3,16 +3,17 @@ import { Redirect, NavLink } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { AppName, CleanDate, DefaultImage } from "../../../context/App";
 import { User } from "./../../../model/user.model";
-import { Mail, Call, Planet, Person, Copy, ArrowBack, Trash, Book } from "@styled-icons/ionicons-outline";
+import { Mail, Call, Planet, Person, Copy, ArrowBack, Trash, Close, CheckmarkDone } from "@styled-icons/ionicons-outline";
 import { useTranslation } from "react-i18next";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import { toast } from "react-toastify";
 import { CleanMessage } from "./../../../context/App";
-import { GET_SINGLE, REMOVE_USER } from "../../../queries/user.query";
+import { GET_SINGLE, REMOVE_USER, UPDATE_ACCOUNT_TYPE } from "../../../queries/user.query";
 import { LoadingIcon } from "./../../../components/Button/index";
-import { UserX } from "@styled-icons/feather";
+import { Edit, UserX } from "@styled-icons/feather";
 import { authService } from "./../../../services/Authentication.Service";
 import { setTimeout } from "timers";
+import AccountTypes from "../../../data/account-type.json";
 
 interface iProp {
     match?: any;
@@ -26,6 +27,9 @@ const UserProfile: FC<iProp> = ({ match, history }) => {
         investment: 0,
         referral: 0
     });
+    // account type
+    const [edit, setEdit] = useState(false);
+    const [accountType, setAccountType] = useState(user?.accountType);
     const { t } = useTranslation();
 
     const { loading } = useQuery(GET_SINGLE, {
@@ -44,6 +48,16 @@ const UserProfile: FC<iProp> = ({ match, history }) => {
             toast.success(d.DeleteAccount.message);
             setTimeout(() => {
                 document.location.href = "/app/users";
+            }, 500);
+        }
+    });
+    //   change account type
+    const [changeTypeFunc, { loading: changing }] = useMutation(UPDATE_ACCOUNT_TYPE, {
+        onError: (e) => toast.error(CleanMessage(e.message)),
+        onCompleted: (d) => {
+            toast.success(d.ChangeAccountType.message);
+            setTimeout(() => {
+                document.location.reload();
             }, 500);
         }
     });
@@ -95,10 +109,6 @@ const UserProfile: FC<iProp> = ({ match, history }) => {
                                         <Person className="w-4 h-4 mr-2 text-theme-1" />
                                         {user.gender}
                                     </div>
-                                    <div className="truncate sm:whitespace-normal flex items-center mt-3 text-yellow-600">
-                                        <Book className="w-4 h-4 mr-2 text-theme-1" />
-                                        {user.accountType}
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -136,6 +146,56 @@ const UserProfile: FC<iProp> = ({ match, history }) => {
                                         <div className="text-gray-700 mr-5 sm:mr-5">{CleanDate(user.created_at, true)}</div>
                                     </div>
                                 </div>
+                                <div className="relative flex items-center mt-5">
+                                    <div className="ml-4 mr-auto">
+                                        <span className="font-medium">Account Type</span>
+                                        <div className="w-full text-gray-700 mr-5 sm:mr-5">
+                                            {edit ? (
+                                                <div className="intro-x">
+                                                    <div className="flex items-center justify-between">
+                                                        {AccountTypes.map((item, idx) => (
+                                                            <label key={idx} htmlFor={idx + ""} className="flex items-center">
+                                                                <input
+                                                                    checked={accountType === item.value}
+                                                                    type="radio"
+                                                                    onChange={() => setAccountType(item.value)}
+                                                                    className="input border border-gray-300"
+                                                                />
+                                                                <span className="ml-2">{item.label}</span>
+                                                            </label>
+                                                        ))}
+                                                    </div>
+                                                    {/* buttons */}
+                                                    <div className="flex items-center my-2">
+                                                        <button
+                                                            onClick={async () => {
+                                                                await changeTypeFunc({ variables: { id: user.id, accountType } });
+                                                            }}
+                                                            className="mr-4 text-green-600"
+                                                        >
+                                                            <CheckmarkDone className="w-5" />
+                                                        </button>
+                                                        <button onClick={() => setEdit(false)} className="text-red-600">
+                                                            <Close className="w-5" />
+                                                        </button>
+                                                    </div>
+                                                    <LoadingIcon loading={changing} />
+                                                </div>
+                                            ) : (
+                                                <div className="intro-x">
+                                                    <span className="mr-8 text-yellow-600">{user.accountType}</span>
+                                                    <Edit
+                                                        className="w-4 cursor-pointer text-green-600"
+                                                        onClick={() => {
+                                                            setAccountType(user.accountType);
+                                                            setEdit(true);
+                                                        }}
+                                                    />
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div className="intro-y box col-span-12 lg:col-span-4">
@@ -145,11 +205,7 @@ const UserProfile: FC<iProp> = ({ match, history }) => {
                                     {user.referred.map((u, i) => (
                                         <div key={i} className="flex flex-col lg:flex-row items-center p-3">
                                             <div className="w-24 h-24 lg:w-12 lg:h-12 image-fit lg:mr-1">
-                                                <img
-                                                    alt={u.firstname}
-                                                    className="rounded-full"
-                                                    src={u.image || DefaultImage}
-                                                />
+                                                <img alt={u.firstname} className="rounded-full" src={u.image || DefaultImage} />
                                             </div>
                                             <div className="lg:ml-2 lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">
                                                 <NavLink to={{ pathname: `/app/user/${u.id}` }} className="font-medium">

@@ -270,3 +270,11 @@ export const NEW_REFERRAL = gql`
         }
     }
 `;
+
+export const UPDATE_ACCOUNT_TYPE = gql`
+    mutation ChangeAccountType($id: ID!, $accountType: String!) {
+        ChangeAccountType(id: $id, newType: $accountType) {
+            message
+        }
+    }
+`;
