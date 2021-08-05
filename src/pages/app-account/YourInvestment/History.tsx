@@ -53,9 +53,9 @@ const InvestmentHistory: FC<iProp> = ({ match }) => {
                                             <td className="w-10">
                                                 <strong>{idx + 1}</strong>
                                             </td>
-                                            <td className="w-20">{toCurrency(item.amount)}</td>
-                                            <td className="w-50">{item.reason}</td>
-                                            <td className="w-40">{CleanDate(item.date, true, false)}</td>
+                                            <td className="w-20 font-bold text-green-600">€{toCurrency(item.amount)}</td>
+                                            <td>{item.reason}</td>
+                                            <td>{CleanDate(item.date, true, false)}</td>
                                         </tr>
                                     ))}
                                     {data.GetInvestmentHistory.docs.length === 0 && (

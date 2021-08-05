@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { Albums, Cash } from "@styled-icons/ionicons-outline";
-import { toCurrency, CleanDate, CleanMessage } from "../../../../context/App";
+import { toCurrency, CleanDate, CleanMessage, DefaultImage } from "../../../../context/App";
 import { useMutation } from "@apollo/react-hooks";
 import { PAY_REFERRAL } from "../../../../queries/referral.query";
 import { toast } from "react-toastify";
@@ -41,7 +41,7 @@ const ReferralItems: FC<iProp> = ({ items }) => {
                                 <td className="w-40">
                                     <div className="flex flex-col lg:flex-row items-center py-5">
                                         <div className="w-24 h-24 lg:w-12 lg:h-12 image-fit lg:mr-1">
-                                            <img alt={item.user.firstname} className="rounded-full" src={item.user.image || "/dist/images/profile-5.jpg"} />
+                                            <img alt={item.user.firstname} className="rounded-full" src={item.user.image || DefaultImage} />
                                         </div>
                                         <div className="lg:ml-4 lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">
                                             <div className="font-medium">
@@ -57,7 +57,7 @@ const ReferralItems: FC<iProp> = ({ items }) => {
                                 <td className="w-40">
                                     <div className="flex flex-col lg:flex-row items-center py-5">
                                         <div className="w-24 h-24 lg:w-12 lg:h-12 image-fit lg:mr-1">
-                                            <img alt={item.referrer.firstname} className="rounded-full" src={item.referrer.image || "/dist/images/profile-5.jpg"} />
+                                            <img alt={item.referrer.firstname} className="rounded-full" src={item.referrer.image || DefaultImage} />
                                         </div>
                                         <div className="lg:ml-4 lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">
                                             <div className="font-medium">

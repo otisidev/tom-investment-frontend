@@ -34,6 +34,7 @@ const INVESTMENT_PROP = gql`
             name
             address
         }
+        localCurrency
     }
     ${PLAN_PROP}
 `;

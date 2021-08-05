@@ -9,6 +9,9 @@ import { LoadingIcon } from "../../../../components/Button";
 import { GET_CATEGORIES } from "../../../../queries/category.query";
 import { Category } from "../../../../model/category.model";
 import { toCurrency } from "./../../../../context/App";
+import localCurrencies from "../../../../data/currency.json";
+import { Currency } from "../../../../model/currency.model";
+import { GET_CURRENCIES } from "../../../../queries/currency.query";
 
 interface iProp {
     onSubmit: any;
@@ -23,6 +26,9 @@ const InvestmentForm: FC<iProp> = ({ onSubmit }) => {
     const [categories, setCategories] = useState<Array<Category>>([]);
     const [nextFund, setNextFund] = useState<string>();
     const [payout, setPayout] = useState(1);
+    const [currencies, setCurrencies] = useState<Array<Currency>>([]);
+    const [localCurrency, setLocalCurrency] = useState<string>("");
+    const [currency, setCurrency] = useState("");
 
     const [getPlansFunc, { loading: planLoading, data: planDoc }] = useLazyQuery(GET_PLANS, {
         onError: (er) => toast.error(CleanMessage(er.message))
@@ -34,13 +40,21 @@ const InvestmentForm: FC<iProp> = ({ onSubmit }) => {
             setCategories(d.GetCategories.docs);
         }
     });
+
+    const { loading: _load } = useQuery(GET_CURRENCIES, {
+        onError: (er) => toast.error(CleanMessage(er.message)),
+        onCompleted: (d) => {
+            setCurrencies(d.GetCurrencies.docs);
+        }
+    });
+
     const { t } = useTranslation();
     return (
         <div className="grid grid-cols-12 gap-6 mt-5">
             <div className="intro-y col-span-12 flex flex-col flex-1 sm:px-10 pb-10 lg:pb-0">
                 <div className="intro-y flex-1 lg:ml-5 mb-5 lg:mb-0">
                     <h4 className="text-2xl font-medium">New Investment Form</h4>
-                    <LoadingIcon loading={planLoading || getting} />
+                    <LoadingIcon loading={planLoading || getting || _load} />
                     <div>
                         <form
                             onSubmit={async (event) => {
@@ -54,7 +68,9 @@ const InvestmentForm: FC<iProp> = ({ onSubmit }) => {
                                         approved: approve,
                                         nextFund,
                                         weeklyPayoutInterval: payout,
-                                        daysToPayout: payout * 7
+                                        daysToPayout: payout * 7,
+                                        localCurrency,
+                                        currency
                                     });
                                 } else {
                                     toast.warn("Plan must be selected");
@@ -62,7 +78,7 @@ const InvestmentForm: FC<iProp> = ({ onSubmit }) => {
                             }}
                         >
                             <div className="grid grid-cols-12 gap-5">
-                                <div className="col-span-12 xl:col-span-6">
+                                <div className="col-span-12 xl:col-span-4">
                                     <div>
                                         <label htmlFor="cate">Select Category</label>
 
@@ -83,7 +99,7 @@ const InvestmentForm: FC<iProp> = ({ onSubmit }) => {
                                         </select>
                                     </div>
                                 </div>
-                                <div className="col-span-12 xl:col-span-6">
+                                <div className="col-span-12 xl:col-span-4">
                                     <div>
                                         <label htmlFor="plan">Select Plan</label>
 
@@ -111,7 +127,49 @@ const InvestmentForm: FC<iProp> = ({ onSubmit }) => {
                                         </select>
                                     </div>
                                 </div>
-                                <div className="col-span-12 xl:col-span-6">
+                                <div className="col-span-12 xl:col-span-4">
+                                    <div>
+                                        <label htmlFor="local">Select Local Currency</label>
+
+                                        <select
+                                            onChange={({ currentTarget: { value } }) => {
+                                                setLocalCurrency(value);
+                                            }}
+                                            required
+                                            className="w-full bg-gray-200 border border-theme-1 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                            id="local"
+                                        >
+                                            <option value="">Local Currency</option>
+                                            {localCurrencies.map((item: string, idx: number) => (
+                                                <option key={idx} value={item}>
+                                                    {item}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className="col-span-12 xl:col-span-4">
+                                    <div>
+                                        <label htmlFor="digital">Select Digital Currency</label>
+
+                                        <select
+                                            onChange={({ currentTarget: { value } }) => {
+                                                setCurrency(value);
+                                            }}
+                                            required
+                                            className="w-full bg-gray-200 border border-theme-1 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                            id="digital"
+                                        >
+                                            <option value="">Digital Currency</option>
+                                            {currencies.map((item, idx) => (
+                                                <option key={idx} value={item.id}>
+                                                    {item.name}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className="col-span-12 xl:col-span-4">
                                     <div>
                                         <label
                                             className="uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
@@ -120,7 +178,7 @@ const InvestmentForm: FC<iProp> = ({ onSubmit }) => {
                                             {t("investment.new.amount")}
                                         </label>
                                         <input
-                                            defaultValue={amount}
+                                            value={amount}
                                             required
                                             className="appearance-none block w-full bg-gray-200 text-gray-700 border border-theme-1 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                                             id="grid-amount"
@@ -131,11 +189,12 @@ const InvestmentForm: FC<iProp> = ({ onSubmit }) => {
                                             }
                                         />
                                         <p className="text-gray-600 text-xs italic">
-                                            {t("min-amount")} £{toCurrency(plan?.amount)}
+                                            {t("min-amount")} {localCurrency || "£"}
+                                            {toCurrency(plan?.amount)}
                                         </p>
                                     </div>
                                 </div>
-                                <div className="col-span-12 xl:col-span-6">
+                                <div className="col-span-12 xl:col-span-4">
                                     <div>
                                         <label
                                             className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"

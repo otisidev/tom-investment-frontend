@@ -80,14 +80,20 @@ const Investments: FC<iProp> = ({ items }) => {
                             </div>
                             {item.compounded?.status && (
                                 <div className="text-gray-800 text-center mt-5">
-                                    <strong> £{toCurrency(item.compounded.payout)}</strong> {t("i.amount.text")}{" "}
-                                    <span className="mx-1 text-theme-1">•</span> <strong className="text-theme-1">Compounding</strong>
+                                    <strong>
+                                        {item.localCurrency || "£"} {toCurrency(item.compounded.payout)}
+                                    </strong>{" "}
+                                    {t("i.amount.text")} <span className="mx-1 text-theme-1">•</span>{" "}
+                                    <strong className="text-theme-1">Compounding</strong>
                                 </div>
                             )}
                             {!item.compounded?.status && (
                                 <div className="text-gray-700 text-center mt-5">
                                     <span>{t("balance")}</span>
-                                    <p className="font-semibold text-xl">£{toCurrency(item.balance)} </p>
+                                    <p className="font-semibold text-xl">
+                                        {item.localCurrency || "£"}
+                                        {toCurrency(item.balance)}{" "}
+                                    </p>
                                 </div>
                             )}
                             {item.approved && (
@@ -148,7 +154,10 @@ const Investments: FC<iProp> = ({ items }) => {
                             </div>
                             <div className="col-span-12 sm:col-span-12">
                                 <b>{t("investment.made")}</b>
-                                <h6>£{toCurrency(active?.investment_made || 0)}</h6>
+                                <h6>
+                                    {active?.localCurrency || "£"}
+                                    {toCurrency(active?.investment_made || 0)}
+                                </h6>
                             </div>
                             <div className="col-span-12 sm:col-span-12">
                                 <b>{t("plan.title")}</b>

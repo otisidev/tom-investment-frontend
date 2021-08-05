@@ -14,6 +14,7 @@ import PersonList from "../AdminCorner/ContactPerson/PersonList";
 import { GET_CONTACT_PERSONS } from "./../../../queries/contact-person.query";
 import { Currency } from "../../../model/currency.model";
 import { GET_CURRENCIES } from "../../../queries/currency.query";
+import local from "../../../data/currency.json";
 
 interface iProp {
     onCancel: any;
@@ -28,6 +29,7 @@ const NewInvestment: FC<iProp> = ({ onCancel }) => {
     const [contactPersons, setContactPerson] = useState<Array<ContactPersonModel>>([]);
     const [currencies, setCurrencies] = useState<Array<Currency>>([]);
     const [currency, setCurrency] = useState("");
+    const [localCurrency, setLocalCurrency] = useState("");
 
     const [getPlanFunc, { loading: planLoading, data: planDoc }] = useLazyQuery(GET_PLANS, {
         onError: (er) => toast.error(CleanMessage(er.message))
@@ -80,7 +82,8 @@ const NewInvestment: FC<iProp> = ({ onCancel }) => {
                                         investmentMade: amount,
                                         weeklyPayoutInterval: payout,
                                         daysToPayout: payout * 7,
-                                        currency
+                                        currency,
+                                        localCurrency
                                     }
                                 }
                             });
@@ -98,7 +101,7 @@ const NewInvestment: FC<iProp> = ({ onCancel }) => {
                             {categories.length > 1 && (
                                 <>
                                     <label
-                                        className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                                        className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-4"
                                         htmlFor="grid-cate"
                                     >
                                         {t("investment.new.category")}
@@ -130,7 +133,30 @@ const NewInvestment: FC<iProp> = ({ onCancel }) => {
                                     </div>
                                 </>
                             )}
-                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-state">
+                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mt-4" htmlFor="grid-local">
+                                Local Currency
+                            </label>
+                            <div className="relative">
+                                <select
+                                    onChange={({ currentTarget: { value } }) => setLocalCurrency(value)}
+                                    required
+                                    className="block appearance-none w-full bg-gray-100 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    id="grid-local"
+                                >
+                                    <option value="">Local Currency</option>
+                                    {local.map((item: string, idx: number) => (
+                                        <option key={idx} value={item}>
+                                            {item}
+                                        </option>
+                                    ))}
+                                </select>
+                                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                    <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                                    </svg>
+                                </div>
+                            </div>{" "}
+                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mt-4" htmlFor="grid-state">
                                 {t("investment.new.plan")}
                             </label>
                             <div className="relative">
@@ -162,16 +188,23 @@ const NewInvestment: FC<iProp> = ({ onCancel }) => {
                                     </svg>
                                 </div>
                             </div>
-
                             {plan && (
                                 <>
                                     <div className="intro-y">
                                         <div className="text-gray-800 text-center mt-5">
                                             <strong>{plan.percent}% percent ROI</strong>
                                             <span className="mx-1 text-theme-1">•</span>
-                                            Minimum Investment - <strong> £{toCurrency(plan.amount)}</strong>{" "}
+                                            Minimum Investment -{" "}
+                                            <strong>
+                                                {localCurrency || "£"}
+                                                {toCurrency(plan.amount)}
+                                            </strong>{" "}
                                             <span className="mx-1 text-theme-1">•</span>
-                                            Maximum Investment - <strong> £{toCurrency(plan.max_amount)}</strong>
+                                            Maximum Investment -{" "}
+                                            <strong>
+                                                {localCurrency || "£"}
+                                                {toCurrency(plan.max_amount)}
+                                            </strong>
                                         </div>
                                     </div>
                                     <div className="flex flex-wrap -mx-3 my-6">
@@ -183,7 +216,7 @@ const NewInvestment: FC<iProp> = ({ onCancel }) => {
                                                 {t("investment.new.amount")}
                                             </label>
                                             <input
-                                                defaultValue={amount}
+                                                value={amount}
                                                 required
                                                 className="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
                                                 id="grid-amount"
@@ -194,7 +227,8 @@ const NewInvestment: FC<iProp> = ({ onCancel }) => {
                                                 }
                                             />
                                             <p className="text-gray-600 text-xs italic">
-                                                {t("min-amount")} £{toCurrency(plan.amount)}
+                                                {t("min-amount")} {localCurrency || "£"}
+                                                {toCurrency(plan.amount)}
                                             </p>
                                         </div>
                                         <div className="w-full px-3 mt-4">

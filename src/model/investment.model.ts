@@ -20,6 +20,7 @@ export class Investment {
     compounded? = new InvestmentCompound();
     logs = [];
     topups = [];
+    localCurrency = "";
 }
 
 class InvestmentCompound {
