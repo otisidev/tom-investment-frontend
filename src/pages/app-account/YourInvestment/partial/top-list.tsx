@@ -56,7 +56,10 @@ const InvestmentTopUpList = ({ investment }: Props) => {
                                                 <hr />
                                                 <div>
                                                     <p className="text-gray-500">Amount</p>
-                                                    <p className="font-semibold text-base">£{toCurrency(item.amount)}</p>
+                                                    <p className="font-semibold text-base">
+                                                        {item.investment.localCurrency || "£"}
+                                                        {toCurrency(item.amount)}
+                                                    </p>
                                                 </div>
                                                 <hr />
                                                 <div>
@@ -82,7 +85,8 @@ const InvestmentTopUpList = ({ investment }: Props) => {
                                     </td>
 
                                     <td className="hidden md:table-cell font-semibold text-base text-green-500">
-                                        + £{toCurrency(item.amount)}
+                                        + {item.investment.localCurrency || "£"}
+                                        {toCurrency(item.amount)}
                                     </td>
                                 </tr>
                             ))}

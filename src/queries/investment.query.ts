@@ -232,6 +232,10 @@ export const GET_TOP_LIST = gql`
                 amount
                 created_at
                 approved
+                investment {
+                    id
+                    localCurrency
+                }
             }
         }
     }
