@@ -153,11 +153,11 @@ const Login: FC<iProp> = ({ history, location }) => {
                                         {t("sign_up")} <UserPlus size={18} className="text-theme-1" />
                                     </button>
                                 </div>
-                                <div className="mt-8 intro-y">
+                                {/* <div className="mt-8 intro-y">
                                     <NavLink to="/investment-status">
                                         <button className="button border p-3 border-theme-3 text-theme-3">Check Investment Status</button>
                                     </NavLink>
-                                </div>
+                                </div> */}
                             </form>
                             <div className="intro-x mt-10 xl:mt-24 text-gray-700 text-center xl:text-left">
                                 {t("terms_intro")}

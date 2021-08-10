@@ -132,7 +132,10 @@ const SingleInvestment = ({ match, history }: Props) => {
                                             </div>
                                         </form>
                                         {amount && (
-                                            <p className="font-bold text-xs text-theme-1 -intro-x">Preview: £{toCurrency(amount)}</p>
+                                            <p className="font-bold text-xs text-theme-1 -intro-x">
+                                                Preview: {item.localCurrency || "£"}
+                                                {toCurrency(amount)}
+                                            </p>
                                         )}
                                     </div>
                                 </div>
@@ -177,8 +180,12 @@ const SingleInvestment = ({ match, history }: Props) => {
                                 </div>
                                 {item.compounded?.status && (
                                     <div className="text-gray-800 text-center mt-5">
-                                        <strong> £{toCurrency(item.compounded.payout)}</strong> {t("i.amount.text")}{" "}
-                                        <span className="mx-1 text-theme-1">•</span> <strong className="text-theme-1">Compounding</strong>
+                                        <strong>
+                                            {item.localCurrency || "£"}
+                                            {toCurrency(item.compounded.payout)}
+                                        </strong>{" "}
+                                        {t("i.amount.text")} <span className="mx-1 text-theme-1">•</span>{" "}
+                                        <strong className="text-theme-1">Compounding</strong>
                                     </div>
                                 )}
                                 {!item.compounded?.status && (
@@ -191,16 +198,29 @@ const SingleInvestment = ({ match, history }: Props) => {
                                             </p>
                                         </div>
                                         <div className="text-gray-700 text-center mt-5">
-                                            £{toCurrency(item.payout_weekly)} {t("weekly.pay")} <span className="mx-1 text-theme-1">•</span>{" "}
-                                            £{toCurrency(item.payout_sum)}
+                                            {item.localCurrency || "£"}
+                                            {toCurrency(item.payout_weekly)} {t("weekly.pay")} <span className="mx-1 text-theme-1">•</span>{" "}
+                                            {item.localCurrency || "£"}
+                                            {toCurrency(item.payout_sum)}
                                         </div>
                                     </>
                                 )}
                                 {item.approved && (
-                                    <div className="text-gray-800 px-10 text-center mx-auto mt-2">
-                                        <b>{t("next.fund")}</b> <Calendar className="text-theme-1 h-4 mr-1" />{" "}
-                                        <span>{CleanDate(item.next_fund_date, true, true)}</span>
-                                    </div>
+                                    <>
+                                        <div className="text-gray-800 px-10 text-center mx-auto mt-2">
+                                            <b>{t("next.fund")}</b> <Calendar className="text-theme-1 h-4 mr-1" />{" "}
+                                            <span>{CleanDate(item.next_fund_date, true, true)}</span>
+                                        </div>
+                                        <div className="text-gray-800 px-10 text-center mx-auto mt-2">
+                                            <b>Duration</b> <span className="text-teal-600">{item.duration} Months</span>
+                                        </div>
+                                        {item.expiration && (
+                                            <div className="text-yellow-600 px-10 text-center mx-auto mt-2">
+                                                <b>Expiration</b> <Calendar className="text-theme-1 h-4 mr-1" />{" "}
+                                                <span>{CleanDate(item.expiration, true, true)}</span>
+                                            </div>
+                                        )}
+                                    </>
                                 )}
                                 {item.approved && item.paid && (
                                     <div className="p-2 mt-2 flex justify-center">

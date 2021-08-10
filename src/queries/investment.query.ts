@@ -35,6 +35,8 @@ const INVESTMENT_PROP = gql`
             address
         }
         localCurrency
+        expiration
+        duration
     }
     ${PLAN_PROP}
 `;

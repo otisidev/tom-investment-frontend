@@ -30,6 +30,7 @@ const NewInvestment: FC<iProp> = ({ onCancel }) => {
     const [currencies, setCurrencies] = useState<Array<Currency>>([]);
     const [currency, setCurrency] = useState("");
     const [localCurrency, setLocalCurrency] = useState("");
+    const [duration, setDuration] = useState(12);
 
     const [getPlanFunc, { loading: planLoading, data: planDoc }] = useLazyQuery(GET_PLANS, {
         onError: (er) => toast.error(CleanMessage(er.message))
@@ -83,7 +84,8 @@ const NewInvestment: FC<iProp> = ({ onCancel }) => {
                                         weeklyPayoutInterval: payout,
                                         daysToPayout: payout * 7,
                                         currency,
-                                        localCurrency
+                                        localCurrency,
+                                        duration
                                     }
                                 }
                             });
@@ -251,6 +253,30 @@ const NewInvestment: FC<iProp> = ({ onCancel }) => {
                                             />
                                             <p className="text-gray-600 text-xs italic">{t("payout-info")}</p>
                                         </div>
+                                    </div>
+                                    <div>
+                                        <label className="uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="duration">
+                                            Investment Duration
+                                        </label>
+                                        <select
+                                            onChange={({ currentTarget: { value } }) => {
+                                                setDuration(parseInt(value));
+                                            }}
+                                            required
+                                            defaultValue={duration}
+                                            className="w-full bg-gray-200 border border-theme-1 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                            id="duration"
+                                        >
+                                            <option value="">Investment Duration</option>
+                                            {[
+                                                { id: "12", name: "1 YEAR" },
+                                                { id: "6", name: "6 MONTHS" }
+                                            ].map((item, idx) => (
+                                                <option key={idx} value={item.id}>
+                                                    {item.name}
+                                                </option>
+                                            ))}
+                                        </select>
                                     </div>
                                 </>
                             )}

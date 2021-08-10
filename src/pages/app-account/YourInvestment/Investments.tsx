@@ -75,7 +75,9 @@ const Investments: FC<iProp> = ({ items }) => {
                             <div className="flex justify-center">
                                 <div className="relative text-5xl font-semibold mt-4 mx-auto">
                                     {toCurrency(item.investment_made)}{" "}
-                                    <span className="absolute text-2xl top-0 right-0 text-gray-500 -mr-4 mt-1">£</span>
+                                    <span className="absolute text-2xl top-0 right-0 text-gray-500 -mr-4 mt-1">
+                                        {item.localCurrency || "£"}
+                                    </span>
                                 </div>
                             </div>
                             {item.compounded?.status && (
@@ -97,10 +99,22 @@ const Investments: FC<iProp> = ({ items }) => {
                                 </div>
                             )}
                             {item.approved && (
-                                <div className="text-gray-800 px-10 text-center mx-auto mt-2">
-                                    <b>{t("next.fund")}</b> <Calendar className="text-theme-1 h-4 mr-1" />{" "}
-                                    <span>{CleanDate(item.next_fund_date, true, true)}</span>
-                                </div>
+                                <>
+                                    <div className="text-gray-800 px-10 text-center mx-auto mt-2">
+                                        <b>{t("next.fund")}</b> <Calendar className="text-theme-1 h-4 mr-1" />{" "}
+                                        <span>{CleanDate(item.next_fund_date, true, true)}</span>
+                                    </div>
+                                    <div className="text-gray-800 px-10 text-center mx-auto mt-2">
+                                        <b>Duration</b> {" "}
+                                        <span className="text-teal-600">{item.duration} Months</span>
+                                    </div>
+                                    {item.expiration && (
+                                        <div className="text-yellow-600 px-10 text-center mx-auto mt-2">
+                                            <b>Expiration</b> <Calendar className="text-theme-1 h-4 mr-1" />{" "}
+                                            <span>{CleanDate(item.expiration, true, true)}</span>
+                                        </div>
+                                    )}
+                                </>
                             )}
                             {item.approved && (
                                 <div className="p-2 mt-2 flex justify-center">

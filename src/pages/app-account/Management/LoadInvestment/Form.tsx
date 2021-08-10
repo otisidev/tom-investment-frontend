@@ -29,6 +29,7 @@ const InvestmentForm: FC<iProp> = ({ onSubmit }) => {
     const [currencies, setCurrencies] = useState<Array<Currency>>([]);
     const [localCurrency, setLocalCurrency] = useState<string>("");
     const [currency, setCurrency] = useState("");
+    const [duration, setDuration] = useState(12);
 
     const [getPlansFunc, { loading: planLoading, data: planDoc }] = useLazyQuery(GET_PLANS, {
         onError: (er) => toast.error(CleanMessage(er.message))
@@ -70,7 +71,8 @@ const InvestmentForm: FC<iProp> = ({ onSubmit }) => {
                                         weeklyPayoutInterval: payout,
                                         daysToPayout: payout * 7,
                                         localCurrency,
-                                        currency
+                                        currency,
+                                        duration
                                     });
                                 } else {
                                     toast.warn("Plan must be selected");
@@ -178,7 +180,7 @@ const InvestmentForm: FC<iProp> = ({ onSubmit }) => {
                                             {t("investment.new.amount")}
                                         </label>
                                         <input
-                                            value={amount}
+                                            defaultValue={amount}
                                             required
                                             className="appearance-none block w-full bg-gray-200 text-gray-700 border border-theme-1 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                                             id="grid-amount"
@@ -216,7 +218,7 @@ const InvestmentForm: FC<iProp> = ({ onSubmit }) => {
                                         <p className="text-gray-600 text-xs italic">{t("payout-info")}</p>
                                     </div>
                                 </div>
-                                <div className="col-span-12 xl:col-span-6">
+                                <div className="col-span-12 xl:col-span-4">
                                     <div>
                                         <label className="uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-date">
                                             Investment Date
@@ -231,7 +233,7 @@ const InvestmentForm: FC<iProp> = ({ onSubmit }) => {
                                         />
                                     </div>
                                 </div>
-                                <div className="col-span-12 xl:col-span-6">
+                                <div className="col-span-12 xl:col-span-4">
                                     <div>
                                         <label
                                             className="uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
@@ -247,6 +249,32 @@ const InvestmentForm: FC<iProp> = ({ onSubmit }) => {
                                             type="date"
                                             onChange={({ currentTarget: { value, validity } }) => validity.valid && setNextFund(value)}
                                         />
+                                    </div>
+                                </div>
+                                <div className="col-span-12 xl:col-span-4">
+                                    <div>
+                                        <label className="uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="duration">
+                                            Investment Duration
+                                        </label>
+                                        <select
+                                            onChange={({ currentTarget: { value } }) => {
+                                                setDuration(parseInt(value));
+                                            }}
+                                            required
+                                            defaultValue={duration}
+                                            className="w-full bg-gray-200 border border-theme-1 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                            id="duration"
+                                        >
+                                            <option value="">Investment Duration</option>
+                                            {[
+                                                { id: "12", name: "1 YEAR" },
+                                                { id: "6", name: "6 MONTHS" }
+                                            ].map((item, idx) => (
+                                                <option key={idx} value={item.id}>
+                                                    {item.name}
+                                                </option>
+                                            ))}
+                                        </select>
                                     </div>
                                 </div>
                                 <div className="col-span-12 xl:col-span-6">

@@ -21,6 +21,8 @@ export class Investment {
     logs = [];
     topups = [];
     localCurrency = "";
+    expiration = "";
+    duration = 0;
 }
 
 class InvestmentCompound {
