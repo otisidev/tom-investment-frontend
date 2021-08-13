@@ -1,8 +1,12 @@
 import React, { FC, useState } from "react";
 import { Albums, CloseCircle } from "@styled-icons/ionicons-outline";
-import { CleanDate } from "../../../../context/App";
+import { CleanDate, CleanMessage } from "../../../../context/App";
 import { NavLink } from "react-router-dom";
 import { toCurrency } from "./../../../../context/App";
+import { useMutation } from "@apollo/react-hooks";
+import { UPDATE_INVESTMENT_DURATION } from "../../../../queries/investment.query";
+import { toast } from "react-toastify";
+import { LoadingIcon } from "../../../../components/Button";
 
 interface iProps {
     items: Array<any>;
@@ -15,6 +19,17 @@ const ActiveInvestmentItems: FC<iProps> = ({ items, onClose, onCredit, onTopUp }
     const [active, setActive] = useState<any>();
     const [model, setModel] = useState<any>();
     const [credit, setCredit] = useState<any>(true);
+
+    const [updateFunc, { loading }] = useMutation(UPDATE_INVESTMENT_DURATION, {
+        onError: (er) => toast.error(CleanMessage(er.message)),
+        onCompleted: (e) => {
+            const { message } = e.UpdateInvestmentDuration;
+            toast.success(message);
+            setTimeout(() => {
+                document.location.reload();
+            }, 200);
+        }
+    });
 
     if (items.length)
         return (
@@ -33,7 +48,7 @@ const ActiveInvestmentItems: FC<iProps> = ({ items, onClose, onCredit, onTopUp }
                         </thead>
                         <tbody>
                             {items.map((item: any, idx: number) => (
-                                <tr className="intro-x" key={idx}>
+                                <tr className="intro-x bg-red-200" key={idx}>
                                     <td className="text-center">
                                         <strong>{idx + 1}</strong>
                                     </td>
@@ -58,9 +73,7 @@ const ActiveInvestmentItems: FC<iProps> = ({ items, onClose, onCredit, onTopUp }
                                                 <div className="text-gray-600 text-xs">
                                                     {item.user.gender} | <span className="text-theme-1">{item.user.nationality}</span>
                                                 </div>
-                                                <div className="text-yellow-600 text-xs">
-                                                    {item.user.accountType}
-                                                </div>
+                                                <div className="text-yellow-600 text-xs">{item.user.accountType}</div>
                                             </div>
                                         </div>
                                     </td>
@@ -68,6 +81,7 @@ const ActiveInvestmentItems: FC<iProps> = ({ items, onClose, onCredit, onTopUp }
                                     <td className="text-left">
                                         <p> {item.plan.title}</p>
                                         <div className="font-medium text-theme-9">{CleanDate(item.created_at, true)}</div>
+                                        <p className="font-semibold text-yellow-600">Duration: {item.duration} Months</p>
                                     </td>
                                     <td className="text-left">
                                         {item.compounded?.status ? (
@@ -86,40 +100,58 @@ const ActiveInvestmentItems: FC<iProps> = ({ items, onClose, onCredit, onTopUp }
                                     </td>
                                     <td className="text-left">
                                         <h4 className="text-theme-9 text-lg">£{toCurrency(item.balance)}</h4>
+                                        {item.expiration && (
+                                            <p className="font-medium">Expiration: {CleanDate(item.expiration, true, true)}</p>
+                                        )}
                                     </td>
                                     <td className="table-report__action">
-                                        <div className="flex justify-center items-center">
-                                            <a
-                                                href="javascript:;"
-                                                onClick={() => setActive(item)}
-                                                data-toggle="modal"
-                                                data-target="#credit-modal"
-                                                className="button p-2 border bg-teal-500 text-white shadow mr-2"
-                                            >
-                                                Credit
-                                            </a>
-                                            <a
-                                                href="javascript:;"
-                                                onClick={() => setActive(item)}
-                                                data-toggle="modal"
-                                                data-target="#top-up-modal"
-                                                className="button p-2 border shadow mr-2"
-                                            >
-                                                Top-up
-                                            </a>
-                                            <a
-                                                onClick={() => {
-                                                    if (window.confirm("Are you sure you want to close this investment?")) {
-                                                        onClose(item);
-                                                    }
-                                                }}
-                                                className="flex items-center mr-3 text-theme-6"
-                                                href="javascript:;"
-                                            >
-                                                <CloseCircle className="w-4 h-4 mr-1" />
-                                                Close
-                                            </a>
-                                        </div>
+                                        {item.expired ? (
+                                            <div className=" bg-red-600 text-white rounded-lg py-2 text-center">
+                                                <p>Expired</p>
+                                            </div>
+                                        ) : (
+                                            <div className="flex justify-center items-center">
+                                                <a
+                                                    href="javascript:;"
+                                                    onClick={() => setActive(item)}
+                                                    data-toggle="modal"
+                                                    data-target="#credit-modal"
+                                                    className="button p-2 border bg-teal-500 text-white shadow mr-2"
+                                                >
+                                                    Credit
+                                                </a>
+                                                <a
+                                                    href="javascript:;"
+                                                    onClick={() => setActive(item)}
+                                                    data-toggle="modal"
+                                                    data-target="#top-up-modal"
+                                                    className="button p-2 border shadow mr-2"
+                                                >
+                                                    Top-up
+                                                </a>
+                                                <a
+                                                    onClick={() => {
+                                                        if (window.confirm("Are you sure you want to close this investment?")) {
+                                                            onClose(item);
+                                                        }
+                                                    }}
+                                                    className="flex items-center mr-3 text-theme-6"
+                                                    href="javascript:;"
+                                                >
+                                                    <CloseCircle className="w-4 h-4 mr-1" />
+                                                    Close
+                                                </a>
+                                                <a
+                                                    href="javascript:;"
+                                                    onClick={() => setActive(item)}
+                                                    data-toggle="modal"
+                                                    data-target="#edit-modal"
+                                                    className="button"
+                                                >
+                                                    Edit
+                                                </a>
+                                            </div>
+                                        )}
                                     </td>
                                 </tr>
                             ))}
@@ -302,6 +334,72 @@ const ActiveInvestmentItems: FC<iProps> = ({ items, onClose, onCredit, onTopUp }
                                         document.getElementById("top_cancel")?.click();
                                     } else {
                                         window.alert("Amount and reason are required!");
+                                    }
+                                }}
+                                className="button w-24 bg-theme-1 text-white"
+                            >
+                                Submit
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="modal" id="edit-modal">
+                    <div className="modal__content">
+                        <div className="p-5">
+                            <div className="grid gap-4">
+                                <div className="my-6">
+                                    <div className="font-bold uppercase">Update Investment Duration</div>
+                                    <div className="w-6 h-1 bg-theme-1"></div>
+                                </div>
+
+                                <div>
+                                    <label
+                                        className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                                        htmlFor="g-currency"
+                                    >
+                                        Investment Duration
+                                    </label>
+                                    <select
+                                        id="g-duration"
+                                        required
+                                        defaultValue={active?.duration}
+                                        onChange={({ currentTarget: { value } }) => {
+                                            setModel({ ...model, duration: value });
+                                        }}
+                                        className="w-full login__input input rounded-lg input--lg border-2 border-gray-300 block hover:border-theme-1 resize-none font-semibold"
+                                    >
+                                        <option value="">Select Duration</option>
+                                        {[
+                                            { value: "A Year", id: "12" },
+                                            { value: "6 Months", id: "6" }
+                                        ].map((item, idx) => (
+                                            <option key={idx} value={item.id}>
+                                                {item.value}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                            </div>
+                            <LoadingIcon loading={loading} />
+                        </div>
+                        <div className="px-5 pb-8 text-center">
+                            {/* <LoadingIcon loading={closeLoading} /> */}
+                            <button
+                                type="button"
+                                id="duration_cancel"
+                                data-dismiss="modal"
+                                className="button w-24 border text-gray-700 mr-1"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                type="button"
+                                onClick={async () => {
+                                    if (model && model.duration) {
+                                        await updateFunc({ variables: { id: active.id, duration: parseInt(model.duration) } });
+                                    } else {
+                                        window.alert("Duration is required!");
                                     }
                                 }}
                                 className="button w-24 bg-theme-1 text-white"

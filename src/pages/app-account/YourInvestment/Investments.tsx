@@ -46,30 +46,40 @@ const Investments: FC<iProp> = ({ items }) => {
                 <div className="grid grid-cols-12 gap-6 mt-5">
                     {items.map((item, idx) => (
                         <div key={idx} className="intro-y box col-span-12 py-8 md:col-span-3">
-                            {!item.paid && !item.approved && !item.closed && (
-                                <div className="rounded-md flex items-center px-5 py-4 mb-2 bg-theme-14 text-theme-10">
-                                    <AlertCircle className="w-6 h-6 mr-2" />
-                                    {t("payment.not-done")}
-                                </div>
-                            )}
-                            {item.paid && item.approved && !item.closed && (
-                                <div className="rounded-md flex items-center px-5 py-4 mb-2 bg-theme-9 text-white">
-                                    <CheckCircle className="w-6 h-6 mr-2" />
-                                    {t("approval.done")}
-                                </div>
-                            )}
-                            {item.paid && !item.approved && !item.closed && item.declined && (
+                            {item.expired ? (
                                 <div className="rounded-md flex items-center px-5 py-4 mb-2 bg-theme-6 text-white">
                                     <CloseCircle className="w-6 h-6 mr-2" />
-                                    Investment Declined
+                                    Investment Expired
                                 </div>
+                            ) : (
+                                <>
+                                    {!item.paid && !item.approved && !item.closed && (
+                                        <div className="rounded-md flex items-center px-5 py-4 mb-2 bg-theme-14 text-theme-10">
+                                            <AlertCircle className="w-6 h-6 mr-2" />
+                                            {t("payment.not-done")}
+                                        </div>
+                                    )}
+                                    {item.paid && item.approved && !item.closed && (
+                                        <div className="rounded-md flex items-center px-5 py-4 mb-2 bg-theme-9 text-white">
+                                            <CheckCircle className="w-6 h-6 mr-2" />
+                                            {t("approval.done")}
+                                        </div>
+                                    )}
+                                    {item.paid && !item.approved && !item.closed && item.declined && (
+                                        <div className="rounded-md flex items-center px-5 py-4 mb-2 bg-theme-6 text-white">
+                                            <CloseCircle className="w-6 h-6 mr-2" />
+                                            Investment Declined
+                                        </div>
+                                    )}
+                                    {item.paid && !item.approved && !item.closed && !item.declined && (
+                                        <div className="rounded-md flex items-center px-5 py-4 mb-2 bg-theme-1 text-white">
+                                            <GitCommit className="w-6 h-6 mr-2" />
+                                            {t("approval.status")}
+                                        </div>
+                                    )}
+                                </>
                             )}
-                            {item.paid && !item.approved && !item.closed && !item.declined && (
-                                <div className="rounded-md flex items-center px-5 py-4 mb-2 bg-theme-1 text-white">
-                                    <GitCommit className="w-6 h-6 mr-2" />
-                                    {t("approval.status")}
-                                </div>
-                            )}
+
                             <div className="text-center font-bold text-gray-600 mt-6">{item.plan.category.title}</div>
                             <div className="text-xl font-medium text-center">{item.plan.title}</div>
                             <div className="flex justify-center">
@@ -105,8 +115,7 @@ const Investments: FC<iProp> = ({ items }) => {
                                         <span>{CleanDate(item.next_fund_date, true, true)}</span>
                                     </div>
                                     <div className="text-gray-800 px-10 text-center mx-auto mt-2">
-                                        <b>Duration</b> {" "}
-                                        <span className="text-teal-600">{item.duration} Months</span>
+                                        <b>Duration</b> <span className="text-teal-600">{item.duration} Months</span>
                                     </div>
                                     {item.expiration && (
                                         <div className="text-yellow-600 px-10 text-center mx-auto mt-2">

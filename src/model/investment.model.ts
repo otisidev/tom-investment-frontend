@@ -23,6 +23,7 @@ export class Investment {
     localCurrency = "";
     expiration = "";
     duration = 0;
+    expired = false;
 }
 
 class InvestmentCompound {

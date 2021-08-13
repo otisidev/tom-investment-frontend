@@ -37,6 +37,7 @@ const INVESTMENT_PROP = gql`
         localCurrency
         expiration
         duration
+        expired
     }
     ${PLAN_PROP}
 `;
@@ -338,6 +339,14 @@ export const GET_INVESTMENT_STATUS = gql`
                     created_at
                 }
             }
+        }
+    }
+`;
+
+export const UPDATE_INVESTMENT_DURATION = gql`
+    mutation UpdateInvestmentDuration($id: ID!, $duration: Int!) {
+        UpdateInvestmentDuration(id: $id, duration: $duration) {
+            message
         }
     }
 `;
