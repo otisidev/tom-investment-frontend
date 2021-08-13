@@ -3,10 +3,13 @@ import { Albums, CloseCircle } from "@styled-icons/ionicons-outline";
 import { CleanDate, CleanMessage } from "../../../../context/App";
 import { NavLink } from "react-router-dom";
 import { toCurrency } from "./../../../../context/App";
-import { useMutation } from "@apollo/react-hooks";
-import { UPDATE_INVESTMENT_DURATION } from "../../../../queries/investment.query";
+import { useMutation, useQuery } from "@apollo/react-hooks";
+import { UPDATE_INVESTMENT_DURATION, UPDATE_INVESTMENT_PLAN } from "../../../../queries/investment.query";
 import { toast } from "react-toastify";
 import { LoadingIcon } from "../../../../components/Button";
+import { Edit3 } from "@styled-icons/feather";
+import { GET_PLANS } from "../../../../queries/plan.query";
+import { PlanModel } from "../../../../model/plan.model";
 
 interface iProps {
     items: Array<any>;
@@ -19,6 +22,8 @@ const ActiveInvestmentItems: FC<iProps> = ({ items, onClose, onCredit, onTopUp }
     const [active, setActive] = useState<any>();
     const [model, setModel] = useState<any>();
     const [credit, setCredit] = useState<any>(true);
+    const [plans, setPlans] = useState<Array<PlanModel>>([]);
+    const [plan, setPlan] = useState<string>("");
 
     const [updateFunc, { loading }] = useMutation(UPDATE_INVESTMENT_DURATION, {
         onError: (er) => toast.error(CleanMessage(er.message)),
@@ -29,6 +34,25 @@ const ActiveInvestmentItems: FC<iProps> = ({ items, onClose, onCredit, onTopUp }
                 document.location.reload();
             }, 200);
         }
+    });
+
+    const [updatePlanFunc, { loading: ___Loading }] = useMutation(UPDATE_INVESTMENT_PLAN, {
+        onError: (er) => toast.error(CleanMessage(er.message)),
+        onCompleted: (e) => {
+            const { message } = e.UpdateInvestmentPlan;
+            toast.success(message);
+            setTimeout(() => {
+                document.location.reload();
+            }, 200);
+        }
+    });
+
+    useQuery(GET_PLANS, {
+        onError: (er) => toast.error(CleanMessage(er.message)),
+        onCompleted: (d) => {
+            setPlans(d.GetPlans.docs);
+        },
+        variables: { category: "5ff339a1932246000883a135" }
     });
 
     if (items.length)
@@ -79,7 +103,18 @@ const ActiveInvestmentItems: FC<iProps> = ({ items, onClose, onCredit, onTopUp }
                                     </td>
 
                                     <td className="text-left">
-                                        <p> {item.plan.title}</p>
+                                        <p>
+                                            {item.plan.title}{" "}
+                                            <a
+                                                className="button"
+                                                href="javascript:;"
+                                                onClick={() => setActive(item)}
+                                                data-toggle="modal"
+                                                data-target="#plan-update"
+                                            >
+                                                <Edit3 className="w-5 cursor-pointer" />
+                                            </a>
+                                        </p>
                                         <div className="font-medium text-theme-9">{CleanDate(item.created_at, true)}</div>
                                         <p className="font-semibold text-yellow-600">Duration: {item.duration} Months</p>
                                     </td>
@@ -106,8 +141,20 @@ const ActiveInvestmentItems: FC<iProps> = ({ items, onClose, onCredit, onTopUp }
                                     </td>
                                     <td className="table-report__action">
                                         {item.expired ? (
-                                            <div className=" bg-red-600 text-white rounded-lg py-2 text-center">
-                                                <p>Expired</p>
+                                            <div className="flex items-center justify-center">
+                                                <span className="bg-red-600 text-white rounded-lg py-2 px-4 text-center mr-4">Expired</span>
+                                                <a
+                                                    onClick={() => {
+                                                        if (window.confirm("Are you sure you want to close this investment?")) {
+                                                            onClose(item);
+                                                        }
+                                                    }}
+                                                    className="flex items-center mr-3 text-theme-6"
+                                                    href="javascript:;"
+                                                >
+                                                    <CloseCircle className="w-4 h-4 mr-1" />
+                                                    Close
+                                                </a>
                                             </div>
                                         ) : (
                                             <div className="flex justify-center items-center">
@@ -400,6 +447,65 @@ const ActiveInvestmentItems: FC<iProps> = ({ items, onClose, onCredit, onTopUp }
                                         await updateFunc({ variables: { id: active.id, duration: parseInt(model.duration) } });
                                     } else {
                                         window.alert("Duration is required!");
+                                    }
+                                }}
+                                className="button w-24 bg-theme-1 text-white"
+                            >
+                                Submit
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div className="modal" id="plan-update">
+                    <div className="modal__content">
+                        <div className="p-5">
+                            <div className="grid gap-4">
+                                <div className="my-6">
+                                    <div className="font-bold uppercase">Update Investment Plan</div>
+                                    <div className="w-6 h-1 bg-theme-1"></div>
+                                </div>
+
+                                <div>
+                                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="g-plan">
+                                        Investment Plan
+                                    </label>
+                                    <select
+                                        id="g-plan"
+                                        required
+                                        defaultValue={plan}
+                                        onChange={({ currentTarget: { value } }) => {
+                                            setPlan(value);
+                                        }}
+                                        className="w-full login__input input rounded-lg input--lg border-2 border-gray-300 block hover:border-theme-1 resize-none font-semibold"
+                                    >
+                                        <option value="">Select Plan</option>
+                                        {plans.map((item, idx) => (
+                                            <option key={idx} value={item.id}>
+                                                {item.title}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                            </div>
+                            <LoadingIcon loading={___Loading} />
+                        </div>
+                        <div className="px-5 pb-8 text-center">
+                            {/* <LoadingIcon loading={closeLoading} /> */}
+                            <button
+                                type="button"
+                                id="duration_cancel"
+                                data-dismiss="modal"
+                                className="button w-24 border text-gray-700 mr-1"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                type="button"
+                                onClick={async () => {
+                                    if (plan) {
+                                        await updatePlanFunc({ variables: { id: active.id, plan } });
+                                    } else {
+                                        window.alert("Plan is required!");
                                     }
                                 }}
                                 className="button w-24 bg-theme-1 text-white"

@@ -350,3 +350,11 @@ export const UPDATE_INVESTMENT_DURATION = gql`
         }
     }
 `;
+
+export const UPDATE_INVESTMENT_PLAN = gql`
+    mutation UpdateInvestmentPlan($id: ID!, $plan: ID!) {
+        UpdateInvestmentPlan(id: $id, plan: $plan) {
+            message
+        }
+    }
+`;
