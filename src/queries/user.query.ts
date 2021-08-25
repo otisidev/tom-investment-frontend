@@ -278,3 +278,11 @@ export const UPDATE_ACCOUNT_TYPE = gql`
         }
     }
 `;
+
+export const ADMIN_UPDATE_ACCOUNT = gql`
+    mutation AdminAccountUpdate($id: ID!, $model: AdminUserUpdateInput!) {
+        AdminAccountUpdate(id: $id, model: $model) {
+            message
+        }
+    }
+`;

@@ -8,12 +8,14 @@ import { useTranslation } from "react-i18next";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import { toast } from "react-toastify";
 import { CleanMessage } from "./../../../context/App";
-import { GET_SINGLE, REMOVE_USER, UPDATE_ACCOUNT_TYPE } from "../../../queries/user.query";
-import { LoadingIcon } from "./../../../components/Button/index";
+import { ADMIN_UPDATE_ACCOUNT, GET_SINGLE, REMOVE_USER, UPDATE_ACCOUNT_TYPE } from "../../../queries/user.query";
+import PrimaryButton, { ButtonType, LoadingIcon } from "./../../../components/Button/index";
 import { Edit, UserX } from "@styled-icons/feather";
 import { authService } from "./../../../services/Authentication.Service";
 import { setTimeout } from "timers";
 import AccountTypes from "../../../data/account-type.json";
+import Select from "react-select";
+import countries from "../../../data/country.json";
 
 interface iProp {
     match?: any;
@@ -29,6 +31,7 @@ const UserProfile: FC<iProp> = ({ match, history }) => {
     });
     // account type
     const [edit, setEdit] = useState(false);
+    const [update, setUpdate] = useState(false);
     const [accountType, setAccountType] = useState(user?.accountType);
     const { t } = useTranslation();
 
@@ -49,6 +52,14 @@ const UserProfile: FC<iProp> = ({ match, history }) => {
             setTimeout(() => {
                 document.location.href = "/app/users";
             }, 500);
+        }
+    });
+
+    const [accountUpdateFunc, { loading: updating }] = useMutation(ADMIN_UPDATE_ACCOUNT, {
+        onError: (e) => toast.error(CleanMessage(e.message)),
+        onCompleted: (d) => {
+            toast.success(d.AdminAccountUpdate.message);
+            setUpdate(false);
         }
     });
     //   change account type
@@ -74,9 +85,12 @@ const UserProfile: FC<iProp> = ({ match, history }) => {
                 </title>
             </Helmet>
             <div className="intro-y flex items-center mt-8">
-                <h2 className="text-lg font-medium mr-auto">Profile</h2>
+                <h2 className="text-lg font-medium mr-auto uppercase">Profile</h2>
+                <button onClick={() => setUpdate(!update)} className="button bg-green-600 text-white">
+                    <Edit className="w-5" />
+                </button>
             </div>
-            {user && (
+            {user && !update && (
                 <>
                     <div className="intro-y box lg:mt-5">
                         <div className="p-5">
@@ -288,6 +302,198 @@ const UserProfile: FC<iProp> = ({ match, history }) => {
                         </div>
                     </div>
                 </>
+            )}
+            {user && update && (
+                <div className="intro-y box p-4 my-4">
+                    <div className="my-4">
+                        <h2 className="font-bold text-lg uppercase">Update Account</h2>
+                        <div className="w-6 h-1 bg-yellow-600"></div>
+                    </div>
+                    <form
+                        onSubmit={async (event) => {
+                            event.preventDefault();
+                            await accountUpdateFunc({
+                                variables: {
+                                    id: user.id,
+                                    model: {
+                                        firstname: user.firstname,
+                                        lastname: user.lastname,
+                                        email: user.email,
+                                        dob: user.dob,
+                                        walletAddress: user.dob,
+                                        nationality: user.nationality,
+                                        phone: user.phone,
+                                        gender: user.gender
+                                    }
+                                }
+                            });
+                        }}
+                    >
+                        <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
+                            <div>
+                                <label htmlFor="fn">Firstname</label>
+                                <input
+                                    required
+                                    type="text"
+                                    id="fn"
+                                    defaultValue={user?.firstname}
+                                    className="intro-x input w-full input--lg border-2 border-gray-300 hover:border-yellow-600"
+                                    onChange={({ currentTarget }) =>
+                                        setUser({
+                                            ...user,
+                                            firstname: currentTarget.value
+                                        })
+                                    }
+                                    placeholder="Enter firstname"
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="ln">Lastname</label>
+                                <input
+                                    required
+                                    type="text"
+                                    id="ln"
+                                    defaultValue={user.lastname}
+                                    className="intro-x input w-full input--lg border-2 border-gray-300 hover:border-yellow-600"
+                                    onChange={({ currentTarget }) =>
+                                        setUser({
+                                            ...user,
+                                            lastname: currentTarget.value
+                                        })
+                                    }
+                                    placeholder="Enter lastname"
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="phone">Phone number</label>
+                                <input
+                                    required
+                                    type="text"
+                                    id="phone"
+                                    defaultValue={user.phone}
+                                    className="intro-x input w-full input--lg border-2 border-gray-300 hover:border-yellow-600"
+                                    onChange={({ currentTarget }) =>
+                                        setUser({
+                                            ...user,
+                                            phone: currentTarget.value
+                                        })
+                                    }
+                                    placeholder="Enter phone"
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="email">Email address</label>
+                                <input
+                                    required
+                                    type="email"
+                                    id="email"
+                                    defaultValue={user.email}
+                                    className="intro-x input w-full input--lg border-2 border-gray-300 hover:border-yellow-600"
+                                    onChange={({ currentTarget }) =>
+                                        setUser({
+                                            ...user,
+                                            email: currentTarget.value
+                                        })
+                                    }
+                                    placeholder="Enter email"
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="dob">Date of birth</label>
+                                <input
+                                    required
+                                    type="date"
+                                    id="dob"
+                                    defaultValue={user.dob}
+                                    className="intro-x input w-full input--lg border-2 border-gray-300 hover:border-yellow-600"
+                                    onChange={({ currentTarget }) =>
+                                        setUser({
+                                            ...user,
+                                            dob: currentTarget.value
+                                        })
+                                    }
+                                />
+                                <span>{CleanDate(user.dob, true, true)}</span>
+                            </div>
+                            <div>
+                                <label htmlFor="wallet">Wallet address</label>
+                                <input
+                                    required
+                                    type="text"
+                                    id="wallet"
+                                    defaultValue={user.wallet_address}
+                                    className="intro-x input w-full input--lg border-2 border-gray-300 hover:border-yellow-600"
+                                    onChange={({ currentTarget }) =>
+                                        setUser({
+                                            ...user,
+                                            wallet_address: currentTarget.value
+                                        })
+                                    }
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="gender">Gender</label>
+                                <Select
+                                    id="gender"
+                                    isMulti={false}
+                                    defaultValue={{ value: user.gender, label: user.gender }}
+                                    onChange={(item: any) =>
+                                        setUser({
+                                            ...user,
+                                            gender: item.value
+                                        })
+                                    }
+                                    placeholder="Select Gender"
+                                    options={[
+                                        { value: "Male", label: "Male" },
+                                        { value: "Female", label: "Female" },
+                                        { value: "Others", label: "Others" }
+                                    ]}
+                                />
+                            </div>
+
+                            <div>
+                                <label htmlFor="nation">Country</label>
+                                <Select
+                                    onChange={(item: any) =>
+                                        setUser({
+                                            ...user,
+                                            nationality: item.value
+                                        })
+                                    }
+                                    className="border-theme-1"
+                                    isMulti={false}
+                                    id="nation"
+                                    defaultValue={{ value: user.nationality, label: user.nationality }}
+                                    placeholder="Select country"
+                                    options={countries.map((item) => ({
+                                        value: item.name,
+                                        label: item.name
+                                    }))}
+                                />
+                            </div>
+
+                            <div>
+                                <PrimaryButton
+                                    onClick={() => {}}
+                                    type={ButtonType.submit}
+                                    loading={updating}
+                                    className="button button--lg text-white bg-theme-1 mr-4"
+                                >
+                                    <CheckmarkDone className="ml-3 h-6" /> Update account
+                                </PrimaryButton>
+                                <PrimaryButton
+                                    onClick={() => setUpdate(false)}
+                                    type={ButtonType.button}
+                                    loading={false}
+                                    className="button button--lg text-red-600 bg-red-100"
+                                >
+                                    Cancel
+                                </PrimaryButton>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             )}
             <LoadingIcon loading={loading} />
         </>
