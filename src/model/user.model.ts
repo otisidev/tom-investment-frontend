@@ -21,6 +21,7 @@ export class User {
     next_of_kin = null;
     useTwoF = false;
     accountType = "";
+    referrer?: IUser = undefined;
 }
 
 export interface IUser {

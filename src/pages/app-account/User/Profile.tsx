@@ -127,8 +127,20 @@ const UserProfile: FC<iProp> = ({ match, history }) => {
                             </div>
                         </div>
                     </div>
+                    {user.referrer && (
+                        <div className="my-4 intro-y flex items-center box px-4 py-8">
+                            <div className="w-16 h-16 sm:w-18 sm:h-18 flex-none lg:w-20 lg:h-20 image-fit relative mr-3 bg-yellow-200 border-2 rounded-full">
+                                <img alt={user.firstname} className="rounded-full" src={user.referrer.image || DefaultImage} />
+                            </div>
+                            <div className="mr-auto">
+                                <h2 className="font-bold text-lg uppercase">{user.referrer.name}</h2>
+                                <span className="text-gray-600 text-xs">{user.referrer.email}</span>
+                            </div>
+                            <span className="text-teal-600 font-bold uppercase p-2 bg-teal-100 rounded-lg">Referrer</span>
+                        </div>
+                    )}
                     <div className="grid grid-cols-12 gap-6 mt-5">
-                        <div className="intro-y box col-span-12 lg:col-span-4">
+                        <div className="intro-y box col-span-12 lg:col-span-6 xxl:col-span-4">
                             <div className="p-5">
                                 <div className="relative flex items-center">
                                     <div className="ml-4 mr-auto">
@@ -212,7 +224,7 @@ const UserProfile: FC<iProp> = ({ match, history }) => {
                                 </div>
                             </div>
                         </div>
-                        <div className="intro-y box col-span-12 lg:col-span-4">
+                        <div className="intro-y box col-span-12 lg:col-span-4 xxl:col-span-4">
                             <div className="p-5">
                                 <h4 className="font-medium">{t("general.referral")}</h4>
                                 <div className="intro-y col-span-12 md:col-span-6">
@@ -246,7 +258,7 @@ const UserProfile: FC<iProp> = ({ match, history }) => {
                             </div>
                         </div>
                         {admin && (
-                            <div className="intro-y col-span-12 lg:col-span-4">
+                            <div className="intro-y col-span-12 lg:col-span-2 xxl:col-span-4">
                                 <div className="p-5">
                                     <a
                                         href="javascript:;"

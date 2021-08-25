@@ -177,6 +177,14 @@ export const GET_SINGLE = gql`
             doc {
                 ...UserProps
                 referralCode
+                referrer {
+                    id
+                    firstname
+                    lastname
+                    image
+                    email
+                    name
+                }
             }
         }
         CountInvestment
