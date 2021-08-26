@@ -37,26 +37,26 @@ const TopNavigation = () => {
                         <div className="p-2">
                             <NavLink
                                 to="/app/profile"
-                                className="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-600 rounded-md"
+                                className="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-900 rounded-md"
                             >
                                 <User className="w-4 h-4 mr-2" size={18} /> {t("side.profile")}
                             </NavLink>
 
                             <NavLink
                                 to="/app/profile/change-password"
-                                className="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-600 rounded-md"
+                                className="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-900 rounded-md"
                             >
                                 <Shield className="w-4 h-4 mr-2" size={18} /> {t("change_password")}
                             </NavLink>
                             <NavLink
                                 to="/app/profile/update"
-                                className="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-600 rounded-md"
+                                className="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-900 rounded-md"
                             >
                                 <Edit3 className="w-4 h-4 mr-2" size={18} /> {t("account_setting")}
                             </NavLink>
                             <NavLink
                                 to="/app/profile/next-of-kin"
-                                className="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-600 rounded-md"
+                                className="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-900 rounded-md"
                             >
                                 <PersonAdd className="w-4 h-4 mr-2" size={18} /> {t("next_heading")}
                             </NavLink>
@@ -69,7 +69,7 @@ const TopNavigation = () => {
                                     authService.Logout();
                                     document.location.href = "/";
                                 }}
-                                className="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-600 rounded-md"
+                                className="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-900 rounded-md"
                             >
                                 <ToggleRight className="w-4 h-4 mr-2" size={18} /> Logout
                             </NavLink>

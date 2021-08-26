@@ -304,7 +304,25 @@ const CreateAccount: FC<iProp> = ({ history, location }) => {
                                                     defaultValue={user?.address}
                                                 />
                                             </div>
-
+                                            <div>
+                                                <label htmlFor="duration">Duration</label>
+                                                <Select
+                                                    id="duration"
+                                                    isMulti={false}
+                                                    defaultValue={{ value: user.duration, label: user.duration }}
+                                                    onChange={(item: any) =>
+                                                        setUser({
+                                                            ...user,
+                                                            duration: item.value
+                                                        })
+                                                    }
+                                                    placeholder="Select Duration"
+                                                    options={[
+                                                        { value: "1 Year", label: "1 Year" },
+                                                        { value: "6 Months", label: "6 Months" }
+                                                    ]}
+                                                />
+                                            </div>
                                             <div className="mt-4">
                                                 <label htmlFor="referral_code">{t("referral_code")}</label>
                                                 <input

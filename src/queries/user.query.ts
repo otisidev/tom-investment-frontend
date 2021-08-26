@@ -33,6 +33,7 @@ const USER_PROP = gql`
             image
         }
         useTwoF
+        duration
     }
 `;
 export const LOGIN = gql`
@@ -147,6 +148,7 @@ export const NEW_ACCOUNT = gql`
     }
     ${USER_PROP}
 `;
+
 export const PASSWORD_RESET = gql`
     mutation ResetPassword($email: String!) {
         ResetPassword(email: $email)

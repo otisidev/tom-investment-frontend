@@ -85,7 +85,7 @@ const UserProfile: FC<iProp> = ({ match, history }) => {
                 </title>
             </Helmet>
             <div className="intro-y flex items-center mt-8">
-                <h2 className="text-lg font-medium mr-auto uppercase">Profile</h2>
+                <h2 className="text-lg font-bold mr-auto uppercase">Profile</h2>
                 <button onClick={() => setUpdate(!update)} className="button bg-green-600 text-white">
                     <Edit className="w-5" />
                 </button>
@@ -100,10 +100,11 @@ const UserProfile: FC<iProp> = ({ match, history }) => {
                                         <img alt={user.firstname} className="rounded-full" src={user.image || "/dist/images/profile.png"} />
                                     </div>
                                     <div className="ml-5">
-                                        <div className="w-24 sm:w-40 truncate sm:whitespace-normal font-medium text-lg">
+                                        <div className=" uppercase font-medium text-lg">
                                             {user.firstname} {user.lastname}
                                         </div>
                                         <div className="text-gray-600">Investor</div>
+                                        <div className="text-gray-600 font-semibold">Duration: <span className="text-yellow-600">{user.duration}</span> </div>
                                     </div>
                                 </div>
                                 <div className="flex mt-6 lg:mt-0 items-center lg:items-start flex-1 flex-col justify-center text-gray-600 px-5 border-l border-r border-gray-200 border-t lg:border-t-0 pt-5 lg:pt-0">
@@ -335,7 +336,8 @@ const UserProfile: FC<iProp> = ({ match, history }) => {
                                         walletAddress: user.dob,
                                         nationality: user.nationality,
                                         phone: user.phone,
-                                        gender: user.gender
+                                        gender: user.gender,
+                                        duration: user.duration
                                     }
                                 }
                             });
@@ -484,8 +486,26 @@ const UserProfile: FC<iProp> = ({ match, history }) => {
                                     }))}
                                 />
                             </div>
-
                             <div>
+                                <label htmlFor="duration">Duration</label>
+                                <Select
+                                    id="duration"
+                                    isMulti={false}
+                                    defaultValue={{ value: user.duration, label: user.duration }}
+                                    onChange={(item: any) =>
+                                        setUser({
+                                            ...user,
+                                            duration: item.value
+                                        })
+                                    }
+                                    placeholder="Select Duration"
+                                    options={[
+                                        { value: "1 Year", label: "1 Year" },
+                                        { value: "6 Months", label: "6 Months" }
+                                    ]}
+                                />
+                            </div>
+                            <div className="col-span-2">
                                 <PrimaryButton
                                     onClick={() => {}}
                                     type={ButtonType.submit}

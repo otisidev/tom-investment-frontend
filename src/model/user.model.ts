@@ -22,6 +22,7 @@ export class User {
     useTwoF = false;
     accountType = "";
     referrer?: IUser = undefined;
+    duration = "";
 }
 
 export interface IUser {
