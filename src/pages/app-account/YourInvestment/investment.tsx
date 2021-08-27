@@ -208,20 +208,20 @@ const SingleInvestment = ({ match, history }: Props) => {
                                                 {toCurrency(item.balance)}{" "}
                                             </p>
                                         </div>
-                                        <div className="text-gray-700 text-center mt-5">
+                                        {/* <div className="text-gray-700 text-center mt-5">
                                             {item.localCurrency || "£"}
                                             {toCurrency(item.payout_weekly)} {t("weekly.pay")} <span className="mx-1 text-theme-1">•</span>{" "}
                                             {item.localCurrency || "£"}
                                             {toCurrency(item.payout_sum)}
-                                        </div>
+                                        </div> */}
                                     </>
                                 )}
                                 {item.approved && (
                                     <>
-                                        <div className="text-gray-800 px-10 text-center mx-auto mt-2">
+                                        {/* <div className="text-gray-800 px-10 text-center mx-auto mt-2">
                                             <b>{t("next.fund")}</b> <Calendar className="text-theme-1 h-4 mr-1" />{" "}
                                             <span>{CleanDate(item.next_fund_date, true, true)}</span>
-                                        </div>
+                                        </div> */}
                                         <div className="text-gray-800 px-10 text-center mx-auto mt-2">
                                             <b>Duration</b> <span className="text-teal-600">{item.duration} Months</span>
                                         </div>

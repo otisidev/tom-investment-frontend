@@ -110,10 +110,10 @@ const Investments: FC<iProp> = ({ items }) => {
                             )}
                             {item.approved && (
                                 <>
-                                    <div className="text-gray-800 px-10 text-center mx-auto mt-2">
+                                    {/* <div className="text-gray-800 px-10 text-center mx-auto mt-2">
                                         <b>{t("next.fund")}</b> <Calendar className="text-theme-1 h-4 mr-1" />{" "}
                                         <span>{CleanDate(item.next_fund_date, true, true)}</span>
-                                    </div>
+                                    </div> */}
                                     <div className="text-gray-800 px-10 text-center mx-auto mt-2">
                                         <b>Duration</b> <span className="text-teal-600">{item.duration} Months</span>
                                     </div>
