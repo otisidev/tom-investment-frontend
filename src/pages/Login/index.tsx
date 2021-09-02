@@ -27,8 +27,8 @@ const Login: FC<iProp> = ({ history, location }) => {
 
     const [loginFunc, { loading }] = useMutation(LOGIN, {
         onError: (error) => {
-            if (error.message.includes("Invalid verification code")) {
-                toast.warning(error.message);
+            if (error.message.includes("verification code")) {
+                toast.warning(CleanMessage(error.message));
                 setShowToken(true);
             } else toast.error(CleanMessage(error.message));
         },

@@ -8,7 +8,7 @@ import { imageService } from "../../../services/Image.service";
 import { toast } from "react-toastify";
 import { useMutation } from "@apollo/react-hooks";
 import { CREATE_KIN } from "../../../queries/user.query";
-import { CleanMessage } from "./../../../context/App";
+import { CleanMessage, DefaultImage } from "./../../../context/App";
 import { UPDATE_KIN } from "./../../../queries/user.query";
 
 const NextOfKinPage = () => {
@@ -25,14 +25,13 @@ const NextOfKinPage = () => {
         onCompleted: (d) => {
             if (d) {
                 toast.success("Next of kin updated successfully!");
-                setModel(d);
+                setModel(d.NewNextOfKin);
 
                 const token = authService.GetToken();
-                let user = authService.GetUser();
-                user.next_of_kin = d;
+                let user = { ...authService.GetUser(), next_of_kin: d.NewNextOfKin };
                 authService.Login(user, token);
             }
-        },
+        }
     });
 
     const [updateFunc, { loading: uLoading }] = useMutation(UPDATE_KIN, {
@@ -40,13 +39,12 @@ const NextOfKinPage = () => {
         onCompleted: (d) => {
             if (d) {
                 toast.success("Next of kin updated successfully!");
-                setModel(d);
+                setModel(d.UpdateNextOfKin);
                 const token = authService.GetToken();
-                let user = authService.GetUser();
-                user.next_of_kin = d;
+                let user = { ...authService.GetUser(), next_of_kin: d.UpdateNextOfKin };
                 authService.Login(user, token);
             }
-        },
+        }
     });
 
     return (
@@ -54,10 +52,10 @@ const NextOfKinPage = () => {
             onSubmit={async (event) => {
                 event.preventDefault();
                 if (!next_of_kin) {
-                    await createFunc({ variables: { model } });
+                    await createFunc({ variables: { model: { ...model, image: model.image || DefaultImage } } });
                 } else {
-                    const { id, ...update } = model;
-                    await updateFunc({ variables: { id, update } });
+                    const { id, name, email, phone, relationship, image } = model;
+                    await updateFunc({ variables: { id, update: { name, email, phone, image, relationship } } });
                 }
             }}
         >
@@ -160,7 +158,11 @@ const NextOfKinPage = () => {
                         </div>
                     </div>
                     <div className="flex justify-end mt-4">
-                        <button disabled={false} type="submit" className="button  mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white">
+                        <button
+                            disabled={false}
+                            type="submit"
+                            className="button  mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white"
+                        >
                             <Save className="w-4 h-4 mr-2" /> {t("save_changes")}
                         </button>
                     </div>
