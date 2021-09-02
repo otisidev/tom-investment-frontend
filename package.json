@@ -1,7 +1,7 @@
 {
-    "name": "timo-investment-frontend",
+    "name": "Tom-investment-frontend",
     "version": "0.1.0",
-    "homepage": "https://app.timoinvestmentcompany.com/",
+    "homepage": "https://app.Tominvestmentcompany.com/",
     "private": true,
     "dependencies": {
         "@apollo/react-hooks": "^3.1.5",

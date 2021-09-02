@@ -44,8 +44,6 @@ const YourInvestment = () => {
 
             {!newItem && !loading && data && <Investments items={data.GetUserInvestments.docs} />}
             {newItem && <NewInvestment onCancel={() => setNewItem(!newItem)} />}
-
-            
         </>
     );
 };

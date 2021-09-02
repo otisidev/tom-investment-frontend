@@ -65,11 +65,11 @@ const Login: FC<iProp> = ({ history, location }) => {
                         <a href="/" className="-intro-x flex items-center pt-5">
                             <img alt="Investment bot" className="w-6" src="dist/images/icon.png" />
                             <span className="text-theme-1 text-lg ml-3">
-                                Timo <span className="font-medium">Investment</span>
+                                Tom <span className="font-medium">Investment</span>
                             </span>
                         </a>
                         <div className="my-auto">
-                            <img alt="investment bot" className="-intro-x w-3/4 -mt-16" src="dist/images/login-bg.svg" />
+                            <img alt="investment bot" className="-intro-x w-3/4 -mt-16" src="dist/images/logo-2.png" />
                             <div className="-intro-x text-theme-1 font-medium text-4xl leading-tight mt-10">
                                 {t("login_title")}
                                 <br />
@@ -153,11 +153,11 @@ const Login: FC<iProp> = ({ history, location }) => {
                                         {t("sign_up")} <UserPlus size={18} className="text-theme-1" />
                                     </button>
                                 </div>
-                                <div className="mt-8 intro-y">
+                                {/* <div className="mt-8 intro-y">
                                     <NavLink to="/investment-status">
                                         <button className="button border p-3 border-theme-3 text-theme-3">Check Investment Status</button>
                                     </NavLink>
-                                </div>
+                                </div> */}
                             </form>
                             <div className="intro-x mt-10 xl:mt-24 text-gray-700 text-center xl:text-left">
                                 {t("terms_intro")}
