@@ -87,7 +87,7 @@ const SingleInvestment = ({ match, history }: Props) => {
                     </span>
                     <h2 className="text-lg font-medium mr-auto">{t("investment.detail")}</h2>
                 </div>
-                {item && !item.expired && (
+                {/* {item && !item.expired && (
                     <button
                         onClick={() => setNewItem(!newItem)}
                         className="button mr-2 mb-2 flex items-center border justify-center shadow-lg bg-yellow-200 text-theme-1"
@@ -95,7 +95,7 @@ const SingleInvestment = ({ match, history }: Props) => {
                         {t("top.new")}
                         <Plus className="w-4 h-4 ml-2" />
                     </button>
-                )}
+                )} */}
             </div>
 
             <LoadingIcon loading={loading || rLoading || upLoading} />
