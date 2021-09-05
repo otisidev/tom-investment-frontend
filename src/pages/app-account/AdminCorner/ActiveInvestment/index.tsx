@@ -14,7 +14,7 @@ import ActiveInvestmentItems from "./items";
 const ActiveInvestment = () => {
     const title = "Active Investments";
     const [limit] = useState<number>(25);
-    const [page, setPage] = useState<number>(1);
+    const [page, setPage] = useState<number>(parseInt(localStorage.getItem("_page") || "1"));
     const [user, setUser] = useState<any>(null);
 
     const { loading, data, fetchMore } = useQuery(GET_ACTIVE, {
@@ -139,7 +139,10 @@ const ActiveInvestment = () => {
             <div className="mt-5 intro-x">
                 {data && (
                     <PageNumber
-                        onPageClicked={(page: number) => setPage(page)}
+                        onPageClicked={(page: number) => {
+                            setPage(page);
+                            localStorage.setItem("_page", page + "");
+                        }}
                         {...data.GetActiveInvestment}
                         length={data.GetActiveInvestment.docs.length}
                     />
