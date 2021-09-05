@@ -1,11 +1,8 @@
+import moment from "moment";
+import { Investment } from "../model/investment.model";
 import { authService } from "./../services/Authentication.Service";
-const {
-    REACT_APP_BASE_URL,
-    REACT_APP_WalletAddress,
-    REACT_APP_ReferralBonus,
-    REACT_APP_UploadBaseUrl,
-    REACT_APP_UploadPreset
-} = process.env;
+const { REACT_APP_BASE_URL, REACT_APP_WalletAddress, REACT_APP_ReferralBonus, REACT_APP_UploadBaseUrl, REACT_APP_UploadPreset } =
+    process.env;
 
 export const AppUrl = () => REACT_APP_BASE_URL || "";
 
@@ -102,6 +99,15 @@ function isIOS() {
     return navigator.userAgent.match(/ipad|iphone/i);
 }
 
-
-
 export const DefaultImage = "https://res.cloudinary.com/obaforex/image/upload/v1620379912/assets/imgs/isgpp_avatar_placeholder_l8cm9b.png";
+
+export const getTotalAmount = (investment: Investment) => {
+    return Intl.NumberFormat("en-US", {
+        maximumFractionDigits: 2
+    }).format(investment.investment_made * (investment.plan.percent / 100) * (investment.duration * 4));
+};
+
+export const getNextPayment = () => {
+    const date = moment().startOf("week").add(5, "days");
+    return date.toISOString();
+};

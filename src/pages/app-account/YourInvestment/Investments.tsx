@@ -2,7 +2,7 @@ import React, { FC, useState } from "react";
 import { Info, Calendar, AlertCircle, CheckCircle } from "@styled-icons/feather";
 import { useTranslation } from "react-i18next";
 import { Investment } from "../../../model/investment.model";
-import { toCurrency, CleanDate, CleanMessage, CopyToClipboard } from "./../../../context/App";
+import { toCurrency, CleanDate, CleanMessage, CopyToClipboard, getTotalAmount, getNextPayment } from "./../../../context/App";
 import { Wallet, Trash, ArrowForward, GitCommit, CloseCircle } from "@styled-icons/ionicons-outline";
 import { useMutation } from "@apollo/react-hooks";
 import { MAKE_PAYMENT, CLOSE_INVESTMENT } from "../../../queries/investment.query";
@@ -100,13 +100,22 @@ const Investments: FC<iProp> = ({ items }) => {
                                 </div>
                             )}
                             {!item.compounded?.status && (
-                                <div className="text-gray-700 text-center mt-5">
-                                    <span>{t("balance")}</span>
-                                    <p className="font-semibold text-xl">
-                                        {item.localCurrency || "£"}
-                                        {toCurrency(item.balance)}{" "}
-                                    </p>
-                                </div>
+                                <>
+                                    <div className="text-gray-700 text-center mt-5">
+                                        <span>{t("balance")}</span>
+                                        <p className="font-semibold text-xl">
+                                            {item.localCurrency || "£"}
+                                            {toCurrency(item.balance)}{" "}
+                                        </p>
+                                    </div>
+                                    <div className="text-gray-700 text-center mt-5">
+                                        <span> Expected Amount</span>
+                                        <p className="font-semibold text-xl">
+                                            {item.localCurrency || "£"}
+                                            {getTotalAmount(item)}
+                                        </p>
+                                    </div>
+                                </>
                             )}
                             {item.approved && (
                                 <>
@@ -127,6 +136,11 @@ const Investments: FC<iProp> = ({ items }) => {
                                             <span>{CleanDate(item.expiration, true, true)}</span>
                                         </div>
                                     )}
+
+                                    <div className="px-10 text-center mx-auto mt-2">
+                                        <b>Next Payout</b> <Calendar className="text-theme-1 h-4 mr-1" />{" "}
+                                        <span>{CleanDate(getNextPayment(), true, true)}</span>
+                                    </div>
                                 </>
                             )}
                             {item.approved && (
