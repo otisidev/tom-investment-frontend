@@ -117,9 +117,13 @@ const Investments: FC<iProp> = ({ items }) => {
                                     <div className="text-gray-800 px-10 text-center mx-auto mt-2">
                                         <b>Duration</b> <span className="text-teal-600">{item.duration} Months</span>
                                     </div>
+                                    <div className="px-10 text-center mx-auto mt-2">
+                                        <b>Start Date</b> <Calendar className="text-theme-1 h-4 mr-1" />{" "}
+                                        <span>{CleanDate(item.date, true, true)}</span>
+                                    </div>
                                     {item.expiration && (
                                         <div className="text-yellow-600 px-10 text-center mx-auto mt-2">
-                                            <b>Expiration</b> <Calendar className="text-theme-1 h-4 mr-1" />{" "}
+                                            <b>Expiration Date</b> <br />
                                             <span>{CleanDate(item.expiration, true, true)}</span>
                                         </div>
                                     )}

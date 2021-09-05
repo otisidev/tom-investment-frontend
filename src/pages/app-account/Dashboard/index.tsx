@@ -41,7 +41,10 @@ const Dashboard = () => {
                                         <div className="flex">
                                             <Albums className="report-box__icon text-theme-10" />
                                             <div className="ml-auto">
-                                                <div className="report-box__indicator bg-theme-1 tooltip cursor-pointer" title="33% Higher than last month">
+                                                <div
+                                                    className="report-box__indicator bg-theme-1 tooltip cursor-pointer"
+                                                    title="33% Higher than last month"
+                                                >
                                                     <Eye className="w-4 h-4" />
                                                 </div>
                                             </div>
@@ -59,7 +62,10 @@ const Dashboard = () => {
                                         <div className="flex">
                                             <Albums className="report-box__icon text-theme-10" />
                                             <div className="ml-auto">
-                                                <div className="report-box__indicator bg-theme-9 tooltip cursor-pointer" title="33% Higher than last month">
+                                                <div
+                                                    className="report-box__indicator bg-theme-9 tooltip cursor-pointer"
+                                                    title="33% Higher than last month"
+                                                >
                                                     <CheckmarkDone className="w-4 h-4" />
                                                 </div>
                                             </div>
@@ -77,7 +83,10 @@ const Dashboard = () => {
                                         <div className="flex">
                                             <People className="report-box__icon text-theme-11" />
                                             <div className="ml-auto">
-                                                <div className="report-box__indicator bg-theme-11 tooltip cursor-pointer" title="33% Higher than last month">
+                                                <div
+                                                    className="report-box__indicator bg-theme-11 tooltip cursor-pointer"
+                                                    title="33% Higher than last month"
+                                                >
                                                     <PeopleCircle className="w-4 h-4" />
                                                 </div>
                                             </div>
@@ -94,12 +103,15 @@ const Dashboard = () => {
                                     <div className="flex">
                                         <Wallet className="report-box__icon text-theme-9" />
                                         <div className="ml-auto">
-                                            <div className="report-box__indicator bg-theme-9 tooltip cursor-pointer" title="33% Higher than last month">
+                                            <div
+                                                className="report-box__indicator bg-theme-9 tooltip cursor-pointer"
+                                                title="33% Higher than last month"
+                                            >
                                                 <Cash className="w-4 h-4" />
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="text-3xl font-bold leading-8 mt-6">£{toCurrency(data.SumInvestmentMade)}</div>
+                                    <div className="text-3xl font-bold leading-8 mt-6">€{toCurrency(data.SumInvestmentMade)}</div>
                                     <div className="text-base text-gray-600 mt-1">{t("investment.made")}</div>
                                 </div>
                             </div>
@@ -152,7 +164,9 @@ const Dashboard = () => {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div className="text-3xl font-bold leading-8 mt-6">{toCurrency(data.CountPendingInvestment)}</div>
+                                                <div className="text-3xl font-bold leading-8 mt-6">
+                                                    {toCurrency(data.CountPendingInvestment)}
+                                                </div>
                                                 <div className="text-base text-gray-600 mt-1">Pending Investment</div>
                                             </div>
                                         </div>
@@ -170,7 +184,9 @@ const Dashboard = () => {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div className="text-3xl font-bold leading-8 mt-6">{toCurrency(data.CountActiveInvestment)}</div>
+                                                <div className="text-3xl font-bold leading-8 mt-6">
+                                                    {toCurrency(data.CountActiveInvestment)}
+                                                </div>
                                                 <div className="text-base text-gray-600 mt-1">Active Investment</div>
                                             </div>
                                         </div>
