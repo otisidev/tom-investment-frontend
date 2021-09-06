@@ -104,7 +104,7 @@ export const DefaultImage = "https://res.cloudinary.com/obaforex/image/upload/v1
 export const getTotalAmount = (investment: Investment) => {
     return Intl.NumberFormat("en-US", {
         maximumFractionDigits: 2
-    }).format(investment.investment_made * (investment.plan.percent / 100) * (investment.duration * 4));
+    }).format(investment.investment_made * (investment.plan.percent / 100) * (investment.duration * 4 + 2));
 };
 
 export const getNextPayment = () => {
