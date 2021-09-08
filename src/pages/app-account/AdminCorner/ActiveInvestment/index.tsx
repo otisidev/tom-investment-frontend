@@ -16,11 +16,21 @@ const ActiveInvestment = () => {
     const [limit] = useState<number>(25);
     const [page, setPage] = useState<number>(parseInt(localStorage.getItem("_page") || "1"));
     const [user, setUser] = useState<any>(null);
+    const [search, setSearch] = useState<any>(null);
+    const [items, setItems] = useState<Array<any>>([]);
+    const [pageProps, setPageProps] = useState<any>();
 
     const { loading, data, fetchMore } = useQuery(GET_ACTIVE, {
         variables: { page, limit, user },
         onError: (er) => toast.error(CleanMessage(er.message)),
-        notifyOnNetworkStatusChange: true
+        notifyOnNetworkStatusChange: true,
+        onCompleted: (d) => {
+            if (d.GetActiveInvestment) {
+                const { docs, ...props } = d.GetActiveInvestment;
+                setItems(docs);
+                setPageProps(props);
+            }
+        }
     });
 
     const [creditFunc, { loading: __loading }] = useMutation(CREDIT_INVESTMENT, {
@@ -40,47 +50,24 @@ const ActiveInvestment = () => {
             variables: { page, limit, user },
             updateQuery: (prev, { fetchMoreResult }) => {
                 if (!fetchMoreResult) return prev;
+                const { docs, ...props } = fetchMoreResult.GetActiveInvestment;
+                setItems(docs);
+                setPageProps(props);
                 return { GetActiveInvestment: fetchMoreResult.GetActiveInvestment };
             }
         });
     }, [page, user, limit, fetchMore]);
 
     const [closeFunc, { loading: cLoading }] = useMutation(CLOSE_INVESTMENT, {
-        update: (caches, { data }) => {
-            // read
-            let d: any = caches.readQuery({
-                query: GET_ACTIVE,
-                variables: {
-                    page,
-                    limit,
-                    user
-                }
-            });
-            // update
-            const docs = d.GetActiveInvestment.docs;
-            d.GetActiveInvestment.docs.splice(
-                docs.findIndex((x: any) => data.CloseInvestment.doc.id === x.id),
-                1
-            );
-            //   reduce totalDocs count by 1
-            d.GetActiveInvestment.totalDocs--;
-            //   write the new content back
-            caches.writeQuery({
-                query: GET_ACTIVE,
-                variables: {
-                    page,
-                    limit,
-                    user
-                },
-                data: {
-                    GetActiveInvestment: d.GetActiveInvestment
-                }
-            });
-        },
         onError: (er) => toast.error(CleanMessage(er.message)),
         onCompleted: (data) => {
             if (data.CloseInvestment) {
-                toast.success(data.CloseInvestment.message);
+                const { message, doc } = data.CloseInvestment;
+                const idx = items.findIndex((x) => x.id === doc.id);
+                const _items = [...items];
+                _items.splice(idx, 1);
+                setItems(_items);
+                toast.success(message);
             }
         }
     });
@@ -105,17 +92,18 @@ const ActiveInvestment = () => {
                             </span>
                         </button>
                     )}
-                    {data && <PaginationSummary {...data.GetActiveInvestment} length={data.GetActiveInvestment.docs.length} />}
+                    {data && <PaginationSummary {...pageProps} length={items.length} />}
                     <div className="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
                         <form
                             onSubmit={async (event) => {
                                 event.preventDefault();
+                                setUser(search);
                             }}
                         >
                             <div className="w-56 relative text-gray-700">
                                 <input
-                                    defaultValue={user}
-                                    onChange={({ currentTarget: { value } }) => setUser(value)}
+                                    defaultValue={search}
+                                    onChange={({ currentTarget: { value } }) => setSearch(value)}
                                     type="search"
                                     className="input w-56 box pr-10 placeholder-theme-13"
                                     placeholder="Search..."
@@ -130,7 +118,7 @@ const ActiveInvestment = () => {
                 {data && (
                     <ActiveInvestmentItems
                         onClose={async (item: any) => await closeFunc({ variables: { id: item.id } })}
-                        items={data.GetActiveInvestment.docs}
+                        items={items}
                         onCredit={async (model: any) => await creditFunc({ variables: { model } })}
                         onTopUp={async (model: any) => await topUpFunc({ variables: { ...model } })}
                     />
@@ -143,8 +131,8 @@ const ActiveInvestment = () => {
                             setPage(page);
                             localStorage.setItem("_page", page + "");
                         }}
-                        {...data.GetActiveInvestment}
-                        length={data.GetActiveInvestment.docs.length}
+                        {...pageProps}
+                        length={items.length}
                     />
                 )}
             </div>

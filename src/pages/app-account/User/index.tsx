@@ -18,6 +18,7 @@ const UserManagement = () => {
     const [limit] = useState<number>(25);
     const [nationality] = useState<any>(null);
     const [user, setUser] = useState<any>(null);
+    const [search, setSearch] = useState<string>("");
 
     // get user list
     const { loading, data, refetch, fetchMore } = useQuery(GET_USERS, {
@@ -26,8 +27,8 @@ const UserManagement = () => {
             page: page,
             limit: limit,
             nationality: nationality,
-            user,
-        },
+            user
+        }
     });
 
     useEffect(() => {
@@ -36,9 +37,9 @@ const UserManagement = () => {
             updateQuery: (prev, { fetchMoreResult }) => {
                 if (!fetchMoreResult) return prev;
                 return { GetUsers: fetchMoreResult.GetUsers };
-            },
+            }
         });
-    }, [page, limit, fetchMore]);
+    }, [page, user, limit, fetchMore]);
 
     return (
         <>
@@ -60,7 +61,7 @@ const UserManagement = () => {
                                     page,
                                     limit,
                                     nationality: null,
-                                    user: null,
+                                    user: null
                                 });
                             }}
                             className="intro-y button px-2 box mt-4 text-gray-700"
@@ -75,18 +76,13 @@ const UserManagement = () => {
                         <form
                             onSubmit={async (event) => {
                                 event.preventDefault();
-                                await refetch({
-                                    page,
-                                    limit,
-                                    nationality,
-                                    user,
-                                });
+                                setUser(search);
                             }}
                         >
                             <div className="w-56 relative text-gray-700">
                                 <input
-                                    defaultValue={user}
-                                    onChange={({ currentTarget: { value } }) => setUser(value)}
+                                    defaultValue={search}
+                                    onChange={({ currentTarget: { value } }) => setSearch(value)}
                                     type="search"
                                     className="input w-56 box pr-10 placeholder-theme-13"
                                     placeholder="Search..."
@@ -98,7 +94,11 @@ const UserManagement = () => {
                 </div>
             </div>
             {data && <UserItems items={data.GetUsers.docs} />}
-            <div className="mt-5 intro-y">{data && <PageNumber onPageClicked={(page: number) => setPage(page)} {...data.GetUsers} length={data.GetUsers.docs.length} />}</div>
+            <div className="mt-5 intro-y">
+                {data && (
+                    <PageNumber onPageClicked={(page: number) => setPage(page)} {...data.GetUsers} length={data.GetUsers.docs.length} />
+                )}
+            </div>
         </>
     );
 };
