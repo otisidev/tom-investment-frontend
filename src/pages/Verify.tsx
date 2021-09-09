@@ -38,6 +38,7 @@ const Verify: FC<iProp> = ({ location }) => {
                 document.location.href = from.pathname;
             }
         },
+        notifyOnNetworkStatusChange: true
     });
 
     if (authService.IsAuthenticated()) {
@@ -76,7 +77,7 @@ const Verify: FC<iProp> = ({ location }) => {
                     <div className="h-screen xl:h-auto flex py-5 xl:py-0 my-10 xl:my-0">
                         <div className="my-auto mx-auto xl:ml-20 bg-white xl:bg-transparent px-5 sm:px-8 py-8 xl:p-0 rounded-md shadow-md xl:shadow-none w-full sm:w-3/4 lg:w-2/4 xl:w-auto">
                             <h2 className="intro-x font-bold text-2xl xl:text-3xl text-center xl:text-left">Account Verification</h2>
-                            <div className="intro-x mt-2 text-gray-500 xl:hidden text-center">Verification should happen automatically.</div>
+                            <div className="intro-x mt-2 text-gray-500 xl:hidden text-center">Account verification in process.</div>
 
                             <div className="intro-x mt-5 xl:mt-8 text-center xl:text-left">
                                 <LoadingIcon loading={loading} />

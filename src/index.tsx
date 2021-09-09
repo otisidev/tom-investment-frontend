@@ -20,12 +20,7 @@ const client = new ApolloClient({
                 authorization: token ? `Bearer ${token}` : "",
             },
         });
-    },
-    onError: ({ networkError }) => {
-        if (networkError) {
-            networkError.message = "An error occurred! Check your internet connection and try again.";
-        }
-    },
+    }
 });
 
 ReactDOM.render(

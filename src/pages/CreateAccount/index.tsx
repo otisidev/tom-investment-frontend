@@ -84,6 +84,7 @@ const CreateAccount: FC<iProp> = ({ history, location }) => {
                                             userAgent: navigator.userAgent
                                         };
                                         const { re_password, referralCode, ...rest } = user;
+                                        // if(rest.email && rest.phone && rest.)
                                         await createFunc({
                                             variables: { option, model: rest, referrer: referralCode }
                                         });
@@ -178,6 +179,7 @@ const CreateAccount: FC<iProp> = ({ history, location }) => {
                                                             }
                                                             placeholder="Select type"
                                                             options={AccountType}
+                                                            required
                                                             theme={(theme) => ({
                                                                 ...theme,
                                                                 colors: {
@@ -193,6 +195,7 @@ const CreateAccount: FC<iProp> = ({ history, location }) => {
                                                         <Select
                                                             id="gender"
                                                             isMulti={false}
+                                                            required
                                                             defaultValue={user?.gender}
                                                             onChange={(item: any) =>
                                                                 setUser({
@@ -228,6 +231,7 @@ const CreateAccount: FC<iProp> = ({ history, location }) => {
                                                             nationality: item.value
                                                         })
                                                     }
+                                                    required
                                                     className="border-theme-1"
                                                     isMulti={false}
                                                     defaultValue={user?.nationality}
@@ -308,6 +312,7 @@ const CreateAccount: FC<iProp> = ({ history, location }) => {
                                                 <label htmlFor="duration">Duration</label>
                                                 <Select
                                                     id="duration"
+                                                    required
                                                     isMulti={false}
                                                     defaultValue={{ value: user.duration, label: user.duration }}
                                                     onChange={(item: any) =>
@@ -332,6 +337,7 @@ const CreateAccount: FC<iProp> = ({ history, location }) => {
                                                             referralCode: value
                                                         })
                                                     }
+                                                    required
                                                     type="text"
                                                     name="referral code"
                                                     id="referral_code"
@@ -369,6 +375,7 @@ const CreateAccount: FC<iProp> = ({ history, location }) => {
                                                     })
                                                 }
                                                 type="password"
+                                                required
                                                 className="intro-x input w-full input--lg border border-gray-300 block"
                                                 placeholder={t("password.confirm.text")}
                                                 defaultValue={user?.re_password}

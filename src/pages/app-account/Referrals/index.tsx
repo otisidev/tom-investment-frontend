@@ -19,6 +19,8 @@ const YourReferral = () => {
     const [invest, setInvest] = useState(0);
     const [users, setUsers] = useState<Array<IUser>>([]);
     const [user, setUser] = useState<IUser>();
+    const [items, setItems] = useState<Array<any>>([]);
+
     const { referralCode, id } = authService.GetUser();
     useQuery(GET_COUNT_USER, {
         onCompleted: (d) => {
@@ -26,7 +28,12 @@ const YourReferral = () => {
         }
     });
 
-    const { loading, data } = useQuery(GET_REFERRALS, {});
+    const { loading, data } = useQuery(GET_REFERRALS, {
+        onError: (er) => toast.error(CleanMessage(er.message)),
+        onCompleted: (d) => {
+            setItems(d.GetReferrals.docs);
+        }
+    });
 
     const { loading: _loading } = useQuery(GET_REFERRER, {
         onError: (er) => toast.error(CleanMessage(er.message)),
@@ -74,12 +81,14 @@ const YourReferral = () => {
 
             <LoadingIcon className="text-theme-1" loading={loading || _loading || __loading} />
 
-            {data && !loading && <ReferrerItems items={data.GetReferrals.docs} />}
-            <div className="mt-8">
-                <span className="button w-56 rounded-full mr-1 mb-2 bg-theme-14 text-theme-10 font-medium">
-                    {t("general.referral")}: {data ? data.GetReferrals.docs.length : 0}
-                </span>
-            </div>
+            {items.length > 0 && !loading && <ReferrerItems items={items} />}
+            {items.length > 0 && (
+                <div className="mt-8 intro-y">
+                    <span className="button w-56 rounded-full mr-1 mb-2 bg-theme-14 text-theme-10 font-medium">
+                        {t("general.referral")}: {data ? data.GetReferrals.docs.length : 0}
+                    </span>
+                </div>
+            )}
 
             {user && (
                 <div className="my-4 intro-y flex items-center box px-4 py-8">
@@ -91,13 +100,14 @@ const YourReferral = () => {
                     <span className="text-teal-600 font-bold uppercase p-2 bg-teal-100 rounded-lg">Referrer</span>
                 </div>
             )}
+
             {users.length > 0 && (
                 <div className="my-4">
                     <div className="mb-2">
                         <h2 className="uppercase text-lg font-medium">Referral list</h2>
                         <div className="w-6 h-1 bg-yellow-600"></div>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 xxl:grid-cols-4 gap-2 lg:gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 xxl:grid-cols-4 gap-2 lg:gap-4">
                         {users.map((item, idx) => (
                             <div key={idx} className="intro-y flex items-center box rounded-xl px-4 py-6">
                                 <img className="w-20 rounded-full border shadow  mr-4" src={item.image || DefaultImage} alt={item.name} />
