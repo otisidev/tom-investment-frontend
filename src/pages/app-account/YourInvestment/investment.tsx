@@ -57,14 +57,14 @@ const SingleInvestment = ({ match, history }: Props) => {
     const [compoundFunc, { loading: comLoading }] = useMutation(COMPOUND_INVESTMENT, {
         onError: (er) => toast.error(CleanMessage(er.message)),
         onCompleted: () => {
-            document.location.reload(true);
+            document.location.reload();
         }
     });
 
     const [topUpFunc, { loading: upLoading }] = useMutation(NEW_TOP_UP, {
         onError: (er) => toast.error(CleanMessage(er.message)),
         onCompleted: () => {
-            document.location.reload(true);
+            document.location.reload();
         }
     });
 
@@ -219,6 +219,11 @@ const SingleInvestment = ({ match, history }: Props) => {
                                 )}
                                 {item.approved && (
                                     <>
+                                        {item.investmentType && (
+                                            <div className="text-gray-800 px-10 text-center mx-auto mt-2">
+                                                <b>Investment Type</b> <span className="text-teal-600">{item.investmentType}</span>
+                                            </div>
+                                        )}
                                         <div className="text-gray-800 px-10 text-center mx-auto mt-2">
                                             <b>{t("next.fund")}</b> <Calendar className="text-theme-1 h-4 mr-1" />{" "}
                                             <span>{CleanDate(getNextPayment(), true, true)}</span>

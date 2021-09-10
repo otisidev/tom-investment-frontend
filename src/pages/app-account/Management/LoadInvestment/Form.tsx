@@ -10,6 +10,7 @@ import { GET_CATEGORIES } from "../../../../queries/category.query";
 import { Category } from "../../../../model/category.model";
 import { toCurrency } from "./../../../../context/App";
 import localCurrencies from "../../../../data/currency.json";
+import investmentTypes from "../../../../data/account-type.json";
 import { Currency } from "../../../../model/currency.model";
 import { GET_CURRENCIES } from "../../../../queries/currency.query";
 
@@ -29,6 +30,7 @@ const InvestmentForm: FC<iProp> = ({ onSubmit }) => {
     const [currencies, setCurrencies] = useState<Array<Currency>>([]);
     const [localCurrency, setLocalCurrency] = useState<string>("");
     const [currency, setCurrency] = useState("");
+    const [investmentType, setInvestmentType] = useState("");
     const [duration, setDuration] = useState(12);
 
     const [getPlansFunc, { loading: planLoading, data: planDoc }] = useLazyQuery(GET_PLANS, {
@@ -72,7 +74,8 @@ const InvestmentForm: FC<iProp> = ({ onSubmit }) => {
                                         daysToPayout: payout * 7,
                                         localCurrency,
                                         currency,
-                                        duration
+                                        duration,
+                                        investmentType
                                     });
                                 } else {
                                     toast.warn("Plan must be selected");
@@ -277,9 +280,32 @@ const InvestmentForm: FC<iProp> = ({ onSubmit }) => {
                                         </select>
                                     </div>
                                 </div>
-                                <div className="col-span-12 xl:col-span-6">
+                                <div className="col-span-12">
                                     <div>
-                                        <label className="mr-3">Paid for this investment?</label>
+                                        <label
+                                            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mt-4"
+                                            htmlFor="investmentType"
+                                        >
+                                            Investment Type
+                                        </label>
+                                        <select
+                                            onChange={({ currentTarget: { value } }) => setInvestmentType(value)}
+                                            required
+                                            className="w-full bg-gray-200 border border-theme-1 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                            id="investmentType"
+                                        >
+                                            <option value="-1">Investment Type</option>
+                                            {investmentTypes.map((item, idx) => (
+                                                <option key={idx} value={item.value}>
+                                                    {item.label}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className="col-span-12 xl:col-span-4">
+                                    <div className="flex items-center">
+                                        <label className="mr-3 font-semibold">Paid for this investment?</label>
                                         <input
                                             defaultChecked={paid}
                                             onChange={({ currentTarget: { checked } }) => setPaid(checked)}
@@ -288,9 +314,9 @@ const InvestmentForm: FC<iProp> = ({ onSubmit }) => {
                                         />
                                     </div>
                                 </div>
-                                <div className="col-span-12 xl:col-span-6">
-                                    <div>
-                                        <label className="mr-3">Approve investment?</label>
+                                <div className="col-span-12 xl:col-span-4">
+                                    <div className="flex items-center">
+                                        <label className="mr-3 font-semibold">Approve investment?</label>
                                         <input
                                             defaultChecked={approve}
                                             onChange={({ currentTarget: { checked } }) => setApprove(checked)}

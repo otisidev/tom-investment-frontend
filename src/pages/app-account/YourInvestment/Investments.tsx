@@ -28,7 +28,7 @@ const Investments: FC<iProp> = ({ items }) => {
         onError: (er) => toast.error(CleanMessage(er.message)),
         onCompleted: (data) => {
             if (data.PaidForInvestment) {
-                document.location.reload(true);
+                document.location.reload();
             }
         }
     });
@@ -36,7 +36,7 @@ const Investments: FC<iProp> = ({ items }) => {
     const [closeFunc, { loading: closeLoading }] = useMutation(CLOSE_INVESTMENT, {
         onError: (er) => toast.error(CleanMessage(er.message)),
         onCompleted: () => {
-            document.location.reload(true);
+            document.location.reload();
         }
     });
 
@@ -45,7 +45,7 @@ const Investments: FC<iProp> = ({ items }) => {
             <>
                 <div className="grid grid-cols-12 gap-6 mt-5">
                     {items.map((item, idx) => (
-                        <div key={idx} className="intro-y box col-span-12 py-8 md:col-span-3">
+                        <div key={idx} className="intro-y box col-span-12 py-8 md:col-span-4">
                             {item.expired ? (
                                 <div className="rounded-md flex items-center px-5 py-4 mb-2 bg-theme-6 text-white">
                                     <CloseCircle className="w-6 h-6 mr-2" />
@@ -124,8 +124,13 @@ const Investments: FC<iProp> = ({ items }) => {
                                         <span>{CleanDate(item.next_fund_date, true, true)}</span>
                                     </div> */}
                                     <div className="text-gray-800 px-10 text-center mx-auto mt-2">
-                                        <b>Duration</b> <span className="text-teal-600">{item.duration} Months</span>
+                                        <b>Duration:</b> <span className="text-teal-600 font-medium">{item.duration} Months</span>
                                     </div>
+                                    {item.investmentType && (
+                                        <div className="text-gray-800 px-10 text-center mx-auto mt-2">
+                                            <b>Investment Type:</b> <span className="text-teal-600 font-medium">{item.investmentType}</span>
+                                        </div>
+                                    )}
                                     <div className="px-10 text-center mx-auto mt-2">
                                         <b>Start Date</b> <Calendar className="text-theme-1 h-4 mr-1" />{" "}
                                         <span>{CleanDate(item.date, true, true)}</span>

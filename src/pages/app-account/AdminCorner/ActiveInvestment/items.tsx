@@ -10,6 +10,7 @@ import { LoadingIcon } from "../../../../components/Button";
 import { Edit3 } from "@styled-icons/feather";
 import { GET_PLANS } from "../../../../queries/plan.query";
 import { PlanModel } from "../../../../model/plan.model";
+import investmentTypes from "../../../../data/account-type.json";
 
 interface iProps {
     items: Array<any>;
@@ -98,6 +99,9 @@ const ActiveInvestmentItems: FC<iProps> = ({ items, onClose, onCredit, onTopUp }
                                                     {item.user.gender} | <span className="text-theme-1">{item.user.nationality}</span>
                                                 </div>
                                                 <div className="text-yellow-600 text-xs">{item.user.accountType}</div>
+                                                {item.investmentType && (
+                                                    <div className="text-green-600 text-xs font-bold">{item.investmentType}</div>
+                                                )}
                                             </div>
                                         </div>
                                     </td>
@@ -427,6 +431,30 @@ const ActiveInvestmentItems: FC<iProps> = ({ items, onClose, onCredit, onTopUp }
                                         ))}
                                     </select>
                                 </div>
+                                <div>
+                                    <div>
+                                        <label
+                                            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mt-4"
+                                            htmlFor="investmentType"
+                                        >
+                                            Investment Type
+                                        </label>
+                                        <select
+                                            onChange={({ currentTarget: { value } }) => setModel({ ...model, investmentType: value })}
+                                            required
+                                            defaultValue={model?.investmentType}
+                                            className="w-full bg-gray-200 border border-theme-1 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                            id="investmentType"
+                                        >
+                                            <option value="-1">Investment Type</option>
+                                            {investmentTypes.map((item, idx) => (
+                                                <option key={idx} value={item.value}>
+                                                    {item.label}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                             <LoadingIcon loading={loading} />
                         </div>
@@ -444,7 +472,13 @@ const ActiveInvestmentItems: FC<iProps> = ({ items, onClose, onCredit, onTopUp }
                                 type="button"
                                 onClick={async () => {
                                     if (model && model.duration) {
-                                        await updateFunc({ variables: { id: active.id, duration: parseInt(model.duration) } });
+                                        await updateFunc({
+                                            variables: {
+                                                id: active.id,
+                                                duration: parseInt(model.duration),
+                                                investmentType: model.investmentType
+                                            }
+                                        });
                                     } else {
                                         window.alert("Duration is required!");
                                     }

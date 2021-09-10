@@ -24,6 +24,7 @@ export class Investment {
     expiration = "";
     duration = 0;
     expired = false;
+    investmentType = null;
 }
 
 class InvestmentCompound {

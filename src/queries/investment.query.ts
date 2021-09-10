@@ -38,6 +38,7 @@ const INVESTMENT_PROP = gql`
         expiration
         duration
         expired
+        investmentType
     }
     ${PLAN_PROP}
 `;
@@ -344,8 +345,8 @@ export const GET_INVESTMENT_STATUS = gql`
 `;
 
 export const UPDATE_INVESTMENT_DURATION = gql`
-    mutation UpdateInvestmentDuration($id: ID!, $duration: Int!) {
-        UpdateInvestmentDuration(id: $id, duration: $duration) {
+    mutation UpdateInvestmentDuration($id: ID!, $duration: Int!, $investmentType: String) {
+        UpdateInvestmentDuration(id: $id, duration: $duration, investmentType: $investmentType) {
             message
         }
     }

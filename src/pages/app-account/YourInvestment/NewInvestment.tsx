@@ -15,6 +15,7 @@ import { GET_CONTACT_PERSONS } from "./../../../queries/contact-person.query";
 import { Currency } from "../../../model/currency.model";
 import { GET_CURRENCIES } from "../../../queries/currency.query";
 import local from "../../../data/currency.json";
+import investmentTypes from "../../../data/account-type.json";
 
 interface iProp {
     onCancel: any;
@@ -30,6 +31,7 @@ const NewInvestment: FC<iProp> = ({ onCancel }) => {
     const [currencies, setCurrencies] = useState<Array<Currency>>([]);
     const [currency, setCurrency] = useState("");
     const [localCurrency, setLocalCurrency] = useState("");
+    const [investmentType, setInvestmentType] = useState("");
     const [duration, setDuration] = useState(12);
 
     const [getPlanFunc, { loading: planLoading, data: planDoc }] = useLazyQuery(GET_PLANS, {
@@ -62,7 +64,7 @@ const NewInvestment: FC<iProp> = ({ onCancel }) => {
     const [createFunc, { loading }] = useMutation(NEW_INVESTMENT, {
         onCompleted: (data) => {
             if (data.NewInvestment) {
-                window.document.location.reload(true);
+                window.document.location.reload();
             }
         },
         onError: (er) => toast.error(CleanMessage(er.message))
@@ -85,7 +87,8 @@ const NewInvestment: FC<iProp> = ({ onCancel }) => {
                                         daysToPayout: payout * 7,
                                         currency,
                                         localCurrency,
-                                        duration
+                                        duration,
+                                        investmentType
                                     }
                                 }
                             });
@@ -189,6 +192,27 @@ const NewInvestment: FC<iProp> = ({ onCancel }) => {
                                         <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
                                     </svg>
                                 </div>
+                            </div>
+                            <div className="relative">
+                                <label
+                                    className="block uppercase tracking-wide text-gray-700 text-xs font-bold mt-4"
+                                    htmlFor="investmentType"
+                                >
+                                    Investment Type
+                                </label>
+                                <select
+                                    onChange={({ currentTarget: { value } }) => setInvestmentType(value)}
+                                    required
+                                    className="block appearance-none w-full bg-gray-100 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    id="investmentType"
+                                >
+                                    <option value="-1">Investment Type</option>
+                                    {investmentTypes.map((item, idx) => (
+                                        <option key={idx} value={item.value}>
+                                            {item.label}
+                                        </option>
+                                    ))}
+                                </select>
                             </div>
                             {plan && (
                                 <>
