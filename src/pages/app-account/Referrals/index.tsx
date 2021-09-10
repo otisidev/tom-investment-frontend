@@ -8,8 +8,8 @@ import { CleanMessage } from "./../../../context/App";
 import { LoadingIcon } from "../../../components/Button";
 import { Copy } from "@styled-icons/feather";
 import { authService } from "./../../../services/Authentication.Service";
-import { GET_REFERRALS } from "../../../queries/referral.query";
-import ReferrerItems from "./items";
+// import { GET_REFERRALS } from "../../../queries/referral.query";
+// import ReferrerItems from "./items";
 import { GET_COUNT_USER } from "../../../queries/statistics.query";
 import { GET_REFERRER, GET_YOUR_REFERRALS } from "../../../queries/user.query";
 import { IUser } from "../../../model/user.model";
@@ -19,7 +19,7 @@ const YourReferral = () => {
     const [invest, setInvest] = useState(0);
     const [users, setUsers] = useState<Array<IUser>>([]);
     const [user, setUser] = useState<IUser>();
-    const [items, setItems] = useState<Array<any>>([]);
+    // const [items, setItems] = useState<Array<any>>([]);
 
     const { referralCode, id } = authService.GetUser();
     useQuery(GET_COUNT_USER, {
@@ -28,12 +28,12 @@ const YourReferral = () => {
         }
     });
 
-    const { loading, data } = useQuery(GET_REFERRALS, {
-        onError: (er) => toast.error(CleanMessage(er.message)),
-        onCompleted: (d) => {
-            setItems(d.GetReferrals.docs);
-        }
-    });
+    // const { loading, data } = useQuery(GET_REFERRALS, {
+    //     onError: (er) => toast.error(CleanMessage(er.message)),
+    //     onCompleted: (d) => {
+    //         setItems(d.GetReferrals.docs);
+    //     }
+    // });
 
     const { loading: _loading } = useQuery(GET_REFERRER, {
         onError: (er) => toast.error(CleanMessage(er.message)),
@@ -79,16 +79,16 @@ const YourReferral = () => {
                 </div>
             </div>
 
-            <LoadingIcon className="text-theme-1" loading={loading || _loading || __loading} />
+            <LoadingIcon className="text-theme-1" loading={_loading || __loading} />
 
-            {items.length > 0 && !loading && <ReferrerItems items={items} />}
+            {/* {items.length > 0 && !loading && <ReferrerItems items={items} />}
             {items.length > 0 && (
                 <div className="mt-8 intro-y">
                     <span className="button w-56 rounded-full mr-1 mb-2 bg-theme-14 text-theme-10 font-medium">
                         {t("general.referral")}: {data ? data.GetReferrals.docs.length : 0}
                     </span>
                 </div>
-            )}
+            )} */}
 
             {user && (
                 <div className="my-4 intro-y flex items-center box px-4 py-8">
