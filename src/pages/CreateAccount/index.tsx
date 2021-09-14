@@ -12,6 +12,7 @@ import { NEW_ACCOUNT } from "../../queries/user.query";
 import { authService } from "../../services/Authentication.Service";
 import { CleanMessage } from "./../../context/App";
 import AccountType from "../../data/account-type.json";
+import WalletNames from "../../data/wallet-name.json";
 
 interface iProp {
     history?: any;
@@ -255,11 +256,28 @@ const CreateAccount: FC<iProp> = ({ history, location }) => {
                                     {step === 2 && (
                                         <>
                                             <div className="mt-4">
+                                                <label htmlFor="walletName">Wallet</label>
+                                                <Select
+                                                    id="walletName"
+                                                    isMulti={false}
+                                                    defaultValue={user?.walletName}
+                                                    onChange={(item: any) =>
+                                                        setUser({
+                                                            ...user,
+                                                            walletName: item.value
+                                                        })
+                                                    }
+                                                    placeholder="Select Wallet"
+                                                    options={WalletNames}
+                                                    required
+                                                />
+                                            </div>
+                                            <div className="mt-4">
                                                 <label htmlFor="wallet">{t("wallet.label")}</label>
                                                 <input
                                                     type="text"
                                                     required
-                                                    className="intro-x input w-full input--lg border border-gray-300 block"
+                                                    className="input w-full input--lg border border-gray-300 block"
                                                     onChange={({ currentTarget: { value } }) =>
                                                         setUser({
                                                             ...user,

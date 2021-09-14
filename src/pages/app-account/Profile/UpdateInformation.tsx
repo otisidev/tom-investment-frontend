@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { CleanMessage } from "./../../../context/App";
 import { LoadingIcon } from "./../../../components/Button/index";
 import { Shield } from "@styled-icons/ionicons-outline";
+import WalletNames from "../../../data/wallet-name.json";
 
 const UpdateInformation = () => {
     const user = authService.GetUser();
@@ -49,7 +50,8 @@ const UpdateInformation = () => {
                                 address: model.address,
                                 walletAddress: model.wallet_address,
                                 phone: model.phone,
-                                gender: model.gender
+                                gender: model.gender,
+                                walletName: model.walletName
                             }
                         }
                     });
@@ -127,7 +129,21 @@ const UpdateInformation = () => {
                                         placeholder={t("phone.placeholder")}
                                     />
                                 </div>
-
+                                <div className="mt-3">
+                                    <label>Wallet</label>
+                                    <select
+                                        defaultValue={model.walletName}
+                                        onChange={({ currentTarget: { value } }) => setModel({ ...model, walletName: value })}
+                                        className="input w-full border mt-2"
+                                    >
+                                        <option value="">Select Wallet</option>
+                                        {WalletNames.map((item, idx) => (
+                                            <option key={idx} value={item.value}>
+                                                {item.label}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
                                 <div className="mt-3">
                                     <label>{t("wallet.label")}</label>
                                     <input

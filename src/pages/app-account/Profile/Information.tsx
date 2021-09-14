@@ -80,7 +80,7 @@ const UserInformation: FC<IProps> = ({ user }) => {
                 <div className="p-5">
                     <div className="relative flex items-center">
                         <div className="ml-4 mr-auto">
-                            <span className="font-medium">{t("wallet.label")}</span>
+                            <span className="font-medium">{user.walletName || "Wallet"}</span>
                             <div className="text-gray-700 mr-5 sm:mr-5">{user.wallet_address}</div>
                         </div>
                     </div>

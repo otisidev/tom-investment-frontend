@@ -34,6 +34,7 @@ const USER_PROP = gql`
         }
         useTwoF
         duration
+        walletName
     }
 `;
 export const LOGIN = gql`

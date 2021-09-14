@@ -23,6 +23,7 @@ export class User {
     accountType = "";
     referrer?: IUser = undefined;
     duration = "";
+    walletName = "";
 }
 
 export interface IUser {

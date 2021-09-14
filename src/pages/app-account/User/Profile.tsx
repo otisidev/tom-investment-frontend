@@ -16,6 +16,7 @@ import { setTimeout } from "timers";
 import AccountTypes from "../../../data/account-type.json";
 import Select from "react-select";
 import countries from "../../../data/country.json";
+import walletNames from "../../../data/wallet-name.json";
 
 interface iProp {
     match?: any;
@@ -104,7 +105,9 @@ const UserProfile: FC<iProp> = ({ match, history }) => {
                                             {user.firstname} {user.lastname}
                                         </div>
                                         <div className="text-gray-600">Investor</div>
-                                        <div className="text-gray-600 font-semibold">Duration: <span className="text-yellow-600">{user.duration}</span> </div>
+                                        <div className="text-gray-600 font-semibold">
+                                            Duration: <span className="text-yellow-600">{user.duration}</span>{" "}
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="flex mt-6 lg:mt-0 items-center lg:items-start flex-1 flex-col justify-center text-gray-600 px-5 border-l border-r border-gray-200 border-t lg:border-t-0 pt-5 lg:pt-0">
@@ -145,7 +148,7 @@ const UserProfile: FC<iProp> = ({ match, history }) => {
                             <div className="p-5">
                                 <div className="relative flex items-center">
                                     <div className="ml-4 mr-auto">
-                                        <span className="font-medium">{t("wallet.label")}</span>
+                                        <span className="font-medium">{user.walletName || t("wallet.label")}</span>
                                         <div className="text-gray-700 mr-5 sm:mr-5">{user.wallet_address}</div>
                                     </div>
                                 </div>
@@ -337,7 +340,8 @@ const UserProfile: FC<iProp> = ({ match, history }) => {
                                         nationality: user.nationality,
                                         phone: user.phone,
                                         gender: user.gender,
-                                        duration: user.duration
+                                        duration: user.duration,
+                                        walletName: user.walletName
                                     }
                                 }
                             });
@@ -415,7 +419,6 @@ const UserProfile: FC<iProp> = ({ match, history }) => {
                             <div>
                                 <label htmlFor="dob">Date of birth</label>
                                 <input
-                                    required
                                     type="date"
                                     id="dob"
                                     defaultValue={user.dob}
@@ -428,6 +431,22 @@ const UserProfile: FC<iProp> = ({ match, history }) => {
                                     }
                                 />
                                 <span>{CleanDate(user.dob, true, true)}</span>
+                            </div>
+                            <div>
+                                <label htmlFor="wallet">Wallet name</label>
+                                <Select
+                                    id="wallet"
+                                    isMulti={false}
+                                    defaultValue={{ value: user.walletName, label: user.walletName }}
+                                    onChange={(item: any) =>
+                                        setUser({
+                                            ...user,
+                                            walletName: item.value
+                                        })
+                                    }
+                                    placeholder="Select wallet"
+                                    options={walletNames}
+                                />
                             </div>
                             <div>
                                 <label htmlFor="wallet">Wallet address</label>
