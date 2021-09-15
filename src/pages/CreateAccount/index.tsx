@@ -355,7 +355,6 @@ const CreateAccount: FC<iProp> = ({ history, location }) => {
                                                             referralCode: value
                                                         })
                                                     }
-                                                    required
                                                     type="text"
                                                     name="referral code"
                                                     id="referral_code"
