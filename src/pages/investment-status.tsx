@@ -1,14 +1,13 @@
 import { useLazyQuery } from "@apollo/react-hooks";
-import { ArrowRight } from "@styled-icons/feather";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { toast } from "react-toastify";
-import PrimaryButton, { ButtonType, LoadingIcon } from "../components/Button";
-import { AppName, CleanDate, CleanMessage, toCurrency } from "../context/App";
+import { LoadingIcon } from "../components/Button";
+import { AppName, CleanDate, CleanMessage, GetValueFromURL, toCurrency } from "../context/App";
 import { GET_INVESTMENT_STATUS } from "../queries/investment.query";
 
-const InvestmentStatus = () => {
-    const [email, setEmail] = useState("");
+const InvestmentStatus = (props: any) => {
+    const id = GetValueFromURL("id");
     const [items, setItems] = useState<Array<any>>([]);
 
     const [getInfoFunc, { loading }] = useLazyQuery(GET_INVESTMENT_STATUS, {
@@ -17,6 +16,10 @@ const InvestmentStatus = () => {
             setItems(d.GetInvestmentInformation.docs);
         }
     });
+
+    useEffect(() => {
+        if (id) getInfoFunc({ variables: { email: id } });
+    }, [id, getInfoFunc]);
 
     return (
         <>
@@ -33,28 +36,6 @@ const InvestmentStatus = () => {
                         </span>
                     </a>
                     <h2 className="font-bold text-xl mt-6">Investment Status</h2>
-                </div>
-                <div className="flex flex-col items-center justify-center">
-                    <input
-                        type="email"
-                        required
-                        defaultValue={email}
-                        onChange={({ currentTarget: { value } }) => setEmail(value)}
-                        className="w-full md:w-1/2 intro-x login__input input input--lg border border-gray-300 block mt-4"
-                        placeholder="Enter email address"
-                    />
-                    <PrimaryButton
-                        type={ButtonType.submit}
-                        onClick={async () => {
-                            if (email) {
-                                await getInfoFunc({ variables: { email } });
-                            } else toast.error("Enter a valid email address!");
-                        }}
-                        loading={false}
-                        className="button button--lg w-full xl:w-32 text-white bg-theme-1 xl:mr-3 mt-4 intro-x"
-                    >
-                        Search <ArrowRight size={18} />
-                    </PrimaryButton>
                 </div>
                 <LoadingIcon loading={loading} />
                 {!loading && items.length > 0 && (
