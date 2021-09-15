@@ -285,6 +285,13 @@ const UserProfile: FC<iProp> = ({ match, history }) => {
                                     >
                                         <ArrowBack className="w-4 h-4 mr-2" /> Go Back
                                     </button>
+                                    <a
+                                        target="_blank"
+                                        href={`/investment-status?id=${user.email}`}
+                                        className="button w-full mr-2 mb-2 flex items-center justify-center uppercase border shadow bg-green-100"
+                                    >
+                                        Investment Status
+                                    </a>
                                 </div>
                             </div>
                         )}
