@@ -5,11 +5,12 @@ import { useQuery } from "@apollo/react-hooks";
 import { toast } from "react-toastify";
 import { CleanMessage } from "./../../../context/App";
 import { GET_USERS } from "../../../queries/user.query";
-import { LoadingIcon } from "../../../components/Button";
-import { Search, Refresh } from "@styled-icons/ionicons-outline";
+import PrimaryButton, { ButtonType, LoadingIcon } from "../../../components/Button";
+import { Search, Refresh, Mail } from "@styled-icons/ionicons-outline";
 import PaginationSummary from "../../../components/Paging/Summary";
 import PageNumber from "./../../../components/Paging/Number";
 import UserItems from "./Items";
+import { Link } from "react-router-dom";
 // import Select from "react-select";
 // import countries from "../../../data/country.json";
 
@@ -48,6 +49,15 @@ const UserManagement = () => {
             </Helmet>
             <div className="intro-y flex items-center mt-8">
                 <h2 className="text-lg font-medium mr-auto">User Management</h2>
+                <Link to="/app/users/send-mail">
+                    <PrimaryButton
+                        loading={false}
+                        type={ButtonType.button}
+                        className="shadow button bg-white text-teal-600 border border-teal-600 py-4 hover:bg-teal-100"
+                    >
+                        <Mail className="w-5" /> Bulk Email
+                    </PrimaryButton>
+                </Link>
             </div>
             <LoadingIcon loading={loading} />
             <div className="grid grid-cols-12 gap-6 mt-5">

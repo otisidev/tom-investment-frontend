@@ -26,6 +26,7 @@ import SingleInvestment from "./YourInvestment/investment";
 import TopUpRequest from "./AdminCorner/top-up-request";
 import CurrencyApp from "./AdminCorner/Currency";
 import { UserReferral } from "./AdminCorner/referral";
+import sendMail from "./User/send-mail";
 
 const AppAccount = () => {
     // Update css class name
@@ -53,7 +54,8 @@ const AppAccount = () => {
                         <Route path="/app/profile" component={Profile} />
                         <Route path="/app/investment-history/:id" component={InvestmentHistory} />
                         <AdminRoute path="/app/plan" component={Plan} />
-                        <AdminRoute path="/app/users" component={UserManagement} />
+                        <AdminRoute path="/app/users" exact component={UserManagement} />
+                        <AdminRoute path="/app/users/send-mail" component={sendMail} />
                         <Route path="/app/user/:id" component={UserProfile} />
                         <AdminRoute path="/app/load-investment" component={LoadInvestment} />
                         <AdminRoute path="/app/payout" component={Payout} />

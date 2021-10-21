@@ -5,6 +5,7 @@ import { authService } from "../services/Authentication.Service";
 interface IProp {
     component: any;
     path: string;
+    exact?: boolean;
 }
 
 const AdminRoute: React.FC<IProp> = ({ component: Component, ...rest }) => (
@@ -19,7 +20,7 @@ const AdminRoute: React.FC<IProp> = ({ component: Component, ...rest }) => (
                         to={{
                             pathname: "/",
                             state: { from: props.location },
-                            search: `?redirect=${props.location.pathname}`,
+                            search: `?redirect=${props.location.pathname}`
                         }}
                     />
                 )

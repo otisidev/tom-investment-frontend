@@ -297,3 +297,15 @@ export const ADMIN_UPDATE_ACCOUNT = gql`
         }
     }
 `;
+
+export const GET_EMAILS = gql`
+    query GetUserEmailAddresses {
+        GetUserEmailAddresses
+    }
+`;
+
+export const NEW_EMAIL_MESSAGE = gql`
+    mutation SendBulkEmail($emails: [String!]!, $message: String!, $subject: String!) {
+        SendBulkEmail(emails: $emails, subject: $subject, messageContent: $message)
+    }
+`;
