@@ -309,3 +309,15 @@ export const NEW_EMAIL_MESSAGE = gql`
         SendBulkEmail(emails: $emails, subject: $subject, messageContent: $message)
     }
 `;
+
+export const GET_USERS_SHORT = gql`
+    query GetUsers($page: Int, $limit: Int, $nationality: ID, $user: String) {
+        GetUsers(page: $page, limit: $limit, nationality: $nationality, user: $user) {
+            docs {
+                id
+                name
+                email
+            }
+        }
+    }
+`;

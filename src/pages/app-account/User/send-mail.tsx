@@ -3,29 +3,37 @@ import React, { useState } from "react";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import { AppName, CleanMessage } from "../../../context/App";
-
 import "froala-editor/css/froala_style.min.css";
 import "froala-editor/css/froala_editor.pkgd.min.css";
 import Editor from "react-froala-wysiwyg";
 import "froala-editor/js/plugins.pkgd.min.js";
-import PrimaryButton, { ButtonType, LoadingIcon } from "../../../components/Button";
+import PrimaryButton, { ButtonType } from "../../../components/Button";
 import { useMutation, useQuery } from "@apollo/react-hooks";
-import { GET_EMAILS, NEW_EMAIL_MESSAGE } from "../../../queries/user.query";
+import { GET_USERS_SHORT, NEW_EMAIL_MESSAGE } from "../../../queries/user.query";
 import { toast } from "react-toastify";
+import Select from "react-select";
+
+interface MailUserOption {
+    label: string;
+    value: string;
+}
 
 const SendMail = () => {
     const title = "Bulk Emailing";
 
     const [model, setModel] = useState({ messageContent: "", subject: "" });
-    const [emails, setEmails] = useState([]);
+    const [emails, setEmails] = useState<any>([]);
+    const [users, setUsers] = useState<MailUserOption[]>([]);
 
-    const { loading } = useQuery(GET_EMAILS, {
+    const { loading } = useQuery(GET_USERS_SHORT, {
         onError: (er) => {
             toast.error(CleanMessage(er.message));
         },
         onCompleted: (d) => {
-            setEmails(d.GetUserEmailAddresses);
-        }
+            const options = Array.from(d.GetUsers.docs, ({ name, email }) => ({ value: email, label: `${name} (${email})` }));
+            setUsers(options);
+        },
+        variables: { page: 1, limit: 1000 }
     });
     //
     const [sendFunc, { loading: _loading }] = useMutation(NEW_EMAIL_MESSAGE, {
@@ -59,7 +67,20 @@ const SendMail = () => {
                 <hr />
                 {/* CONTACT */}
                 <div className="grid gap-4 mt-4">
-                    <LoadingIcon loading={loading} />
+                    <div>
+                        <span className="font-semibold">Select Receiver</span>
+                        <Select
+                            options={users}
+                            isSearchable={true}
+                            isMulti={true}
+                            isLoading={loading}
+                            placeholder="Select Receiver"
+                            onChange={(evt: any) => {
+                                const items = Array.from(evt, ({ value }) => value);
+                                setEmails(items);
+                            }}
+                        />
+                    </div>
 
                     <div>
                         <label>Total Receiver</label>

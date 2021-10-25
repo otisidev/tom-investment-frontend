@@ -39,7 +39,7 @@
         "react-router-dom": "^5.2.0",
         "react-scripts": "3.4.1",
         "react-select": "^3.1.0",
-        "react-toastify": "^6.0.8",
+        "react-toastify": "^8.0.3",
         "styled-components": "^5.1.1",
         "timeago-react": "^3.0.0",
         "typescript": "~3.7.2"

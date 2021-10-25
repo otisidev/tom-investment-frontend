@@ -5,11 +5,12 @@ import { toast } from "react-toastify";
 import { CleanMessage } from "./../../../../context/App";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import { GET_ACTIVE, CLOSE_INVESTMENT, CREDIT_INVESTMENT, ADMIN_TOP_UP_INVESTMENT } from "../../../../queries/investment.query";
-import { Refresh, Search } from "@styled-icons/ionicons-outline";
-import { LoadingIcon } from "../../../../components/Button";
+import { Mail, Refresh, Search } from "@styled-icons/ionicons-outline";
+import PrimaryButton, { ButtonType, LoadingIcon } from "../../../../components/Button";
 import PaginationSummary from "../../../../components/Paging/Summary";
 import PageNumber from "../../../../components/Paging/Number";
 import ActiveInvestmentItems from "./items";
+import { Link } from "react-router-dom";
 
 const ActiveInvestment = () => {
     const title = "Active Investments";
@@ -81,6 +82,15 @@ const ActiveInvestment = () => {
             </Helmet>
             <div className="intro-y flex items-center mt-8 mb-8">
                 <h2 className="text-lg font-medium mr-auto">{title}</h2>
+                <Link to="/app/users/send-mail">
+                    <PrimaryButton
+                        loading={false}
+                        type={ButtonType.button}
+                        className="shadow button bg-white text-teal-600 border border-teal-600 py-4 hover:bg-teal-100"
+                    >
+                        <Mail className="w-5" /> Bulk Email
+                    </PrimaryButton>
+                </Link>
             </div>
             <LoadingIcon loading={loading || cLoading || __loading || top__loading} />
             <div className="grid grid-cols-12 gap-6 mt-5">
