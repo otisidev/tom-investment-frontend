@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import { toast } from "react-toastify";
-import { CleanMessage, toCurrency, CleanDate } from "./../../../../context/App";
+import { CleanMessage, toCurrency, CleanDate, DefaultImageFromURL } from "./../../../../context/App";
 import { DECLINE_INVESTMENT, ACCEPT_INVESTMENT, INVESTMENT_APPROVAL } from "../../../../queries/investment.query";
 import PaginationSummary from "../../../../components/Paging/Summary";
 import PageNumber from "../../../../components/Paging/Number";
@@ -147,7 +147,10 @@ const InvestmentApprovalItems = () => {
                                                     <img
                                                         alt={item.user.firstname}
                                                         className="rounded-full"
-                                                        src={item.user.image || "/dist/images/profile-5.jpg"}
+                                                        src={
+                                                            item.user.image ||
+                                                            DefaultImageFromURL(item.user.firstname + " " + item.user.lastname)
+                                                        }
                                                     />
                                                 </div>
                                                 <div className="lg:ml-4 lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">

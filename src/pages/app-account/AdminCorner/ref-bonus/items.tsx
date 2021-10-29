@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { Albums, Cash } from "@styled-icons/ionicons-outline";
-import { toCurrency, CleanDate, CleanMessage, DefaultImage } from "../../../../context/App";
+import { toCurrency, CleanDate, CleanMessage, DefaultImageFromURL } from "../../../../context/App";
 import { useMutation } from "@apollo/react-hooks";
 import { PAY_REFERRAL } from "../../../../queries/referral.query";
 import { toast } from "react-toastify";
@@ -13,8 +13,8 @@ const ReferralItems: FC<iProp> = ({ items }) => {
     const [payFunc, { loading }] = useMutation(PAY_REFERRAL, {
         onError: (er) => toast.error(CleanMessage(er.message)),
         update: () => {
-            document.location.reload(true);
-        },
+            document.location.reload();
+        }
     });
 
     if (items.length)
@@ -41,7 +41,11 @@ const ReferralItems: FC<iProp> = ({ items }) => {
                                 <td className="w-40">
                                     <div className="flex flex-col lg:flex-row items-center py-5">
                                         <div className="w-24 h-24 lg:w-12 lg:h-12 image-fit lg:mr-1">
-                                            <img alt={item.user.firstname} className="rounded-full" src={item.user.image || DefaultImage} />
+                                            <img
+                                                alt={item.user.firstname}
+                                                className="rounded-full"
+                                                src={item.user.image || DefaultImageFromURL(item.user.firstname + " " + item.user.lastname)}
+                                            />
                                         </div>
                                         <div className="lg:ml-4 lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">
                                             <div className="font-medium">
@@ -57,7 +61,11 @@ const ReferralItems: FC<iProp> = ({ items }) => {
                                 <td className="w-40">
                                     <div className="flex flex-col lg:flex-row items-center py-5">
                                         <div className="w-24 h-24 lg:w-12 lg:h-12 image-fit lg:mr-1">
-                                            <img alt={item.referrer.firstname} className="rounded-full" src={item.referrer.image || DefaultImage} />
+                                            <img
+                                                alt={item.referrer.firstname}
+                                                className="rounded-full"
+                                                src={item.referrer.image || DefaultImageFromURL(item.user.firstname + " " + item.user.lastname)}
+                                            />
                                         </div>
                                         <div className="lg:ml-4 lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">
                                             <div className="font-medium">
@@ -85,8 +93,8 @@ const ReferralItems: FC<iProp> = ({ items }) => {
                                                 if (window.confirm("Are you sure you want to confirm Payment?")) {
                                                     await payFunc({
                                                         variables: {
-                                                            id: item.id,
-                                                        },
+                                                            id: item.id
+                                                        }
                                                     });
                                                 }
                                             }}

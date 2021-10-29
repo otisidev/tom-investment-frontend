@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { authService } from "./../services/Authentication.Service";
 import LanguageChanger from "./LanguageChanger";
 import { PersonAdd } from "@styled-icons/ionicons-outline";
+import { DefaultImageFromURL } from "../context/App";
 
 const TopNavigation = () => {
     const { t } = useTranslation();
@@ -24,7 +25,7 @@ const TopNavigation = () => {
             </div>
             <div className="intro-x dropdown w-8 h-8 relative">
                 <div className="dropdown-toggle w-8 h-8 border-gray-600 border-2 rounded-full overflow-hidden shadow-lg image-fit zoom-in scale-110">
-                    <img alt={user.firstname} src={user.image || "/dist/images/profile.jpg"} />
+                    <img alt={user.firstname} src={user.image || DefaultImageFromURL(user.firstname + " " + user.lastname)} />
                 </div>
                 <div className="dropdown-box mt-10 absolute w-56 top-0 right-0 z-20">
                     <div className="dropdown-box__content box bg-gray-800 text-white">

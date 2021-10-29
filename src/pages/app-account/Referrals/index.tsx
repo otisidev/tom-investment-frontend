@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Helmet } from "react-helmet";
-import { AppName, DefaultImage } from "../../../context/App";
+import { AppName, DefaultImageFromURL } from "../../../context/App";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "@apollo/react-hooks";
 import { toast } from "react-toastify";
@@ -92,7 +92,11 @@ const YourReferral = () => {
 
             {user && (
                 <div className="my-4 intro-y flex items-center box px-4 py-8">
-                    <img className="w-20 rounded-full border shadow  mr-4" src={user.image || DefaultImage} alt={user.name} />
+                    <img
+                        className="w-20 rounded-full border shadow  mr-4"
+                        src={user.image || DefaultImageFromURL(user.name)}
+                        alt={user.name}
+                    />
                     <div className="mr-auto">
                         <h2 className="font-bold text-lg">{user.name}</h2>
                         <span className="text-gray-600">{user.email}</span>
@@ -110,7 +114,11 @@ const YourReferral = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 xxl:grid-cols-4 gap-2 lg:gap-4">
                         {users.map((item, idx) => (
                             <div key={idx} className="intro-y flex items-center box rounded-xl px-4 py-6">
-                                <img className="w-20 rounded-full border shadow  mr-4" src={item.image || DefaultImage} alt={item.name} />
+                                <img
+                                    className="w-20 rounded-full border shadow  mr-4"
+                                    src={item.image || DefaultImageFromURL(item.name)}
+                                    alt={item.name}
+                                />
                                 <div className="mr-auto">
                                     <h2 className="font-bold text-lg">{item.name}</h2>
                                     <span className="text-xs text-gray-600">{item.email}</span>

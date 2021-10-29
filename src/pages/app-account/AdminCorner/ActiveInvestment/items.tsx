@@ -1,6 +1,6 @@
 import React, { FC, useState } from "react";
 import { Albums, CloseCircle } from "@styled-icons/ionicons-outline";
-import { CleanDate, CleanMessage } from "../../../../context/App";
+import { CleanDate, CleanMessage, DefaultImageFromURL } from "../../../../context/App";
 import { NavLink } from "react-router-dom";
 import { toCurrency } from "./../../../../context/App";
 import { useMutation, useQuery } from "@apollo/react-hooks";
@@ -84,7 +84,10 @@ const ActiveInvestmentItems: FC<iProps> = ({ items, onClose, onCredit, onTopUp }
                                                 <img
                                                     alt={item.user.firstname}
                                                     className="rounded-full"
-                                                    src={item.user.image || "/dist/images/profile.jpg"}
+                                                    src={
+                                                        item.user.image ||
+                                                        DefaultImageFromURL(item.user.firstname + " " + item.user.lastname)
+                                                    }
                                                 />
                                             </div>
                                             <div className="lg:ml-4 lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">
@@ -126,19 +129,31 @@ const ActiveInvestmentItems: FC<iProps> = ({ items, onClose, onCredit, onTopUp }
                                         {item.compounded?.status ? (
                                             <>
                                                 <span className="font-bold text-theme-1">Compounding</span>
-                                                <h4 className="text-theme-9 text-lg">£{toCurrency(item.investment_made)}</h4>
-                                                <b>Expected Payout: </b> £{toCurrency(item.compounded.payout || 0)} <br />
+                                                <h4 className="text-theme-9 text-lg">
+                                                    {item.localCurrency || "£"}
+                                                    {toCurrency(item.investment_made)}
+                                                </h4>
+                                                <b>Expected Payout: </b> {item.localCurrency || "£"}
+                                                {toCurrency(item.compounded.payout || 0)} <br />
                                             </>
                                         ) : (
                                             <>
-                                                <h4 className="text-theme-9 text-lg">£{toCurrency(item.investment_made)}</h4>
-                                                <b>Total Payout: </b> £{toCurrency(item.payout_sum)} <br />
-                                                <b>Weekly Payout: </b> £{toCurrency(item.payout_weekly)}
+                                                <h4 className="text-theme-9 text-lg">
+                                                    {item.localCurrency || "£"}
+                                                    {toCurrency(item.investment_made)}
+                                                </h4>
+                                                <b>Total Payout: </b> {item.localCurrency || "£"}
+                                                {toCurrency(item.payout_sum)} <br />
+                                                <b>Weekly Payout: </b> {item.localCurrency || "£"}
+                                                {toCurrency(item.payout_weekly)}
                                             </>
                                         )}
                                     </td>
                                     <td className="text-left">
-                                        <h4 className="text-theme-9 text-lg">£{toCurrency(item.balance)}</h4>
+                                        <h4 className="text-theme-9 text-lg">
+                                            {item.localCurrency || "£"}
+                                            {toCurrency(item.balance)}
+                                        </h4>
                                         {item.expiration && (
                                             <p className="font-medium">Expiration: {CleanDate(item.expiration, true, true)}</p>
                                         )}

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Helmet } from "react-helmet";
 import { toast } from "react-toastify";
 import { LoadingIcon } from "../../../../components/Button";
-import { AppName, CleanMessage, DefaultImage } from "../../../../context/App";
+import { AppName, CleanMessage, DefaultImageFromURL } from "../../../../context/App";
 import { IUser } from "../../../../model/user.model";
 import { GET_USERS, NEW_REFERRAL } from "../../../../queries/user.query";
 
@@ -128,7 +128,7 @@ function UserInfo({ user }: IPops) {
         <div className="intro-y flex items-center px-4">
             <img
                 className="w-16 h-16 object-cover rounded-full border-2 border-yellow-600 shadow  mr-4"
-                src={user.image || DefaultImage}
+                src={user.image || DefaultImageFromURL(user.name)}
                 alt={user.name}
             />
             <div className="mr-auto">

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { authService } from "../../../services/Authentication.Service";
 import { useQuery } from "@apollo/react-hooks";
@@ -7,17 +7,39 @@ import { toast } from "react-toastify";
 import { CleanMessage, toCurrency } from "./../../../context/App";
 import { LoadingIcon } from "../../../components/Button";
 import { RefreshCcw, Eye, PieChart, Users, GitCommit } from "@styled-icons/feather";
-import { Albums, CheckmarkDone, People, PeopleCircle, Cash, Wallet, StatsChart, Layers, RadioButtonOn, ShieldCheckmark } from "@styled-icons/ionicons-outline";
+import {
+    Albums,
+    CheckmarkDone,
+    People,
+    PeopleCircle,
+    Cash,
+    Wallet,
+    StatsChart,
+    Layers,
+    RadioButtonOn,
+    ShieldCheckmark
+} from "@styled-icons/ionicons-outline";
 import UpdateImage from "../Profile/UpdateImage";
 import UpdatePassword from "../Profile/ChangePassword";
 import UpdateEmail from "../Profile/UpdateEmail";
 import { NavLink } from "react-router-dom";
+import { GET_CURRENCY } from "../../../queries/user-currency.query";
 
 const Dashboard = () => {
     const { t } = useTranslation();
     const { admin } = authService.GetUser();
-    const { loading, data, refetch } = useQuery(GET_COUNTS, { onError: (er) => toast.error(CleanMessage(er.message)), notifyOnNetworkStatusChange: true });
+    const [localCurrency, setLocalCurrency] = useState("");
+    const { loading, data, refetch } = useQuery(GET_COUNTS, {
+        onError: (er) => toast.error(CleanMessage(er.message)),
+        notifyOnNetworkStatusChange: true
+    });
 
+    const { loading: __loadC } = useQuery(GET_CURRENCY, {
+        onCompleted: (data) => {
+            setLocalCurrency(data.GetUserCurrency.doc.currency);
+        },
+        onError: (er) => console.error(CleanMessage(er.message))
+    });
     return (
         <>
             <div className="intro-y flex items-center mt-8">
@@ -111,7 +133,13 @@ const Dashboard = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="text-3xl font-bold leading-8 mt-6">€{toCurrency(data.SumInvestmentMade)}</div>
+                                    {!__loadC && (
+                                        <div className="text-3xl font-bold leading-8 mt-6">
+                                            {localCurrency || "£"}
+                                            {toCurrency(data.SumInvestmentMade)}
+                                        </div>
+                                    )}
+                                    <LoadingIcon loading={__loadC} />
                                     <div className="text-base text-gray-600 mt-1">{t("investment.made")}</div>
                                 </div>
                             </div>

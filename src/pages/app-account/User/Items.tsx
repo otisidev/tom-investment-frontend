@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { NavLink } from "react-router-dom";
 import {  Info } from "@styled-icons/feather";
 import { useTranslation } from "react-i18next";
-import { CleanDate, DefaultImage } from "./../../../context/App";
+import { CleanDate, DefaultImageFromURL } from "./../../../context/App";
 import { PersonCircle } from "@styled-icons/ionicons-outline";
 
 interface props {
@@ -18,7 +18,7 @@ const UserItems: FC<props> = ({ items }) => {
                         <div className="box">
                             <div className="flex flex-col lg:flex-row items-center p-5">
                                 <div className="w-24 h-24 lg:w-12 lg:h-12 image-fit lg:mr-1">
-                                    <img alt="user" className="rounded-full" src={user.image || DefaultImage} />
+                                    <img alt="user" className="rounded-full" src={user.image || DefaultImageFromURL(user.name)} />
                                 </div>
                                 <div className="lg:ml-2 lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">
                                     <NavLink to={{ pathname: `/app/user/${user.id}` }} className="uppercase font-medium">

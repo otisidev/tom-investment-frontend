@@ -2,18 +2,28 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { authService } from "./../../../services/Authentication.Service";
 import { Save, Edit3 } from "@styled-icons/feather";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation, useQuery } from "@apollo/react-hooks";
 import { UPDATE_ACCOUNT, UPDATE_2FA } from "../../../queries/user.query";
 import { toast } from "react-toastify";
 import { CleanMessage } from "./../../../context/App";
-import { LoadingIcon } from "./../../../components/Button/index";
-import { Shield } from "@styled-icons/ionicons-outline";
+import PrimaryButton, { ButtonType, LoadingIcon } from "./../../../components/Button/index";
+import { Cash, Shield } from "@styled-icons/ionicons-outline";
 import WalletNames from "../../../data/wallet-name.json";
+import local from "../../../data/currency.json";
+import { GET_CURRENCY, UPDATE_CURRENCY } from "../../../queries/user-currency.query";
 
 const UpdateInformation = () => {
     const user = authService.GetUser();
     const { t } = useTranslation();
     const [model, setModel] = useState(user);
+    const [localCurrency, setLocalCurrency] = useState("");
+
+    const { loading: __loadC } = useQuery(GET_CURRENCY, {
+        onCompleted: (data) => {
+            setLocalCurrency(data.GetUserCurrency.doc.currency);
+        },
+        onError: (er) => toast.error(CleanMessage(er.message))
+    });
 
     const [updateFunc, { loading }] = useMutation(UPDATE_ACCOUNT, {
         onCompleted: (data) => {
@@ -35,6 +45,14 @@ const UpdateInformation = () => {
                 authService.Login(data.Update2FA.doc, token);
             }
         }
+    });
+
+    const [setCurrencyFunc, { loading: func_load }] = useMutation(UPDATE_CURRENCY, {
+        onCompleted: (data) => {
+            toast.success(data.SetUserCurrency.message);
+            setLocalCurrency(data.SetUserCurrency.doc.currency);
+        },
+        onError: (er) => toast.error(CleanMessage(er.message))
     });
     return (
         <>
@@ -179,6 +197,53 @@ const UpdateInformation = () => {
                 </div>
             </form>
             <div className="intro-y box lg:mt-5">
+                <div className="flex items-center p-5 border-b border-gray-200">
+                    <h2 className="font-medium text-base mr-auto">
+                        <Cash className="w-4 h-4 mr-2 text-theme-1" /> Set Default Currency
+                    </h2>
+                </div>
+                <div className="w-full mb-4 p-6">
+                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mt-2" htmlFor="grid-local">
+                        Local Currency
+                    </label>
+                    <div className="relative">
+                        <select
+                            onChange={({ currentTarget: { value } }) => setLocalCurrency(value)}
+                            required
+                            value={localCurrency}
+                            className="block appearance-none w-full bg-gray-100 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                            id="grid-local"
+                        >
+                            <option value="">Local Currency</option>
+                            {local.map((item: string, idx: number) => (
+                                <option key={idx} value={item}>
+                                    {item}
+                                </option>
+                            ))}
+                        </select>
+                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                            <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div className="mt-4">
+                        <PrimaryButton
+                            onClick={async () => {
+                                if (localCurrency) {
+                                    await setCurrencyFunc({ variables: { currency: localCurrency } });
+                                } else toast.info("Please select currency!");
+                            }}
+                            className="rounded-lg bg-teal-600 text-teal-100 shadow p-4"
+                            type={ButtonType.button}
+                            loading={__loadC || func_load}
+                        >
+                            Update Currency
+                        </PrimaryButton>
+                    </div>
+                </div>
+            </div>
+            <div className="intro-y box ">
                 <div className="flex items-center p-5 border-b border-gray-200">
                     <h2 className="font-medium text-base mr-auto">
                         <Shield className="w-4 h-4 mr-2 text-theme-1" /> {t("2fa")}

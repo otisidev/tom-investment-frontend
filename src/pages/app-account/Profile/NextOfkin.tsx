@@ -8,7 +8,7 @@ import { imageService } from "../../../services/Image.service";
 import { toast } from "react-toastify";
 import { useMutation } from "@apollo/react-hooks";
 import { CREATE_KIN } from "../../../queries/user.query";
-import { CleanMessage, DefaultImage } from "./../../../context/App";
+import { CleanMessage, DefaultImageFromURL } from "./../../../context/App";
 import { UPDATE_KIN } from "./../../../queries/user.query";
 
 const NextOfKinPage = () => {
@@ -52,7 +52,7 @@ const NextOfKinPage = () => {
             onSubmit={async (event) => {
                 event.preventDefault();
                 if (!next_of_kin) {
-                    await createFunc({ variables: { model: { ...model, image: model.image || DefaultImage } } });
+                    await createFunc({ variables: { model: { ...model, image: model.image || DefaultImageFromURL(model.name) } } });
                 } else {
                     const { id, name, email, phone, relationship, image } = model;
                     await updateFunc({ variables: { id, update: { name, email, phone, image, relationship } } });

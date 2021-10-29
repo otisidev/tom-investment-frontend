@@ -20,7 +20,7 @@ const PrimaryButton: FC<iProp> = ({ loading, type, children, onClick, className,
     return (
         <button onClick={onClick} disabled={disabled} type={type} className={`${className}`}>
             {loading ? (
-                <div className="lds-ring">
+                <div className="px-4 lds-ring">
                     <div></div>
                     <div></div>
                     <div></div>

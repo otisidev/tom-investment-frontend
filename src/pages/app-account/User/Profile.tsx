@@ -1,7 +1,7 @@
 import React, { FC, useState } from "react";
 import { Redirect, NavLink } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { AppName, CleanDate, DefaultImage } from "../../../context/App";
+import { AppName, CleanDate, DefaultImageFromURL } from "../../../context/App";
 import { User } from "./../../../model/user.model";
 import { Mail, Call, Planet, Person, Copy, ArrowBack, Trash, Close, CheckmarkDone } from "@styled-icons/ionicons-outline";
 import { useTranslation } from "react-i18next";
@@ -98,7 +98,11 @@ const UserProfile: FC<iProp> = ({ match, history }) => {
                             <div className="flex flex-col lg:flex-row border-b border-gray-200 pb-5 -mx-5">
                                 <div className="flex flex-1 px-5 items-center justify-center lg:justify-start">
                                     <div className="w-20 h-20 sm:w-24 sm:h-24 flex-none lg:w-32 lg:h-32 image-fit relative">
-                                        <img alt={user.firstname} className="rounded-full" src={user.image || "/dist/images/profile.png"} />
+                                        <img
+                                            alt={user.firstname}
+                                            className="rounded-full"
+                                            src={user.image || DefaultImageFromURL(user.firstname + " " + user.lastname)}
+                                        />
                                     </div>
                                     <div className="ml-5">
                                         <div className=" uppercase font-medium text-lg">
@@ -134,7 +138,7 @@ const UserProfile: FC<iProp> = ({ match, history }) => {
                     {user.referrer && (
                         <div className="my-4 intro-y flex items-center box px-4 py-8">
                             <div className="w-16 h-16 sm:w-18 sm:h-18 flex-none lg:w-20 lg:h-20 image-fit relative mr-3 bg-yellow-200 border-2 rounded-full">
-                                <img alt={user.firstname} className="rounded-full" src={user.referrer.image || DefaultImage} />
+                                <img alt={user.firstname} className="rounded-full" src={user.referrer.image || DefaultImageFromURL(user.referrer.name)} />
                             </div>
                             <div className="mr-auto">
                                 <h2 className="font-bold text-lg uppercase">{user.referrer.name}</h2>
@@ -235,7 +239,7 @@ const UserProfile: FC<iProp> = ({ match, history }) => {
                                     {user.referred.map((u, i) => (
                                         <div key={i} className="flex flex-col lg:flex-row items-center p-3">
                                             <div className="w-24 h-24 lg:w-12 lg:h-12 image-fit lg:mr-1">
-                                                <img alt={u.firstname} className="rounded-full" src={u.image || DefaultImage} />
+                                                <img alt={u.firstname} className="rounded-full" src={u.image || DefaultImageFromURL(u.firstname + " "+u.lastname)} />
                                             </div>
                                             <div className="lg:ml-2 lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">
                                                 <NavLink to={{ pathname: `/app/user/${u.id}` }} className="font-medium">

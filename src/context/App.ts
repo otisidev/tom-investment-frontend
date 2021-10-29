@@ -19,7 +19,7 @@ export const AppName = "Timo Stephan Investment";
 export const CleanMessage = (message: string) => {
     if (message?.includes("Unauthorized access!")) {
         authService.Logout();
-        window.location.reload(true);
+        window.location.reload();
     }
     return message.replace("GraphQL error:", "").replace("Network error:", "");
 };
@@ -100,6 +100,9 @@ function isIOS() {
 }
 
 export const DefaultImage = "https://res.cloudinary.com/obaforex/image/upload/v1620379912/assets/imgs/isgpp_avatar_placeholder_l8cm9b.png";
+
+export const DefaultImageFromURL = (name: String) =>
+    `https://ui-avatars.com/api/?length=1&size=128&name=${name}&length=2&background=random&format=svg`;
 
 export const getTotalAmount = (investment: Investment) => {
     return Intl.NumberFormat("en-US", {

@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { Info } from "@styled-icons/feather";
-import { toCurrency, CleanDate, DefaultImage } from "./../../../../context/App";
+import { toCurrency, CleanDate, DefaultImageFromURL } from "./../../../../context/App";
 import { Card } from "@styled-icons/ionicons-outline";
 
 interface iProp {
@@ -36,7 +36,7 @@ const PayoutList: FC<iProp> = ({ items, onPay }) => {
                                             <img
                                                 alt={item.user.firstname}
                                                 className="rounded-full"
-                                                src={item.user.image || DefaultImage}
+                                                src={item.user.image || DefaultImageFromURL(item.user.firstname +" "+item.user.lastname)}
                                             />
                                         </div>
                                         <div className="lg:ml-4 lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">

@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { NavLink } from "react-router-dom";
 import { ArrowRight, Info } from "@styled-icons/feather";
 import { useTranslation } from "react-i18next";
-import { toCurrency } from "../../../context/App";
+import { DefaultImageFromURL, toCurrency } from "../../../context/App";
 
 interface props {
     items: Array<any>;
@@ -17,7 +17,7 @@ const ReferrerItems: FC<props> = ({ items }) => {
                         <div className="box">
                             <div className="flex flex-col lg:flex-row items-center p-5">
                                 <div className="w-24 h-24 lg:w-12 lg:h-12 image-fit lg:mr-1">
-                                    <img alt="user" className="rounded-full" src={item.user.image || "/dist/images/profile-5.jpg"} />
+                                    <img alt="user" className="rounded-full" src={item.user.image || DefaultImageFromURL(item.user.name)} />
                                 </div>
                                 <div className="lg:ml-2 lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">
                                     <NavLink to={{ pathname: `/app/user/${item.user.id}` }} className="font-medium">

@@ -1,6 +1,6 @@
 import React from "react";
 import { Check, Info } from "@styled-icons/feather";
-import { CleanDate, DefaultImage, toCurrency } from "../../../../context/App";
+import { CleanDate, DefaultImageFromURL, toCurrency } from "../../../../context/App";
 
 type Props = {
     items: Array<any>;
@@ -34,7 +34,7 @@ const PendingInvestmentList = ({ items, onCancel, onApprove }: Props) => {
                                         <div className="relative w-12 h-12">
                                             <img
                                                 className="shadow border-2 rounded-full border-white w-12 h-12"
-                                                src={item.investment.user.image || DefaultImage}
+                                                src={item.investment.user.image || DefaultImageFromURL(item.investment.user.name)}
                                             />
                                         </div>
                                         <div className="flex flex-col">
