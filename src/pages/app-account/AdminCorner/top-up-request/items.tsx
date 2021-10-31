@@ -45,12 +45,12 @@ const PendingInvestmentList = ({ items, onCancel, onApprove }: Props) => {
                                 </td>
                                 <td>
                                     <span className="text-base text-green-500 font-semibold">
-                                        <span>+£</span> <span className="text-lg">{toCurrency(item.amount)}</span>
+                                        <span>+€</span> <span className="text-lg">{toCurrency(item.amount)}</span>
                                     </span>
                                 </td>
                                 <td>
                                     <span className="text-base text-theme-1 font-semibold">
-                                        <span>£</span> <span className="text-lg">{toCurrency(item.investment.investment_made)}</span>
+                                        <span>€</span> <span className="text-lg">{toCurrency(item.investment.investment_made)}</span>
                                     </span>
                                 </td>
 

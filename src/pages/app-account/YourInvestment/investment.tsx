@@ -135,7 +135,7 @@ const SingleInvestment = ({ match, history }: Props) => {
                                         </form>
                                         {amount && (
                                             <p className="font-bold text-xs text-theme-1 -intro-x">
-                                                Preview: {item.localCurrency || "£"}
+                                                Preview: {item.localCurrency || "€"}
                                                 {toCurrency(amount)}
                                             </p>
                                         )}
@@ -185,14 +185,14 @@ const SingleInvestment = ({ match, history }: Props) => {
                                     <div className="relative text-5xl font-semibold mt-4 mx-auto">
                                         {toCurrency(item.investment_made)}{" "}
                                         <span className="absolute text-2xl top-0 right-0 text-gray-500 -mr-4 mt-1">
-                                            {item.localCurrency || "£"}
+                                            {item.localCurrency || "€"}
                                         </span>
                                     </div>
                                 </div>
                                 {item.compounded?.status && (
                                     <div className="text-gray-800 text-center mt-5">
                                         <strong>
-                                            {item.localCurrency || "£"}
+                                            {item.localCurrency || "€"}
                                             {toCurrency(item.compounded.payout)}
                                         </strong>{" "}
                                         {t("i.amount.text")} <span className="mx-1 text-theme-1">•</span>{" "}
@@ -204,14 +204,14 @@ const SingleInvestment = ({ match, history }: Props) => {
                                         <div className="text-gray-700 text-center mt-5">
                                             <span>{t("balance")}</span>
                                             <p className="font-semibold text-xl">
-                                                {item.localCurrency || "£"}
+                                                {item.localCurrency || "€"}
                                                 {toCurrency(item.balance)}{" "}
                                             </p>
                                         </div>
                                         <div className="text-gray-700 text-center mt-5">
                                             <span>Expected Amount</span>
                                             <p className="font-semibold text-xl">
-                                                {item.localCurrency || "£"}
+                                                {item.localCurrency || "€"}
                                                 {toCurrency(getTotalAmount(item))}
                                             </p>
                                         </div>
@@ -322,7 +322,7 @@ const SingleInvestment = ({ match, history }: Props) => {
                             <div className="col-span-12 sm:col-span-12">
                                 <b>{t("investment.made")}</b>
                                 <h4>
-                                    {active?.localCurrency || "£"}
+                                    {active?.localCurrency || "€"}
                                     {toCurrency(active?.investment_made || 0)}
                                 </h4>
                             </div>

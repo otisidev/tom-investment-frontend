@@ -130,28 +130,28 @@ const ActiveInvestmentItems: FC<iProps> = ({ items, onClose, onCredit, onTopUp }
                                             <>
                                                 <span className="font-bold text-theme-1">Compounding</span>
                                                 <h4 className="text-theme-9 text-lg">
-                                                    {item.localCurrency || "£"}
+                                                    {item.localCurrency || "€"}
                                                     {toCurrency(item.investment_made)}
                                                 </h4>
-                                                <b>Expected Payout: </b> {item.localCurrency || "£"}
+                                                <b>Expected Payout: </b> {item.localCurrency || "€"}
                                                 {toCurrency(item.compounded.payout || 0)} <br />
                                             </>
                                         ) : (
                                             <>
                                                 <h4 className="text-theme-9 text-lg">
-                                                    {item.localCurrency || "£"}
+                                                    {item.localCurrency || "€"}
                                                     {toCurrency(item.investment_made)}
                                                 </h4>
-                                                <b>Total Payout: </b> {item.localCurrency || "£"}
+                                                <b>Total Payout: </b> {item.localCurrency || "€"}
                                                 {toCurrency(item.payout_sum)} <br />
-                                                <b>Weekly Payout: </b> {item.localCurrency || "£"}
+                                                <b>Weekly Payout: </b> {item.localCurrency || "€"}
                                                 {toCurrency(item.payout_weekly)}
                                             </>
                                         )}
                                     </td>
                                     <td className="text-left">
                                         <h4 className="text-theme-9 text-lg">
-                                            {item.localCurrency || "£"}
+                                            {item.localCurrency || "€"}
                                             {toCurrency(item.balance)}
                                         </h4>
                                         {item.expiration && (
@@ -280,7 +280,7 @@ const ActiveInvestmentItems: FC<iProps> = ({ items, onClose, onCredit, onTopUp }
                                         className="w-full login__input input rounded-lg input--lg border-2 border-gray-300 block hover:border-theme-1 resize-none font-semibold"
                                     >
                                         <option value="">Select Currency</option>
-                                        {["$", "€", "£"].map((item, idx) => (
+                                        {["$", "€", "€"].map((item, idx) => (
                                             <option key={idx} value={item}>
                                                 {item}
                                             </option>
@@ -378,7 +378,7 @@ const ActiveInvestmentItems: FC<iProps> = ({ items, onClose, onCredit, onTopUp }
                                         className="w-full login__input input rounded-lg input--lg border-2 border-gray-300 block hover:border-theme-1 resize-none font-semibold"
                                     >
                                         <option value="">Select Currency</option>
-                                        {["$", "€", "£"].map((item, idx) => (
+                                        {["$", "€", "€"].map((item, idx) => (
                                             <option key={idx} value={item}>
                                                 {item}
                                             </option>

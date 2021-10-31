@@ -222,13 +222,13 @@ const NewInvestment: FC<iProp> = ({ onCancel }) => {
                                             <span className="mx-1 text-theme-1">•</span>
                                             Minimum Investment -{" "}
                                             <strong>
-                                                {localCurrency || "£"}
+                                                {localCurrency || "€"}
                                                 {toCurrency(plan.amount)}
                                             </strong>{" "}
                                             <span className="mx-1 text-theme-1">•</span>
                                             Maximum Investment -{" "}
                                             <strong>
-                                                {localCurrency || "£"}
+                                                {localCurrency || "€"}
                                                 {toCurrency(plan.max_amount)}
                                             </strong>
                                         </div>
@@ -253,7 +253,7 @@ const NewInvestment: FC<iProp> = ({ onCancel }) => {
                                                 }
                                             />
                                             <p className="text-gray-600 text-xs italic">
-                                                {t("min-amount")} {localCurrency || "£"}
+                                                {t("min-amount")} {localCurrency || "€"}
                                                 {toCurrency(plan.amount)}
                                             </p>
                                         </div>

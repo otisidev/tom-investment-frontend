@@ -52,7 +52,7 @@ const PayoutList: FC<iProp> = ({ items, onPay }) => {
                                     </div>
                                 </td>
                                 <td className="text-center">
-                                    <div className="font-medium">£{toCurrency(item.investment_made)}</div>
+                                    <div className="font-medium">€{toCurrency(item.investment_made)}</div>
                                 </td>
                                 <td className="text-left">{item.plan.title}</td>
                                 <td className="text-left">
@@ -69,7 +69,7 @@ const PayoutList: FC<iProp> = ({ items, onPay }) => {
                                         <>
                                             <p>
                                                 <b className="text-theme-9">Due Payout:</b>
-                                                <span className="text-theme-9">£{toCurrency(item.compounded.payout)}</span>
+                                                <span className="text-theme-9">€{toCurrency(item.compounded.payout)}</span>
                                             </p>
                                             <p>
                                                 Payout Date:{" "}
@@ -85,10 +85,10 @@ const PayoutList: FC<iProp> = ({ items, onPay }) => {
                                         <>
                                             <p>
                                                 <b className="text-theme-9">Due Payout:</b>{" "}
-                                                <span className="text-theme-9">£{toCurrency(item.payout_sum)}</span>
+                                                <span className="text-theme-9">€{toCurrency(item.payout_sum)}</span>
                                             </p>
                                             <p>
-                                                <b>Weekly Payout: </b>£{toCurrency(item.payout_weekly)}
+                                                <b>Weekly Payout: </b>€{toCurrency(item.payout_weekly)}
                                             </p>
                                         </>
                                     )}

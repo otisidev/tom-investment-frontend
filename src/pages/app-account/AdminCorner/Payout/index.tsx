@@ -177,7 +177,7 @@ const Payout = () => {
                             <div className="col-span-12 sm:col-span-6">
                                 <div>
                                     <label className="font-medium text-grey-600">Amount in POUNDS</label>
-                                    <h6>£{toCurrency(wallet?.amount)}</h6>
+                                    <h6>€{toCurrency(wallet?.amount)}</h6>
                                 </div>
                             </div>
                             <div className="col-span-12 sm:col-span-6">

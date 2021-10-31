@@ -53,7 +53,7 @@ const PlanItems: FC<iProps> = ({ items }) => {
                                     </td>
                                     <td>{item.title}</td>
                                     <td className="text-center font-bold">
-                                        £{toCurrency(item.amount)} - £{toCurrency(item.max_amount)}
+                                        €{toCurrency(item.amount)} - €{toCurrency(item.max_amount)}
                                     </td>
                                     <td className="text-center font-bold">{item.percent}%</td>
                                     {/* <td className="text-center">

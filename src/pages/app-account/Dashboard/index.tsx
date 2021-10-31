@@ -135,7 +135,7 @@ const Dashboard = () => {
                                     </div>
                                     {!__loadC && (
                                         <div className="text-3xl font-bold leading-8 mt-6">
-                                            {localCurrency || "£"}
+                                            {localCurrency || "€"}
                                             {toCurrency(data.SumInvestmentMade)}
                                         </div>
                                     )}

@@ -168,7 +168,7 @@ const InvestmentApprovalItems = () => {
                                             <div className="font-medium">{item.user.nationality}</div>
                                         </td>
                                         <td className="text-center">
-                                            <div className="font-medium text-theme-9">£{toCurrency(item.investment_made)}</div>
+                                            <div className="font-medium text-theme-9">€{toCurrency(item.investment_made)}</div>
                                             <p>{item.plan.title}</p>
                                         </td>
                                         <td className="text-left">

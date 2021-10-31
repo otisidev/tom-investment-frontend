@@ -48,12 +48,12 @@ const InvestmentStatus = (props: any) => {
                                     </div>
                                     <div>
                                         <p className="text-gray-600">Amount Invested</p>
-                                        <h2 className="font-medium text-3xl">£{toCurrency(item.investment_made)}</h2>
+                                        <h2 className="font-medium text-3xl">€{toCurrency(item.investment_made)}</h2>
                                     </div>
 
                                     <div>
                                         <p>Current Balance</p>
-                                        <h2 className="font-medium text-3xl">£{toCurrency(item.balance)}</h2>
+                                        <h2 className="font-medium text-3xl">€{toCurrency(item.balance)}</h2>
                                     </div>
                                     <div className="col-span-2">
                                         <h2 className="font-medium text-base">Investment History</h2>
@@ -69,7 +69,7 @@ const InvestmentStatus = (props: any) => {
                                             <tbody>
                                                 {item.logs.map((_log: any, _l_idx: number) => (
                                                     <tr key={_l_idx}>
-                                                        <td>£{toCurrency(_log.amount)}</td>
+                                                        <td>€{toCurrency(_log.amount)}</td>
                                                         <td>{_log.reason}</td>
                                                         <td>{CleanDate(_log.date)}</td>
                                                     </tr>
@@ -98,7 +98,7 @@ const InvestmentStatus = (props: any) => {
                                             <tbody>
                                                 {item.topups.map((_top: any, _t_idx: number) => (
                                                     <tr key={_t_idx}>
-                                                        <td>£{toCurrency(_top.amount)}</td>
+                                                        <td>€{toCurrency(_top.amount)}</td>
                                                         <td>{CleanDate(_top.created_at)}</td>
                                                     </tr>
                                                 ))}
