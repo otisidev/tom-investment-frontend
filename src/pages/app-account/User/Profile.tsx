@@ -3,7 +3,7 @@ import { Redirect, NavLink } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { AppName, CleanDate, DefaultImageFromURL } from "../../../context/App";
 import { User } from "./../../../model/user.model";
-import { Mail, Call, Planet, Person, Copy, ArrowBack, Trash, Close, CheckmarkDone } from "@styled-icons/ionicons-outline";
+import { Mail, Call, Planet, Person, Copy, ArrowBack, Trash, Close, CheckmarkDone, Cash } from "@styled-icons/ionicons-outline";
 import { useTranslation } from "react-i18next";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import { toast } from "react-toastify";
@@ -17,6 +17,8 @@ import AccountTypes from "../../../data/account-type.json";
 import Select from "react-select";
 import countries from "../../../data/country.json";
 import walletNames from "../../../data/wallet-name.json";
+import locals from "../../../data/currency.json";
+import { GET_CURRENCY, UPDATE_CURRENCY } from "../../../queries/user-currency.query";
 
 interface iProp {
     match?: any;
@@ -35,6 +37,8 @@ const UserProfile: FC<iProp> = ({ match, history }) => {
     const [update, setUpdate] = useState(false);
     const [accountType, setAccountType] = useState(user?.accountType);
     const { t } = useTranslation();
+
+    const [localCurrency, setLocalCurrency] = useState("");
 
     const { loading } = useQuery(GET_SINGLE, {
         onError: (e) => toast.error(CleanMessage(e.message)),
@@ -75,6 +79,23 @@ const UserProfile: FC<iProp> = ({ match, history }) => {
     });
 
     const { admin } = authService.GetUser();
+
+    const [setCurrencyFunc, { loading: func_load }] = useMutation(UPDATE_CURRENCY, {
+        onCompleted: (data) => {
+            toast.success(data.SetUserCurrency.message);
+            setLocalCurrency(data.SetUserCurrency.doc.currency);
+        },
+        onError: (er) => toast.error(CleanMessage(er.message)),
+       
+    });
+
+    const { loading: __loadC } = useQuery(GET_CURRENCY, {
+        onCompleted: (data) => {
+            setLocalCurrency(data.GetUserCurrency.doc.currency);
+        },
+        onError: (er) => toast.error(CleanMessage(er.message)),
+        variables: { id }
+    });
 
     if (!id) return <Redirect to="/app/users" />;
 
@@ -138,7 +159,11 @@ const UserProfile: FC<iProp> = ({ match, history }) => {
                     {user.referrer && (
                         <div className="my-4 intro-y flex items-center box px-4 py-8">
                             <div className="w-16 h-16 sm:w-18 sm:h-18 flex-none lg:w-20 lg:h-20 image-fit relative mr-3 bg-yellow-200 border-2 rounded-full">
-                                <img alt={user.firstname} className="rounded-full" src={user.referrer.image || DefaultImageFromURL(user.referrer.name)} />
+                                <img
+                                    alt={user.firstname}
+                                    className="rounded-full"
+                                    src={user.referrer.image || DefaultImageFromURL(user.referrer.name)}
+                                />
                             </div>
                             <div className="mr-auto">
                                 <h2 className="font-bold text-lg uppercase">{user.referrer.name}</h2>
@@ -239,7 +264,11 @@ const UserProfile: FC<iProp> = ({ match, history }) => {
                                     {user.referred.map((u, i) => (
                                         <div key={i} className="flex flex-col lg:flex-row items-center p-3">
                                             <div className="w-24 h-24 lg:w-12 lg:h-12 image-fit lg:mr-1">
-                                                <img alt={u.firstname} className="rounded-full" src={u.image || DefaultImageFromURL(u.firstname + " "+u.lastname)} />
+                                                <img
+                                                    alt={u.firstname}
+                                                    className="rounded-full"
+                                                    src={u.image || DefaultImageFromURL(u.firstname + " " + u.lastname)}
+                                                />
                                             </div>
                                             <div className="lg:ml-2 lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">
                                                 <NavLink to={{ pathname: `/app/user/${u.id}` }} className="font-medium">
@@ -331,231 +360,281 @@ const UserProfile: FC<iProp> = ({ match, history }) => {
                 </>
             )}
             {user && update && (
-                <div className="intro-y box p-4 my-4">
-                    <div className="my-4">
-                        <h2 className="font-bold text-lg uppercase">Update Account</h2>
-                        <div className="w-6 h-1 bg-yellow-600"></div>
-                    </div>
-                    <form
-                        onSubmit={async (event) => {
-                            event.preventDefault();
-                            await accountUpdateFunc({
-                                variables: {
-                                    id: user.id,
-                                    model: {
-                                        firstname: user.firstname,
-                                        lastname: user.lastname,
-                                        email: user.email,
-                                        dob: user.dob,
-                                        walletAddress: user.dob,
-                                        nationality: user.nationality,
-                                        phone: user.phone,
-                                        gender: user.gender,
-                                        duration: user.duration,
-                                        walletName: user.walletName
+                <>
+                    <div className="intro-y box p-4 my-4">
+                        <div className="my-4">
+                            <h2 className="font-bold text-lg uppercase">Update Account</h2>
+                            <div className="w-6 h-1 bg-yellow-600"></div>
+                        </div>
+                        <form
+                            onSubmit={async (event) => {
+                                event.preventDefault();
+                                await accountUpdateFunc({
+                                    variables: {
+                                        id: user.id,
+                                        model: {
+                                            firstname: user.firstname,
+                                            lastname: user.lastname,
+                                            email: user.email,
+                                            dob: user.dob,
+                                            walletAddress: user.dob,
+                                            nationality: user.nationality,
+                                            phone: user.phone,
+                                            gender: user.gender,
+                                            duration: user.duration,
+                                            walletName: user.walletName
+                                        }
                                     }
-                                }
-                            });
-                        }}
-                    >
-                        <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
-                            <div>
-                                <label htmlFor="fn">Firstname</label>
-                                <input
-                                    required
-                                    type="text"
-                                    id="fn"
-                                    defaultValue={user?.firstname}
-                                    className="intro-x input w-full input--lg border-2 border-gray-300 hover:border-yellow-600"
-                                    onChange={({ currentTarget }) =>
-                                        setUser({
-                                            ...user,
-                                            firstname: currentTarget.value
-                                        })
-                                    }
-                                    placeholder="Enter firstname"
-                                />
-                            </div>
-                            <div>
-                                <label htmlFor="ln">Lastname</label>
-                                <input
-                                    required
-                                    type="text"
-                                    id="ln"
-                                    defaultValue={user.lastname}
-                                    className="intro-x input w-full input--lg border-2 border-gray-300 hover:border-yellow-600"
-                                    onChange={({ currentTarget }) =>
-                                        setUser({
-                                            ...user,
-                                            lastname: currentTarget.value
-                                        })
-                                    }
-                                    placeholder="Enter lastname"
-                                />
-                            </div>
-                            <div>
-                                <label htmlFor="phone">Phone number</label>
-                                <input
-                                    required
-                                    type="text"
-                                    id="phone"
-                                    defaultValue={user.phone}
-                                    className="intro-x input w-full input--lg border-2 border-gray-300 hover:border-yellow-600"
-                                    onChange={({ currentTarget }) =>
-                                        setUser({
-                                            ...user,
-                                            phone: currentTarget.value
-                                        })
-                                    }
-                                    placeholder="Enter phone"
-                                />
-                            </div>
-                            <div>
-                                <label htmlFor="email">Email address</label>
-                                <input
-                                    required
-                                    type="email"
-                                    id="email"
-                                    defaultValue={user.email}
-                                    className="intro-x input w-full input--lg border-2 border-gray-300 hover:border-yellow-600"
-                                    onChange={({ currentTarget }) =>
-                                        setUser({
-                                            ...user,
-                                            email: currentTarget.value
-                                        })
-                                    }
-                                    placeholder="Enter email"
-                                />
-                            </div>
-                            <div>
-                                <label htmlFor="dob">Date of birth</label>
-                                <input
-                                    type="date"
-                                    id="dob"
-                                    defaultValue={user.dob}
-                                    className="intro-x input w-full input--lg border-2 border-gray-300 hover:border-yellow-600"
-                                    onChange={({ currentTarget }) =>
-                                        setUser({
-                                            ...user,
-                                            dob: currentTarget.value
-                                        })
-                                    }
-                                />
-                                <span>{CleanDate(user.dob, true, true)}</span>
-                            </div>
-                            <div>
-                                <label htmlFor="wallet">Wallet name</label>
-                                <Select
-                                    id="wallet"
-                                    isMulti={false}
-                                    defaultValue={{ value: user.walletName, label: user.walletName }}
-                                    onChange={(item: any) =>
-                                        setUser({
-                                            ...user,
-                                            walletName: item.value
-                                        })
-                                    }
-                                    placeholder="Select wallet"
-                                    options={walletNames}
-                                />
-                            </div>
-                            <div>
-                                <label htmlFor="wallet">Wallet address</label>
-                                <input
-                                    required
-                                    type="text"
-                                    id="wallet"
-                                    defaultValue={user.wallet_address}
-                                    className="intro-x input w-full input--lg border-2 border-gray-300 hover:border-yellow-600"
-                                    onChange={({ currentTarget }) =>
-                                        setUser({
-                                            ...user,
-                                            wallet_address: currentTarget.value
-                                        })
-                                    }
-                                />
-                            </div>
-                            <div>
-                                <label htmlFor="gender">Gender</label>
-                                <Select
-                                    id="gender"
-                                    isMulti={false}
-                                    defaultValue={{ value: user.gender, label: user.gender }}
-                                    onChange={(item: any) =>
-                                        setUser({
-                                            ...user,
-                                            gender: item.value
-                                        })
-                                    }
-                                    placeholder="Select Gender"
-                                    options={[
-                                        { value: "Male", label: "Male" },
-                                        { value: "Female", label: "Female" },
-                                        { value: "Others", label: "Others" }
-                                    ]}
-                                />
-                            </div>
+                                });
+                            }}
+                        >
+                            <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
+                                <div>
+                                    <label htmlFor="fn">Firstname</label>
+                                    <input
+                                        required
+                                        type="text"
+                                        id="fn"
+                                        defaultValue={user?.firstname}
+                                        className="intro-x input w-full input--lg border-2 border-gray-300 hover:border-yellow-600"
+                                        onChange={({ currentTarget }) =>
+                                            setUser({
+                                                ...user,
+                                                firstname: currentTarget.value
+                                            })
+                                        }
+                                        placeholder="Enter firstname"
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor="ln">Lastname</label>
+                                    <input
+                                        required
+                                        type="text"
+                                        id="ln"
+                                        defaultValue={user.lastname}
+                                        className="intro-x input w-full input--lg border-2 border-gray-300 hover:border-yellow-600"
+                                        onChange={({ currentTarget }) =>
+                                            setUser({
+                                                ...user,
+                                                lastname: currentTarget.value
+                                            })
+                                        }
+                                        placeholder="Enter lastname"
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor="phone">Phone number</label>
+                                    <input
+                                        required
+                                        type="text"
+                                        id="phone"
+                                        defaultValue={user.phone}
+                                        className="intro-x input w-full input--lg border-2 border-gray-300 hover:border-yellow-600"
+                                        onChange={({ currentTarget }) =>
+                                            setUser({
+                                                ...user,
+                                                phone: currentTarget.value
+                                            })
+                                        }
+                                        placeholder="Enter phone"
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor="email">Email address</label>
+                                    <input
+                                        required
+                                        type="email"
+                                        id="email"
+                                        defaultValue={user.email}
+                                        className="intro-x input w-full input--lg border-2 border-gray-300 hover:border-yellow-600"
+                                        onChange={({ currentTarget }) =>
+                                            setUser({
+                                                ...user,
+                                                email: currentTarget.value
+                                            })
+                                        }
+                                        placeholder="Enter email"
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor="dob">Date of birth</label>
+                                    <input
+                                        type="date"
+                                        id="dob"
+                                        defaultValue={user.dob}
+                                        className="intro-x input w-full input--lg border-2 border-gray-300 hover:border-yellow-600"
+                                        onChange={({ currentTarget }) =>
+                                            setUser({
+                                                ...user,
+                                                dob: currentTarget.value
+                                            })
+                                        }
+                                    />
+                                    <span>{CleanDate(user.dob, true, true)}</span>
+                                </div>
+                                <div>
+                                    <label htmlFor="wallet">Wallet name</label>
+                                    <Select
+                                        id="wallet"
+                                        isMulti={false}
+                                        defaultValue={{ value: user.walletName, label: user.walletName }}
+                                        onChange={(item: any) =>
+                                            setUser({
+                                                ...user,
+                                                walletName: item.value
+                                            })
+                                        }
+                                        placeholder="Select wallet"
+                                        options={walletNames}
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor="wallet">Wallet address</label>
+                                    <input
+                                        required
+                                        type="text"
+                                        id="wallet"
+                                        defaultValue={user.wallet_address}
+                                        className="intro-x input w-full input--lg border-2 border-gray-300 hover:border-yellow-600"
+                                        onChange={({ currentTarget }) =>
+                                            setUser({
+                                                ...user,
+                                                wallet_address: currentTarget.value
+                                            })
+                                        }
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor="gender">Gender</label>
+                                    <Select
+                                        id="gender"
+                                        isMulti={false}
+                                        defaultValue={{ value: user.gender, label: user.gender }}
+                                        onChange={(item: any) =>
+                                            setUser({
+                                                ...user,
+                                                gender: item.value
+                                            })
+                                        }
+                                        placeholder="Select Gender"
+                                        options={[
+                                            { value: "Male", label: "Male" },
+                                            { value: "Female", label: "Female" },
+                                            { value: "Others", label: "Others" }
+                                        ]}
+                                    />
+                                </div>
 
-                            <div>
-                                <label htmlFor="nation">Country</label>
-                                <Select
-                                    onChange={(item: any) =>
-                                        setUser({
-                                            ...user,
-                                            nationality: item.value
-                                        })
-                                    }
-                                    className="border-theme-1"
-                                    isMulti={false}
-                                    id="nation"
-                                    defaultValue={{ value: user.nationality, label: user.nationality }}
-                                    placeholder="Select country"
-                                    options={countries.map((item) => ({
-                                        value: item.name,
-                                        label: item.name
-                                    }))}
-                                />
+                                <div>
+                                    <label htmlFor="nation">Country</label>
+                                    <Select
+                                        onChange={(item: any) =>
+                                            setUser({
+                                                ...user,
+                                                nationality: item.value
+                                            })
+                                        }
+                                        className="border-theme-1"
+                                        isMulti={false}
+                                        id="nation"
+                                        defaultValue={{ value: user.nationality, label: user.nationality }}
+                                        placeholder="Select country"
+                                        options={countries.map((item) => ({
+                                            value: item.name,
+                                            label: item.name
+                                        }))}
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor="duration">Duration</label>
+                                    <Select
+                                        id="duration"
+                                        isMulti={false}
+                                        defaultValue={{ value: user.duration, label: user.duration }}
+                                        onChange={(item: any) =>
+                                            setUser({
+                                                ...user,
+                                                duration: item.value
+                                            })
+                                        }
+                                        placeholder="Select Duration"
+                                        options={[
+                                            { value: "1 Year", label: "1 Year" },
+                                            { value: "6 Months", label: "6 Months" }
+                                        ]}
+                                    />
+                                </div>
+
+                                <div className="col-span-2">
+                                    <PrimaryButton
+                                        onClick={() => {}}
+                                        type={ButtonType.submit}
+                                        loading={updating}
+                                        className="button button--lg text-white bg-theme-1 mr-4"
+                                    >
+                                        <CheckmarkDone className="ml-3 h-6" /> Update account
+                                    </PrimaryButton>
+                                    <PrimaryButton
+                                        onClick={() => setUpdate(false)}
+                                        type={ButtonType.button}
+                                        loading={false}
+                                        className="button button--lg text-red-600 bg-red-100"
+                                    >
+                                        Cancel
+                                    </PrimaryButton>
+                                </div>
                             </div>
-                            <div>
-                                <label htmlFor="duration">Duration</label>
-                                <Select
-                                    id="duration"
-                                    isMulti={false}
-                                    defaultValue={{ value: user.duration, label: user.duration }}
-                                    onChange={(item: any) =>
-                                        setUser({
-                                            ...user,
-                                            duration: item.value
-                                        })
-                                    }
-                                    placeholder="Select Duration"
-                                    options={[
-                                        { value: "1 Year", label: "1 Year" },
-                                        { value: "6 Months", label: "6 Months" }
-                                    ]}
-                                />
-                            </div>
-                            <div className="col-span-2">
-                                <PrimaryButton
-                                    onClick={() => {}}
-                                    type={ButtonType.submit}
-                                    loading={updating}
-                                    className="button button--lg text-white bg-theme-1 mr-4"
+                        </form>
+                    </div>
+                    <div className="intro-y box mt-5">
+                        <div className="flex items-center p-5 border-b border-gray-200">
+                            <h2 className="font-medium text-base mr-auto uppercase">
+                                <Cash className="w-4 h-4 mr-2 text-theme-1" /> Update Default Currency
+                            </h2>
+                        </div>
+                        <div className="w-full mb-4 p-6">
+                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mt-2" htmlFor="grid-local">
+                                Local Currency
+                            </label>
+                            <div className="relative">
+                                <select
+                                    onChange={({ currentTarget: { value } }) => setLocalCurrency(value)}
+                                    required
+                                    value={localCurrency}
+                                    className="block appearance-none w-full bg-gray-100 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    id="grid-local"
                                 >
-                                    <CheckmarkDone className="ml-3 h-6" /> Update account
-                                </PrimaryButton>
+                                    <option value="">Local Currency</option>
+                                    {locals.map((item: string, idx: number) => (
+                                        <option key={idx} value={item}>
+                                            {item}
+                                        </option>
+                                    ))}
+                                </select>
+                                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                    <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <div className="mt-4">
                                 <PrimaryButton
-                                    onClick={() => setUpdate(false)}
+                                    onClick={async () => {
+                                        if (localCurrency) {
+                                            await setCurrencyFunc({ variables: { currency: localCurrency, id: user.id } });
+                                        } else toast.info("Please select currency!");
+                                    }}
+                                    className="rounded-lg bg-teal-600 text-teal-100 shadow p-4"
                                     type={ButtonType.button}
-                                    loading={false}
-                                    className="button button--lg text-red-600 bg-red-100"
+                                    loading={func_load || __loadC}
                                 >
-                                    Cancel
+                                    Update Currency
                                 </PrimaryButton>
                             </div>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </>
             )}
             <LoadingIcon loading={loading} />
         </>
