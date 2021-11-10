@@ -33,12 +33,12 @@ const YourInvestment = () => {
             <div className="intro-y flex items-center mt-8">
                 <h2 className="text-lg font-medium mr-auto">{t("investment")}</h2>
             </div>
-            <div className="flex justify-end">
+            {/* <div className="flex justify-end">
                 <button onClick={() => setNewItem(!newItem)} className="button mr-2 mb-2 flex items-center border justify-center shadow-lg bg-yellow-200 text-theme-1">
                     {t("investment.new")}
                     <Plus className="w-4 h-4 ml-2" />
                 </button>
-            </div>
+            </div> */}
 
             <LoadingIcon loading={loading} />
 
