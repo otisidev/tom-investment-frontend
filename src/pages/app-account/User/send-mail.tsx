@@ -85,6 +85,15 @@ const SendMail = () => {
                     <div>
                         <label>Total Receiver</label>
                         <h2 className="font-bold text-lg">{emails.length}</h2>
+                        <button
+                            onClick={() => {
+                                const items = Array.from(users, ({ value }) => value);
+                                setEmails(items);
+                            }}
+                            className="text-teal-600 font-bold"
+                        >
+                            Select All
+                        </button>
                     </div>
                     <div>
                         <p>Subject</p>
