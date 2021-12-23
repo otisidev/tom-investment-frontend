@@ -23,7 +23,7 @@
         "apollo-client": "^2.6.10",
         "apollo-link": "^1.2.14",
         "axios": "^0.21.1",
-        "class-transformer": "^0.4.0",
+        "class-transformer": "^0.5.1",
         "graphql": "^15.3.0",
         "graphql-tag": "^2.10.4",
         "i18next": "^19.6.0",
@@ -40,6 +40,7 @@
         "react-scripts": "3.4.1",
         "react-select": "^3.1.0",
         "react-toastify": "^8.0.3",
+        "reflect-metadata": "^0.1.13",
         "styled-components": "^5.1.1",
         "timeago-react": "^3.0.0",
         "typescript": "~3.7.2"

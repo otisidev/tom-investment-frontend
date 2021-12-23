@@ -16,6 +16,8 @@ import Verify from "./pages/Verify";
 import NewPassword from "./pages/NewPassword";
 import InvestmentStatus from "./pages/investment-status";
 
+import "reflect-metadata";
+
 function App() {
     document.body.className = "app";
     return (
