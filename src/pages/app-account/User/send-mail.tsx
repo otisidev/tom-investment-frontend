@@ -90,7 +90,7 @@ const SendMail = () => {
                                 const items = Array.from(users, ({ value }) => value);
                                 setEmails(items);
                             }}
-                            className="text-teal-600 font-bold"
+                            className="text-teal-600 font-bold active:outline-none"
                         >
                             Select All
                         </button>
