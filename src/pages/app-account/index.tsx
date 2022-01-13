@@ -46,6 +46,10 @@ const AppAccount = () => {
                 <AppMenu />
                 <div className="content">
                     <TopNavigation />
+                    <div className="bg-red-200 rounded-lg py-4 px-3 shadow-lg cursor-pointer select-none">
+                        <p className="text-lg font-bold text-red-600">Alert!!</p>
+                        <p className="text-red-500">Please do not make any deposit, TSPI is currently experiencing a glitch in our system database.</p>
+                    </div>
                     <Switch>
                         <Route exact path="/app" component={Dashboard} />
                         <Route exact path="/app/user-investment" component={YourInvestment} />
