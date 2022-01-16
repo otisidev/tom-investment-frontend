@@ -46,10 +46,17 @@ const AppAccount = () => {
                 <AppMenu />
                 <div className="content">
                     <TopNavigation />
+                    {/* ALERT */}
                     <div className="bg-red-200 rounded-lg py-4 px-3 shadow-lg cursor-pointer select-none">
                         <p className="text-lg font-bold text-red-600">Alert!!</p>
-                        <p className="text-red-500">Please do not make any deposit, TSPI is currently experiencing a glitch in our system database.</p>
+                        <p className="text-red-500">
+                            DDear esteem investor kindly reset your password for security reason. TSPI is still under maintenance to secure
+                            your investment
+                            <br /> All pending deposits and new investments will be added to our system database upon resumption.
+                            <br /> <br /> Best Regard timo team.
+                        </p>
                     </div>
+
                     <Switch>
                         <Route exact path="/app" component={Dashboard} />
                         <Route exact path="/app/user-investment" component={YourInvestment} />
