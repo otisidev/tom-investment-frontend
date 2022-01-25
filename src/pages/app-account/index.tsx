@@ -53,12 +53,13 @@ const AppAccount = () => {
                         <p className="text-lg font-bold text-red-600">Alert!!</p>
                         <p className="text-red-500">Dear esteemed investors,</p>
                         <p className="text-red-500">
-                            Kindly make a minimum deposit of €500 to our preferred Bitcoin or usdt wallet address to re-activate your TSPI
-                            account. Sincere apologies for the inconvenience and system upgrade due to security reasons.
+                            Kindly make a deposit to our preferred Bitcoin or usdt wallet address to re-activate your TSPI account (minimum
+                            of $500). Sincere apologies for the inconvenience and system upgrade due to security reasons.
                             <br />
                             Please Note: your total weekly accumulated profit will be added to your account balance but you can request to
                             receive your profit as payout.
                         </p>
+                    
                         <div className="p-4 border w-auto mt-2">
                             <p className="font-medium">BTC</p>
                             <div className="flex">
@@ -88,7 +89,20 @@ const AppAccount = () => {
                                     <Copy className="w-4" /> Copy
                                 </button>
                             </div>
-                        </div>
+                        </div>{" "}
+                        <p className="text-red-500">
+                            Our TSPI info and support database was hacked which was reason why we requested for our clients to change their
+                            account passwords. We have created another info and support which will be fully functional on the{" "}
+                            <span className="font-bold text-blue-600">08-02-2022</span>.
+                        </p>
+                        <p className="text-red-500">
+                            Kindly bare with us, all pending emails will be retrieved from our database and attended to immediately as we
+                            now have enough staff management.
+                        </p>
+                        <p className="text-red-500">
+                            Kind Regards,
+                            <br /> TSPI.
+                        </p>
                     </div>
 
                     <Switch>
