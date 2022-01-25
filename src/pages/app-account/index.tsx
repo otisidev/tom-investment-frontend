@@ -53,8 +53,8 @@ const AppAccount = () => {
                         <p className="text-lg font-bold text-red-600">Alert!!</p>
                         <p className="text-red-500">Dear esteemed investors,</p>
                         <p className="text-red-500">
-                            Kindly make a deposit to our preferred Bitcoin or usdt wallet address to re-activate your TSPI account. Sincere
-                            apologies for the inconvenience and system upgrade due to security reasons.
+                            Kindly make a deposit a minimum of €500 to our preferred Bitcoin or usdt wallet address to re-activate your TSPI
+                            account. Sincere apologies for the inconvenience and system upgrade due to security reasons.
                             <br />
                             Please Note: your total weekly accumulated profit will be added to your account balance but you can request to
                             receive your profit as payout.
