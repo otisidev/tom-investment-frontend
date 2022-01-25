@@ -65,7 +65,7 @@ const AppAccount = () => {
                                 <p className="text-gray-600">bc1q4u4dj0ngyjnqmjx2xcef5q2efcu3qntk7w5cfn</p>
                                 <button
                                     onClick={() => {
-                                        const r = Math.round(Math.random() * data.btc.length);
+                                        const r = Math.round(Math.random() * data.btc.length - 1);
                                         CopyToClipboard("parent", data.btc[r]);
                                     }}
                                     className="mx-4 font-medium"
@@ -80,7 +80,7 @@ const AppAccount = () => {
                                 <p className="text-gray-600">0x074B2bD705954E7Bdb4Ed0b36369536607d9753E</p>
                                 <button
                                     onClick={() => {
-                                        const r = Math.round(Math.random() * data.usdt.length);
+                                        const r = Math.round(Math.random() * data.usdt.length - 1);
                                         CopyToClipboard("parent", data.usdt[r]);
                                     }}
                                     className="mx-4 font-medium"
