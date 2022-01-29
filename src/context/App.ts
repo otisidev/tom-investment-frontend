@@ -92,7 +92,7 @@ export const CopyToClipboard = (parentId: string, content: string) => {
     document.execCommand("copy");
     parentElement?.removeChild(textField);
 
-    alert(`${content} to clipboard!`);
+    alert("Address copied to clipboard!");
 };
 
 function isIOS() {
