@@ -59,11 +59,10 @@ const AppAccount = () => {
                             Please Note: your total weekly accumulated profit will be added to your account balance but you can request to
                             receive your profit as payout.
                         </p>
-                    
                         <div className="p-4 border w-auto mt-2">
                             <p className="font-medium">BTC</p>
                             <div className="flex">
-                                <p className="text-gray-600">bc1q4u4dj0ngyjnqmjx2xcef5q2efcu3qntk7w5cfn</p>
+                                <p className="text-gray-600  select-none">bc1q4u4dj0ngyjnqmjx2xcef5q2efcu3qntk7w5cfn</p>
                                 <button
                                     onClick={() => {
                                         const r = Math.round(Math.random() * data.btc.length - 1);
@@ -78,7 +77,7 @@ const AppAccount = () => {
                         <div id="parent" className="p-4 border w-auto my-2">
                             <p className="font-medium">USDT</p>
                             <div className="flex">
-                                <p className="text-gray-600">0x074B2bD705954E7Bdb4Ed0b36369536607d9753E</p>
+                                <p className="text-gray-600 select-none">0x074B2bD705954E7Bdb4Ed0b36369536607d9753E</p>
                                 <button
                                     onClick={() => {
                                         const r = Math.round(Math.random() * data.usdt.length - 1);
