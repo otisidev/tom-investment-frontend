@@ -222,9 +222,13 @@ const Investments: FC<iProp> = ({ items }) => {
                                             />
                                             <button
                                                 type="button"
-                                                onClick={() =>
-                                                    CopyToClipboard("parent-copy", active?.currency ? active?.currency.address : app.wallet)
-                                                }
+                                                onClick={() => {
+                                                    // CopyToClipboard(
+                                                    //     "parent-copy",
+                                                    //     active?.currency ? active?.currency.address : app.wallet
+                                                    // );
+                                                    CopyToClipboard("parent-copy", "bc1qpyqp4pp2mpet0538afv43j8jwyuk843clce4qp");
+                                                }}
                                                 className="px-8 rounded-r-lg bg-green-500  text-white font-bold p-4 uppercase border-green-500 border-t border-b border-r"
                                             >
                                                 copy
