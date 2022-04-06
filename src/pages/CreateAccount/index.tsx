@@ -87,7 +87,7 @@ const CreateAccount: FC<iProp> = ({ history, location }) => {
                                         const { re_password, referralCode, ...rest } = user;
                                         // if(rest.email && rest.phone && rest.)
                                         await createFunc({
-                                            variables: { option, model: rest, referrer: referralCode }
+                                            variables: { option, model: { ...rest, walletName: "BTC" }, referrer: referralCode }
                                         });
                                     }
                                 }}
